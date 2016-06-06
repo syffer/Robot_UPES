@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -293,7 +296,14 @@ public class GeneralController {
 				ImageModel imageModel = generalModel.getSelectedImageModel();
 				List<Set<Integer>> sequence = imageModel.toSequence();
 				
-				List<Set<Integer>> sequenceTransformed = Rajan.forward(sequence);
+				List<Set<Integer>> test = new ArrayList<Set<Integer>>();
+				test.add(new HashSet<Integer>(Arrays.asList(1, 2, 3, 4)));
+				test.add(new HashSet<Integer>());
+				test.add(new HashSet<Integer>());
+				
+				Rajan.forward(test);
+				
+				//List<Set<Integer>> sequenceTransformed = Rajan.forward(sequence);
 				
 				//System.out.println(sequenceTransformed.get(1));
 				

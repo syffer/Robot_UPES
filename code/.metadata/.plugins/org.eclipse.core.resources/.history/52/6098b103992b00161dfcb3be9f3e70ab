@@ -1,7 +1,0 @@
-package rajan;
-
-public class Sequence {
-	
-	private List<Set<E>> sequence;
-	
-}

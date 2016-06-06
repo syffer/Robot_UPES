@@ -1,4 +1,0 @@
-
-public abstract class Transform {
-	public abstract <E> List<E> forward(List<E>);
-}

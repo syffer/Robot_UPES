@@ -55,7 +55,8 @@ public abstract class ImageModel {
 			}
 		}
 		
-		// padding ?
+		// padding 
+		
 		
 		return sequence;
 	}

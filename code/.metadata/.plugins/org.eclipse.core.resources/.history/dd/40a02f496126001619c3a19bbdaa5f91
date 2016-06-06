@@ -1,6 +1,0 @@
-import java.util.List;
-
-public abstract class Transform {
-	public abstract <E> List<E> forward(List<E> sequence) throw Exception;
-	public abstract <E> List<E> reverse(List<E> sequence);
-}

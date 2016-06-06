@@ -1,9 +1,0 @@
-package transform;
-
-public class Complexe {
-	
-	public Complexe(int x, int y) {
-		
-	}
-	
-}
