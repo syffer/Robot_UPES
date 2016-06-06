@@ -1,0 +1,48 @@
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+
+public class Rajan extends Transform {
+
+	@Override
+	public <E> List<E> forward(List<E> sequence) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <E> List<E> reverse(List<E> sequence) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	private static double log2(double value) {
+		return Math.log(value) / Math.log(2); 
+	}
+	
+	
+	private static <E> Set<E> union(Set<E> a, Set<E> b) {
+		Set<E> result = new HashSet<E>(a);
+		result.addAll(b);
+		return result;
+	}
+	
+	private static <E> Set<E> difference(Set<E> a, Set<E> b) {
+		
+		// a U b
+		Set<E> result = new HashSet<E>(a);
+		result.addAll(b);
+		
+		Set<E> intersection = new HashSet<>(a);
+		intersection.retainAll(b);
+		
+		result.removeAll(intersection);
+		
+		return result;
+	}
+
+}

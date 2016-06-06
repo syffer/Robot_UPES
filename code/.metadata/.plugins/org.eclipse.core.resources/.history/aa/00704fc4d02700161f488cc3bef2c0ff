@@ -1,0 +1,57 @@
+package transform;
+
+import matrix.Matrix;
+
+public class FastFourierTransform2D {
+	
+	public static Matrix forward(Matrix matrix) {
+		
+		int M = matrix.getNbRows();
+		int N = matrix.getNbColumns();
+		
+		int[][] f = matrix.getData();
+		double[][] F = new double[M][N];
+		
+				
+		// 
+		for(int u = 0; u < M; u++) {
+			for(int v = 0; v < N; v++) {
+				
+				
+				for(int y = 0; y < N; y++) {
+					//
+					
+					// e^{-i} ? 
+				}
+				
+				
+				for(int x = 0; x < M; x++) {
+					// 
+				}
+				
+				
+			}
+		}
+		
+		
+		
+		return null;
+	}
+	
+	
+	public static int W(int n) {
+		System.out.println( Math.exp(2 * Math.PI / n) );
+		
+		return 0;
+	}
+	
+	
+	public static Matrix inverse(Matrix matrix) {
+		
+		
+		return null;
+	}
+	
+	
+	
+}

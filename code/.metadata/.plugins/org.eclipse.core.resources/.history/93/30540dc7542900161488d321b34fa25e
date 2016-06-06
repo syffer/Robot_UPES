@@ -1,0 +1,21 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class GreyImageModel extends ImageModel {
+
+	private int[][] matrix;
+	
+	public GreyImageModel(BufferedImage bufferedImage, int r) {
+		super();
+		
+				
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

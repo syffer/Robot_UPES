@@ -1,0 +1,205 @@
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.imageio.ImageIO;
+
+
+import java.util.logging.Logger;
+import transform.rajan.Utils;
+
+
+
+public class Matrix {
+	
+	private int nbRows;
+	private int nbColumns;
+	private int data[][];
+		
+	public Matrix(String pathToImageFile) throws IOException {
+		this(ImageIO.read(new File(pathToImageFile))); 
+	}
+	
+	public Matrix(BufferedImage image) {
+		
+		// http://stackoverflow.com/questions/30784470/reading-an-image-into-an-array-of-pixels-and-then-writing-back-to-a-file 
+		
+		int width = image.getWidth();
+        int height = image.getHeight();
+        
+        // initilise the matrix
+        this.nbRows = height;
+                
+        
+        // double the height if not a power of 2 
+        // padding 0 automatic at initialisation 
+        //if(!Utils.isPowerOf2(height)) this.nbRows *= 2;
+        
+        this.nbColumns = width * 3;
+        this.data = new int[this.nbRows][this.nbColumns];
+        
+        System.out.println("Number of rows : " + this.nbRows);
+        System.out.println("Number of columns : " + this.nbColumns);
+        
+        
+        // read the image and save it in data 
+        Raster raster = image.getData();
+        for(int i = 0; i < height; i++) { 
+        	// to take the line of pixel : raster.getPixels(x, y, width, height, new int[byteArray.length]); 
+        	// width * 3, because getPixels will return 3 values (RGB) for each pixels 
+        	this.data[i] = raster.getPixels(0, i, width, 1, new int[width*3]);  	// read one line 
+        }        
+	}
+	
+	public Matrix(int nbRows, int nbColumns) {
+		this.nbColumns = nbColumns;
+		this.nbRows = nbRows;
+		this.data = new int[nbRows][nbColumns];
+	}
+	
+	public Matrix(List<Set<Integer>> sequences) {
+		
+		// create the array 
+		this.nbRows = sequences.size();
+		
+		int maximumSize = -1;
+		for(Set<Integer> sequence : sequences) {
+			if(maximumSize < sequence.size()) maximumSize = sequence.size();
+		}
+		
+		this.nbColumns = maximumSize;
+		
+		this.data = new int[this.nbRows][this.nbColumns];
+		
+		// initialise data to -1 (for unknown values)
+		for(int i = 0; i < this.nbRows; i++) {
+			for(int j = 0; j < this.nbColumns; j++) {
+				this.data[i][j] = -1;
+			}
+		}
+		
+		System.out.println("Number of rows : " + this.nbRows);
+        System.out.println("Number of columns : " + this.nbColumns);
+		
+		// store the data
+		int i = 0;
+		for(Set<Integer> sequence : sequences) {
+			int j = 0;
+			for(int value : sequence) {
+				this.data[i][j] = value;
+				j++;
+			}
+			i++;
+		}
+		
+		// TODO : interpolation !!! 
+		
+	}
+	
+	
+	private void interpolate() {
+		
+		for(int i = 0; i < this.nbRows; i++) {
+			for(int j = 0; j < this.nbColumns; j++) {
+				
+				if(this.get(i,  j) != -1) continue;
+				
+				List<Integer> neibors = this.getKnownNeighbors(i, j);
+				
+				int sum = list.stream().mapToInt(Integer::intValue).sum();
+								
+			}
+		}
+		
+	}
+	
+	
+	private List<Integer> getKnownNeighbors(int i, int j) {
+		
+		List<Integer> neibors = new ArrayList<Integer>();
+		
+		for(int k = -1; k < 2; k++){
+			
+			
+			
+		}
+		
+		return null;
+	}
+	
+	public int get(int line, int column) { 
+		return this.data[line][column];
+	}
+	
+	public void set(int line, int column, int value) {
+		this.data[line][column] = value;
+	}
+	
+	
+	public List<Set<Integer>> toSequences() {
+				
+		List<Set<Integer>> sequences = new ArrayList<Set<Integer>>(this.nbRows);
+		
+		for(int i = 0; i < this.nbRows; i++) {
+			
+			HashSet<Integer> sequence = new HashSet<Integer>(this.nbColumns);
+			
+			for(int j = 0; j < this.nbColumns; j++) {
+				sequence.add(this.get(i, j));
+			}
+			
+			sequences.add(sequence);
+		}
+		
+		return sequences;
+	}
+	
+	public void saveAsGreyImage(String pathToImageFile) throws IOException {
+		
+		int height = this.nbRows;
+		int width = this.nbColumns;
+		
+		BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
+		WritableRaster raster = newImage.getRaster();
+				
+		// write into raster		
+		for(int i = 0; i < height; i++) { 
+			for(int j = 0; j < width; j++) {
+				raster.setSample(j, i, 0, this.get(i,  j));
+			}
+		}
+				
+		File outputFile = new File(pathToImageFile); 
+		ImageIO.write(newImage, "jpg", outputFile);
+		
+	}
+	
+	public String toString() {
+		// won't work if image too big ... 
+		
+		StringBuffer stringBuffer = new StringBuffer();
+				
+		for(int i = 0; i < this.nbRows; i ++) {
+
+			stringBuffer.append("|");
+			for(int j = 0; j < this.nbColumns; j++) { 
+				
+				int value = this.get(i, j);
+				if(value < 100) stringBuffer.append(" ");
+				if(value < 10) stringBuffer.append(" ");
+				
+				stringBuffer.append(this.get(i, j) + " ");
+			}
+			stringBuffer.append("|\n");
+		}
+		
+		return stringBuffer.toString();
+	}
+	
+}

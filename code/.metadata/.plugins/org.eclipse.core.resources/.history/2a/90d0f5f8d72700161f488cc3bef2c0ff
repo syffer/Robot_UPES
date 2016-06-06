@@ -1,0 +1,92 @@
+package transform;
+
+public class Complexe {
+	
+	public static final Complexe zero = new Complexe(0, 0);
+	public static final Complexe one = new Complexe(1, 0);
+	
+	public double reel;
+	public double image;
+
+	public Complexe() {
+		this(0, 0);
+	}
+	
+	public Complexe(double number) {
+		this(number, 0);
+	}
+	
+	public Complexe(double reel, double image) {
+		this.reel = reel; 
+		this.image = image;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Complexe [reel=" + reel + ", image=" + image + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(image);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(reel);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Complexe other = (Complexe) obj;
+		if (Double.doubleToLongBits(image) != Double
+				.doubleToLongBits(other.image))
+			return false;
+		if (Double.doubleToLongBits(reel) != Double
+				.doubleToLongBits(other.reel))
+			return false;
+		return true;
+	}
+
+
+	public static Complexe inv(Complexe c) throws ComplexeException {
+		if(c.equals(Complexe.zero)) throw new ComplexeException("[0,0] has no inverse");
+		double denominator = c.reel * c.reel + c.image * c.image;
+		return new Complexe(c.reel / denominator, -c.image / denominator);
+	}
+
+	public static Complexe neg(Complexe complexe) {
+		return new Complexe(-complexe.reel, -complexe.image);
+	}
+	
+	public static Complexe add(Complexe a, Complexe b) {
+		return new Complexe(a.reel + b.reel, a.image + b.image);
+	}
+	
+	public static Complexe sub(Complexe a, Complexe b) {
+		return new Complexe(a.reel - b.reel, a.image - b.image);
+	}
+	
+	public static Complexe mul(Complexe a, Complexe b) {
+		return new Complexe(a.reel * b.reel - a.image * b.image, a.reel * b.image - a.image * b.reel);
+	}
+	
+	public static Complexe div(Complexe a, Complexe b) throws ComplexeException {
+		if(b.equals(Complexe.zero)) throw new ComplexeException("divide by [0,0] is impossible");
+		double deno = b.reel * b.reel + b.image * b.image;
+		return new Complexe((a.reel * b.reel + a.image * b.image) / deno, (a.image * b.reel - a.reel * b.image) / deno);
+	}
+	
+}

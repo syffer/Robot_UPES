@@ -1,0 +1,254 @@
+package controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+
+import model.GeneralModel;
+import model.BufferedImageModel;
+import model.ImageModel;
+
+import view.ChoiceCanceledException;
+import view.ImageView;
+import view.JFileChooserException;
+import view.View;
+
+public class GeneralController {
+
+	protected GeneralModel generalModel;
+	protected View view;
+	
+	protected ActionLoad actionLoad;
+	protected ActionSave actionSave;
+	protected ActionSaveAs actionSaveAs;
+	
+	protected ActionGreyScale actionGreyScale;
+	
+	public GeneralController(GeneralModel generalModel) {
+		
+		this.generalModel = generalModel;
+		this.view = new View();	
+		
+		//  create actions 
+		this.actionLoad = new ActionLoad();
+		this.actionSave = new ActionSave();
+		this.actionSaveAs = new ActionSaveAs();
+		
+		this.actionGreyScale = new ActionGreyScale();
+		
+		// setting actions 
+		this.view.menuLoad.setAction(this.actionLoad);
+		this.view.menuSave.setAction(this.actionSave);
+		this.view.menuSaveAs.setAction(this.actionSaveAs);
+		
+		this.view.buttonGreyScale.setAction(this.actionGreyScale);
+		
+		// initialise observers (setting default values)
+		this.generalModel.initialise();
+	}
+	
+	
+	private void addImageModel(ImageModel imageModel, String operation, double executionTime) {
+		ImageController imageController = new ImageController(imageModel, operation, executionTime);
+		
+		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
+		imageController.imageView.addInternalFrameListener(new InternalFrameAction());
+		
+		view.desktop.add(imageController.imageView);
+	}
+		
+	
+	
+	public class ActionLoad extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 7721629641991701632L;
+
+		public ActionLoad() {
+			super("Load"); 
+			
+			generalModel.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+			try { 
+				
+				File choosenFile = view.getFileToLoad();
+				
+				long startTime = System.currentTimeMillis();
+				BufferedImage bufferedImage = ImageIO.read(choosenFile);
+				long endTime = System.currentTimeMillis();
+				
+				ImageModel imageModel = new BufferedImageModel(bufferedImage);
+				GeneralController.this.addImageModel(imageModel, "Loading", endTime - startTime);
+				
+			} catch (JFileChooserException e) {
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			
+		}
+	}
+		
+	
+	public class ActionSave extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionSave() {
+			super("Save");
+			
+			generalModel.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void update(Observable observable, Object params) { 			
+			this.setEnabled(generalModel.hasImageModelSelected());
+		} 
+		
+	}
+	
+	
+	public class ActionSaveAs extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionSaveAs() {
+			super("Save as ...");
+			
+			generalModel.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+			try {
+				File file = view.getFileToSave();
+				
+				ImageModel imageModel = generalModel.getSelectedImageModel();
+				imageModel.saveAs(file);
+				
+			} catch (ChoiceCanceledException e) {
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(generalModel.hasImageModelSelected());
+		} 
+		
+	}
+	
+	
+	
+	public class InternalFrameAction implements InternalFrameListener {
+		
+		@Override
+		public void internalFrameActivated(InternalFrameEvent event) { 			
+			ImageView selectedView = view.getSelectedImageView();
+			BufferedImageModel selectedImageModel = selectedView.getImageModel();
+			generalModel.setSelectedImageModel(selectedImageModel);
+		}
+
+		@Override
+		public void internalFrameDeactivated(InternalFrameEvent event) { 
+			generalModel.setSelectedImageModel(null);			
+		}
+		
+		@Override
+		public void internalFrameOpened(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+		
+		@Override
+		public void internalFrameClosed(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void internalFrameClosing(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+		
+		@Override
+		public void internalFrameDeiconified(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void internalFrameIconified(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		} 
+	}
+	
+	
+	public class ActionGreyScale extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 6509734674576991637L;
+
+		public ActionGreyScale() {
+			super("Grey Scale"); 
+			generalModel.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			System.out.println("gray scaling");
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(generalModel.hasImageModelSelected());
+		} 
+		
+	}
+	
+	
+	
+	
+	
+	public class Action extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public Action() {
+			super("name");
+			generalModel.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(generalModel.hasImageModelSelected());
+		} 
+		
+	}
+	
+}

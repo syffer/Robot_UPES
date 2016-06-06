@@ -1,0 +1,48 @@
+package model;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+public class MonoImageModel extends ImageModel {
+	
+	private int[][] matrix;
+	private int height;
+	private int width;
+	
+	public MonoImageModel(BufferedImage bufferedImage, int threshold) {
+		super();
+
+		this.height = bufferedImage.getHeight();
+		this.width = bufferedImage.getWidth();
+		
+		this.matrix = new int[this.height][this.width];
+		
+		for(int i = 0; i < this.width; i++) {
+			for(int j = 0; j < this.height; j++) {
+				
+				Color color = new Color(bufferedImage.getRGB(i, j));
+				int grey = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+				
+				this.matrix[i][j] = (grey >= threshold) ? 1 : 0;
+			}
+		}
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		
+		/*
+		BufferedImage bufferedImage = new BufferedImage(this.nbRows, this.nbColumns);
+		
+		for(int i = 0; i < this.nbRows; i++) {
+			for(int j = 0; j < this.nbColumns; j++) {
+				bufferedImage.				
+			}
+		}
+		*/
+		
+		return null;
+	}
+
+}

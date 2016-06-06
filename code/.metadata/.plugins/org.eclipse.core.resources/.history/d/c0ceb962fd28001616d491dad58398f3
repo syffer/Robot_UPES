@@ -1,0 +1,98 @@
+package controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+
+import model.ImageModel;
+
+import view.JFileChooserException;
+import view.View;
+
+public class GeneralController {
+
+	protected View view;
+	
+	
+	public GeneralController() {
+		
+		this.view = new View();	
+		
+		
+		ActionLoad actionLoad = new ActionLoad();
+		
+		
+		this.view.menuLoad.setAction(actionLoad);
+				
+	}
+	
+	
+	
+	
+	
+	public class ActionLoad extends AbstractAction {
+		private static final long serialVersionUID = 7721629641991701632L;
+
+		public ActionLoad() {
+			super("Load");
+			
+			// this.putValue(...)
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+			try { 
+				
+				File choosenFile = view.getFileToLoad();
+				
+				long startTime = System.currentTimeMillis();
+				BufferedImage bufferedImage = ImageIO.read(choosenFile);
+				long endTime = System.currentTimeMillis();
+				
+				ImageModel imageModel = new ImageModel(bufferedImage, choosenFile.getPath());
+				ImageController imageController = new ImageController(imageModel, "Loading", endTime - startTime);
+				
+				view.desktop.add(imageController.imageView);
+				
+			} catch (JFileChooserException e) {
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
+			
+		}
+	}
+	
+	
+	public class ActionSave extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		} 
+		
+	}
+	
+	
+	
+	
+	public class Action extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		} 
+		
+	}
+	
+}

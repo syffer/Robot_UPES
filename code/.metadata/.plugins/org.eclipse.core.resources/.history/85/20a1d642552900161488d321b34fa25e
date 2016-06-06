@@ -1,0 +1,27 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class GreyImageModel extends ImageModel {
+	
+	private int[][] matrix;
+	private int nbRows;
+	private int nbColumns;
+	
+	public GreyImageModel(BufferedImage bufferedImage) {
+		super();
+		
+		this.nbRows = bufferedImage.getHeight();
+		this.nbColumns = bufferedImage.getWidth();
+		
+		this.matrix = new int[bufferedImage.getHeight()][bufferedImage.getWidth()];
+		
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

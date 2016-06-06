@@ -1,0 +1,70 @@
+package transform.rajan;
+
+
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+
+public class Rajan {
+	
+	private static <E> Set<E> union(Set<E> a, Set<E> b) {
+		Set<E> result = new HashSet<E>(a);
+		result.addAll(b);
+		return result;
+	}
+	
+	private static <E> Set<E> difference(Set<E> a, Set<E> b) {
+		
+		// a U b
+		Set<E> result = new HashSet<E>(a);
+		result.addAll(b);
+		
+		Set<E> intersection = new HashSet<>(a);
+		intersection.retainAll(b);
+		
+		result.removeAll(intersection);
+		
+		
+		return result;
+	}
+	
+	
+	public static ArrayList<Set<Integer>> forward(ArrayList<Set<Integer>> sequences) throws RajanException { 
+		
+		double nbSteps = Utils.log2(sequences.size());
+		if(! Utils.isInteger(nbSteps)) throw new RajanException("The length has to be a power of 2");
+		return forwardRecursive(sequences);
+	}
+	
+	
+	private static ArrayList<Set<Integer>> forwardRecursive(ArrayList<Set<Integer>> sequences) {
+				
+		if(sequences.size() == 1) return sequences;
+		
+		ArrayList<Set<Integer>> G = new ArrayList<Set<Integer>>();
+		ArrayList<Set<Integer>> H = new ArrayList<Set<Integer>>();
+		
+		int mid = sequences.size() / 2;
+		for(int i = 0; i < mid; i++) {
+			HashSet<Integer> tmp = (HashSet<Integer>) union(sequences.get(i), sequences.get(i + mid));
+			G.add(tmp);	
+		}
+		
+		for(int i = mid; i < sequences.size(); i++) {
+			HashSet<Integer> tmp = (HashSet<Integer>) difference(sequences.get(i), sequences.get(i - mid));
+			H.add(tmp); 
+		}
+		
+		ArrayList<Set<Integer>> nextG = forwardRecursive(G);
+		ArrayList<Set<Integer>> nextH = forwardRecursive(H);
+		
+		nextG.addAll(nextH);
+		
+		return nextG;
+	}
+	
+	
+}

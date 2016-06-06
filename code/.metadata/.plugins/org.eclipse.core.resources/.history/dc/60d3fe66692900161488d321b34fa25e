@@ -1,0 +1,32 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class RGBImageModel extends ImageModel {
+
+	private Pixel[][] data;
+	private int height;
+	private int width;
+	
+	public RGBImageModel(ImageModel imageModel) {
+		this(imageModel.getBufferedImage());
+	}
+	
+	public RGBImageModel(BufferedImage bufferedImage) {
+		
+		this.height = bufferedImage.getHeight();
+		this.width = bufferedImage.getWidth();
+		
+		for(int i = 0; i < this.height; i++) {
+			
+		}
+		
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

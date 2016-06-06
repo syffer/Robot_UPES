@@ -1,0 +1,17 @@
+package model;
+
+public class Pixel {
+	private int l;
+	private int r;
+	private int g;
+	private int b;
+	
+	public Pixel(int l, int r, int g, int b) {
+		this.l = l;
+		this.r = r;
+		this.b = b;
+		this.g = g;
+	}
+	
+	
+}

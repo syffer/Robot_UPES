@@ -1,0 +1,27 @@
+package filter;
+
+import transform.FastFourierTransform2D;
+import matrix.Matrix;
+
+public class Butterworth {
+	
+	public static void filter(int d0, int n, Matrix matrix) {
+		
+		matrix.scalaire(-1);
+		
+		Matrix matrixTF = FastFourierTransform2D.forward(matrix);
+		
+		
+		
+		System.out.println(matrix);		
+		
+	}
+	
+	
+	private static void H(int u, int v) {
+		
+		
+		
+	}
+	
+}

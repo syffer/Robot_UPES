@@ -1,0 +1,36 @@
+package model;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+public abstract class ImageModel {
+	
+	private String pathToFile;
+	
+	public ImageModel() {
+		this(null);
+	}
+	
+	public ImageModel(String pathToFile) {
+		this.pathToFile = pathToFile;
+	}
+	
+	
+	public abstract BufferedImage getBufferedImage();
+	
+	
+	public boolean hasBeenSavedOnce() {
+		return this.pathToFile != null;
+	}
+		
+	public void saveAs(String pathToFile) {
+		this.pathToFile = pathToFile;
+		
+		BufferedImage bufferedImage = this.getBufferedImage();
+		File file = new File(pathToFile);
+		
+	}
+	
+	
+	
+}

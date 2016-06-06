@@ -1,0 +1,11 @@
+package model;
+
+public class MatrixImageModel extends ImageModel {
+
+	protected int[][] matrix;
+	
+	public MatrixImageModel(int width, int heigth) {
+		super(width, heigth);
+	}
+
+}

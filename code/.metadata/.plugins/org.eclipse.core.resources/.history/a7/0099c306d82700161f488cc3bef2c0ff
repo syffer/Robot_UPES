@@ -1,0 +1,68 @@
+package transform;
+
+import matrix.Matrix;
+
+public class FastFourierTransform2D {
+	
+	// http://www.originlab.com/doc/Origin-Help/FFT2-Algorithm 
+	
+	private static Complexe W(double M, double N, double x, double y, double u, double v) {
+		double theta = -2 * Math.PI * (((u*x)/M) + ((v*y)/N));
+		double reel = Math.cos(theta);
+		double image = Math.sin(theta);
+		return new Complexe(reel, image);
+	}
+	
+	public static Matrix forward(Matrix matrix) {
+		
+		int M = matrix.getNbRows();
+		int N = matrix.getNbColumns();
+		
+		int[][] f = matrix.getData();
+		Complexe[][] F = new Complexe[M][N];
+		
+				
+		// 
+		for(int u = 0; u < M; u++) {
+			for(int v = 0; v < N; v++) {
+				
+				Complexe c = new Complexe(1 / N, 0);
+				
+				for(int x = 0; x < M; x++) {
+					for(int y = 0; y < N; y++) {
+						
+						Complexe tmp = new Complexe(f[x][y]);
+						
+						Complexe Wmn = W(M, N, x, y, u, v);
+						
+						tmp = Complexe.mul(tmp, Wmn);
+						
+						F[u][v] = Complexe.add(F[u][v], tmp);
+					}
+				}
+								
+			}
+		}
+		
+		
+		
+		return null;
+	}
+	
+	
+	public static int W(int n) {
+		System.out.println( Math.exp(2 * Math.PI / n) );
+		
+		return 0;
+	}
+	
+	
+	public static Matrix inverse(Matrix matrix) {
+		
+		
+		return null;
+	}
+	
+	
+	
+}

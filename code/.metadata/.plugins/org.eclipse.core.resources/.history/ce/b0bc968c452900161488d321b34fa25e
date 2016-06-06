@@ -1,0 +1,35 @@
+package model;
+
+import java.util.Observable;
+import java.util.Observer;
+
+public class GeneralModel extends Observable {
+
+	private ImageModel selectedImageModel;
+	
+	public GeneralModel() {
+		this.selectedImageModel = null;
+	}
+	
+	public void initialise() {
+		this.notifyObservers();
+	}
+	
+	public void addObserver(Observer obs) {
+		super.addObserver(obs);
+		System.out.println("adding observer");
+	}
+	
+	
+	public void setSelectedImageModel(ImageModel selectedImageModel) {
+		this.selectedImageModel = selectedImageModel;
+		
+		this.notifyObservers();
+	}
+	
+	public boolean isImageModelSelected() {
+		return this.selectedImageModel != null;
+	}
+	
+	
+}

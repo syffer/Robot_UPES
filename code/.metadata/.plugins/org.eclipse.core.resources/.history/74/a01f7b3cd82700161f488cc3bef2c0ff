@@ -1,0 +1,55 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
+import filter.Butterworth;
+
+import matrix.Matrix;
+
+import transform.FastFourierTransform2D;
+import transform.Rajan;
+import transform.RajanException;
+
+
+
+public class Application {
+	public static void main(String[] args) {
+		
+		FastFourierTransform2D.W(2);
+		
+		/*
+		try {
+						
+			//Matrix matrix = new Matrix("./images/upes_gandhi.jpg");
+			Matrix matrix = new Matrix("./images/lena.jpg");
+			//System.out.println(matrix);
+			
+			System.out.println();
+			
+			List<Set<Integer>> sequences = matrix.toSequences();
+			List<Set<Integer>> transformedSequences = Rajan.forward(sequences);
+			
+			System.out.println();
+			
+			Matrix transformedMatrix = new Matrix(transformedSequences);
+			
+			//System.out.println(transformedMatrix);
+			
+			//transformedMatrix.saveAsGreyImage("./images/upes_gandhi_transformed.jpg");
+			transformedMatrix.saveAsGreyImage("./images/lena_transformed.jpg");
+
+			Butterworth.filter(100, 0, transformedMatrix);
+			
+			transformedMatrix.saveAsGreyImage("./images/lena_transformed_-1.jpg");
+
+			
+			System.out.println("Done");
+						
+		} catch (IOException io) {
+			io.printStackTrace();
+		} catch (RajanException re) {
+			re.printStackTrace();
+		}
+		*/	
+	}
+}

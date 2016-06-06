@@ -1,0 +1,15 @@
+package filter;
+
+import matrix.Matrix;
+
+public class Butterworth {
+
+	public static void filter(Matrix matrix) {
+		
+		
+		
+		
+	}
+	
+	
+}

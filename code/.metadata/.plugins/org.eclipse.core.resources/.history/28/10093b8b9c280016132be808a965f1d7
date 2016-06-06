@@ -1,0 +1,42 @@
+package controller;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+
+import view.View;
+
+public class GeneralController {
+
+	protected View view;
+	
+	
+	public GeneralController() {
+		
+		this.view = new View();	
+		
+		
+		this.view.menuLoad.setAction(null);
+		
+	}
+	
+	
+	
+	
+	
+	public class ActionLoad extends AbstractAction {
+		
+		private static final long serialVersionUID = 7721629641991701632L;
+
+		public ActionLoad() {
+			
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+		}
+	}
+	
+	
+}

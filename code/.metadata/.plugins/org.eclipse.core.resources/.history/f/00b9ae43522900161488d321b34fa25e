@@ -1,0 +1,12 @@
+import model.GeneralModel;
+import controller.Controller;
+
+
+public class Application {
+	public static void main(String[] args) {
+		
+		GeneralModel model = new GeneralModel();
+		new Controller(model);
+		
+	}
+}

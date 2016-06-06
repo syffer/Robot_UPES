@@ -1,0 +1,38 @@
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+
+import transform.rajan.Rajan;
+import transform.rajan.RajanException;
+import transform.rajan.Utils;
+
+
+
+public class Application {
+	public static void main(String[] args) {
+		
+		try {
+						
+			Matrix matrix = new Matrix("./images/upes_gandhi.jpg");
+			//Matrix matrix = new Matrix("./images/lena.jpg");
+			//System.out.println(matrix);
+			
+			List<Set<Integer>> sequences = matrix.toSequences();
+			List<Set<Integer>> transformedSequences = Rajan.forward(sequences);
+			
+			Matrix transformedMatrix = new Matrix(transformedSequences);
+			
+			//System.out.println(transformedMatrix);
+			
+			transformedMatrix.saveAsGreyImage("./images/upes_gandhi_transformed.jpg");
+			
+			System.out.println("Done");
+						
+		} catch (IOException io) {
+			io.printStackTrace();
+		} catch (RajanException re) {
+			re.printStackTrace();
+		}
+				
+	}
+}

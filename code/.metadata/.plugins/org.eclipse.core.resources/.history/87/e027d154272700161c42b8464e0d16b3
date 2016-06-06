@@ -1,0 +1,33 @@
+package transform.rajan;
+
+public class Utils {
+	
+	public static double log2(double value) {
+		return Math.log(value) / Math.log(2); 
+	}
+	
+	public static boolean isInteger(double value) {
+		return value % 1 == 0;
+	}
+	
+	
+	public static boolean isPowerOf2(int value) {
+		// http://graphics.stanford.edu/~seander/bithacks.html 
+		// v && !(v & (v - 1)) 
+		return (value != 0) && ((value & (value - 1)) == 0);
+	}
+	
+	public static int nextPowerOf2(int value) { 
+		// http://graphics.stanford.edu/~seander/bithacks.html 
+		value--;
+		value |= value >> 1;
+		value |= value >> 2;
+		value |= value >> 4;
+		value |= value >> 8;
+		value |= value >> 16;
+		value++;
+		
+		return value;
+	}
+	
+}

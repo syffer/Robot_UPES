@@ -1,0 +1,20 @@
+package model;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+public class BufferedImageModel extends ImageModel {
+	
+	public BufferedImage bufferedImage;
+	
+	public BufferedImageModel(BufferedImage bufferedImage, String pathToImage) {
+		this.bufferedImage = bufferedImage;
+		this.pathToImage = pathToImage;
+	}
+		
+	@Override
+	public BufferedImage getBufferedImage() {
+		return this.bufferedImage;
+	}
+	
+}

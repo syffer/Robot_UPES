@@ -1,0 +1,18 @@
+package model;
+
+public abstract class ImageModel {
+	
+	private String pathToFile;
+	
+	public ImageModel() {
+		this(null);
+	}
+	
+	public ImageModel(String pathToFile) {
+		this.pathToFile = pathToFile;
+	}
+	
+	
+	public abstract BufferedImage getBufferedImage();
+	
+}

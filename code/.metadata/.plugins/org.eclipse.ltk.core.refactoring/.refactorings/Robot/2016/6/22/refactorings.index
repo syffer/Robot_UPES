@@ -1,0 +1,31 @@
+1464855970639	Delete element
+1464895568568	Delete element
+1464897396205	Delete element
+1464926399454	Rename type 'InternalFrameEventss'
+1464926412602	Rename field 'internal'
+1464934707463	Rename type 'ImageModel'
+1464934712182	Rename type 'AbstractImageModel'
+1464935171835	Rename type 'MatrixImageModel'
+1464935420660	Rename type 'MonochromeImageModel'
+1464936522843	Rename type 'GreyImageModel'
+1464937527716	Rename local variable 'fichier'
+1464943827553	Rename local variable 'cheminFichier'
+1464943835163	Rename local variable 'fichier'
+1464944203457	Delete element
+1464944278038	Rename field 'nbRows'
+1464944283496	Rename field 'nbColumns'
+1464944660222	Delete element
+1464944677577	Rename type 'RGBImageModel'
+1464946026077	Rename method 'initialiseToolbar'
+1464946240048	Rename method 'isImageModelSelected'
+1464953090444	Delete element
+1464963294571	Rename field 'heigth'
+1464963302073	Rename field 'width'
+1464963373351	Rename field 'nbRows'
+1464963382321	Rename field 'nbColumns'
+1464963388391	Rename field 'wisth'
+1464963401990	Rename field 'heigth'
+1464964309690	Rename field 'heigth'
+1465124658972	Rename local variable 'resultat'
+1465141401116	Delete element
+1465149035078	Rename field 'valueSelected'

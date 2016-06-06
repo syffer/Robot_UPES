@@ -1,0 +1,15 @@
+package transform;
+
+public class Complexe {
+	
+	private int reel;
+	private int image;
+	
+	public Complexe(int reel, int image) {
+		this.reel = reel; 
+		this.image = image;
+	}
+	
+	
+	
+}

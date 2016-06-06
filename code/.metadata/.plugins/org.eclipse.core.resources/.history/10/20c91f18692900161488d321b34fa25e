@@ -1,0 +1,7 @@
+package model;
+
+public abstract class MatrixImageModel<E> extends ImageModel {
+
+	
+
+}

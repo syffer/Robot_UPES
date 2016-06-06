@@ -1,0 +1,17 @@
+package model;
+
+import java.util.Observable;
+
+public class GeneralModel extends Observable {
+
+	private ImageModel selectedImageModel;
+	
+	public GeneralModel() {
+		this.selectedImageModel = null;
+	}
+	
+	public void setSelectedImageModel(ImageModel selectedImageModel) {
+		this.selectedImageModel = selectedImageModel;
+	}
+	
+}

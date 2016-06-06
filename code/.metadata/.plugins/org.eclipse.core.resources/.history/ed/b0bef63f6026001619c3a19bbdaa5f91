@@ -1,0 +1,6 @@
+package transform;
+
+public abstract class Transform {
+	public static abstract void forward();
+	
+}

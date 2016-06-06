@@ -1,0 +1,9 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public abstract class MatrixImageModel<E> extends ImageModel {
+
+	
+
+}

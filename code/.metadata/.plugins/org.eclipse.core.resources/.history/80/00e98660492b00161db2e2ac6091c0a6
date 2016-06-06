@@ -1,0 +1,10 @@
+package model;
+
+public class RGBImageModel extends MatrixImageModel {
+
+	private RGBImageModel(int width, int heigth) {
+		super(width, heigth);
+		// TODO Auto-generated constructor stub
+	}
+
+}

@@ -1,0 +1,19 @@
+package rajan;
+
+import java.util.List;
+import java.util.Set;
+
+public class Sequence <E> {
+	
+	private List<Set<E>> sequence;
+	
+	public Sequence(MatrixImageModel imageModel) {
+		
+	}
+	
+	
+	public int size() {
+		return this.sequence.size();
+	}
+	
+}

@@ -1,0 +1,14 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class ImageModel {
+
+	private String pathToImage;
+	
+	public ImageModel(BufferedImage bufferedImage, String pathToImage) {
+		this.pathToImage = pathToImage;
+		
+	}
+	
+}

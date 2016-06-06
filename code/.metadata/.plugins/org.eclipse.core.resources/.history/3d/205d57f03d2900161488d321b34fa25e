@@ -1,0 +1,67 @@
+package controller;
+
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+
+import view.ImageView;
+import model.ImageModel;
+
+public class ImageController {
+
+	public ImageModel imageModel;
+	public ImageView imageView;
+	
+	public ImageController(ImageModel imageModel, String operationName, double executionTime) {
+		this(imageModel, new ImageView(imageModel.bufferedImage, operationName, executionTime));
+	}
+	
+	public ImageController(ImageModel imageModel, ImageView imageView) {
+		this.imageModel = imageModel;
+		this.imageView = imageView;
+		
+		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
+		this.imageView.addInternalFrameListener(new InternalFrameEventss());
+	}
+	
+	
+	public class InternalFrameEventss implements InternalFrameListener {
+		
+		@Override
+		public void internalFrameActivated(InternalFrameEvent event) {
+			
+		}
+
+		@Override
+		public void internalFrameDeactivated(InternalFrameEvent event) {
+			
+		}
+		
+		@Override
+		public void internalFrameOpened(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+		
+		@Override
+		public void internalFrameClosed(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void internalFrameClosing(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+		
+		@Override
+		public void internalFrameDeiconified(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void internalFrameIconified(InternalFrameEvent event) {
+			// TODO Auto-generated method stub
+		} 
+		
+		
+	}
+	
+}

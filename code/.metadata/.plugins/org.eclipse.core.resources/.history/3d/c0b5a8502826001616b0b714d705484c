@@ -1,0 +1,5 @@
+package rajan;
+
+public class RajanException extends Exception {
+
+}

@@ -1,0 +1,21 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class MonochromeImageModel extends ImageModel {
+
+	private int[][] matrix;
+	
+	public MonochromeImageModel(BufferedImage bufferedImage, int r) {
+		super();
+		
+				
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

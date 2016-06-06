@@ -1,0 +1,9 @@
+package view;
+
+public class JFileChooserException extends Exception {
+	private static final long serialVersionUID = 5793822320099870132L;
+
+	public JFileChooserException(String message) {
+		super(message);
+	}
+}

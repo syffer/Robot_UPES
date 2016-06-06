@@ -1,0 +1,49 @@
+package model;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
+
+public abstract class ImageModel {
+	
+	private String pathToFile;
+	
+	public ImageModel() {
+		this(null);
+	}
+	
+	public ImageModel(String pathToFile) {
+		this.pathToFile = pathToFile;
+	}
+	
+	
+	public abstract BufferedImage getBufferedImage();
+	
+	
+	public boolean hasBeenSavedOnce() {
+		return this.pathToFile != null;
+	}
+		
+	public void saveAs(String pathToFile) throws IOException {
+		this.pathToFile = pathToFile;
+		
+		File file = new File(pathToFile);
+		
+		this.saveAs(file);
+	}
+	
+	public void saveAs(File file) throws IOException {
+		BufferedImage bufferedImage = this.getBufferedImage();
+		ImageIO.write(bufferedImage, pathToFile, file);
+		
+		System.out.println("tatatta");
+		
+		this.pathToFile = file.getPath();
+	}
+	
+	
+	
+}

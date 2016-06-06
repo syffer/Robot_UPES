@@ -1,0 +1,10 @@
+package filter;
+
+public class Butterworth {
+
+	public static void filter(Matrix matrix) {
+		
+	}
+	
+	
+}

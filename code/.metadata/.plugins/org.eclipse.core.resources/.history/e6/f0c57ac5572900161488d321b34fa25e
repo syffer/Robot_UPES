@@ -1,0 +1,27 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class MonoImageModel extends ImageModel {
+	
+	private int[][] matrix;
+	private int nbRows;
+	private int nbColumns;
+	
+	public MonoImageModel(BufferedImage bufferedImage) {
+		super();
+		
+		this.nbRows = bufferedImage.getHeight();
+		this.nbColumns = bufferedImage.getWidth();
+		
+		this.matrix = new int[this.nbRows][this.nbColumns];
+		
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

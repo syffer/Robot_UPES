@@ -1,0 +1,22 @@
+package controller;
+
+import view.ImageView;
+import model.BufferedImageModel;
+
+public class ImageController {
+
+	public GeneralController generalController;
+	
+	public BufferedImageModel imageModel;
+	public ImageView imageView;
+	
+	public ImageController(GeneralController generalController, BufferedImageModel imageModel, String operationName, double executionTime) {
+		this(generalController, imageModel, new ImageView(imageModel, operationName, executionTime));
+	}
+	
+	public ImageController(GeneralController generalController, BufferedImageModel imageModel, ImageView imageView) {
+		this.imageModel = imageModel;
+		this.imageView = imageView;
+	}
+	
+}

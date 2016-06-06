@@ -1,0 +1,23 @@
+1464585882668	Move compilation unit
+1464600045876	Move file
+1464610265082	Delete element
+1464610353000	Rename package 'rajan'
+1464610382556	Rename package 'rajan2'
+1464610551338	Delete element
+1464610564722	Rename package 'rajan'
+1464674237456	Move compilation units
+1464674247495	Copy compilation unit
+1464674350916	Delete element
+1464674933425	Rename local variable 'i'
+1464674939514	Rename local variable 'j'
+1464675157693	Move compilation unit
+1464675268843	Rename local variable 'e'
+1464679863659	Move compilation unit
+1464680929961	Rename local variable 'e'
+1464689910148	Rename method 'saveAsImage'
+1464690179641	Rename local variable 'heigth'
+1464694272482	Rename method 'newtPowerOf2'
+1464695969997	Delete element
+1464695973760	Delete element
+1464696043048	Delete element
+1464696056221	Rename package 'transform.rajan'

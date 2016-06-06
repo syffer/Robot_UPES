@@ -1,0 +1,24 @@
+package transform;
+
+public class Complexe {
+	
+	private int reel;
+	private int image;
+	
+	public Complexe(int reel, int image) {
+		this.reel = reel; 
+		this.image = image;
+	}
+	
+	
+	
+	public static Complexe neg(Complexe complexe) {
+		return new Complexe(-complexe.reel, -complexe.image);
+	}
+	
+	public static Complexe add(Complexe a, Complexe b) {
+		return null;
+	}
+	
+	
+}

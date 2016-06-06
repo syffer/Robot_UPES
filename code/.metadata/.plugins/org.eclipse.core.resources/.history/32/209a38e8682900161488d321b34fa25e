@@ -1,0 +1,19 @@
+package model;
+
+import java.awt.image.BufferedImage;
+
+public class RGBImageModel extends ImageModel {
+
+	
+	
+	public RGBImageModel(BufferedImage bufferedImage) {
+		
+	}
+	
+	@Override
+	public BufferedImage getBufferedImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
