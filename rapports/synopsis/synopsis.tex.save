@@ -1,0 +1,135 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[debug, coloredLinks, langue=american, bibStyle=apa]{pages/preambules/preambule}	
+\input{pages/glossaire/termes_glossaire}	
+\addbibresource{pages/bibliographie/bibliographie.bib}
+% https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management#biblatex
+
+
+\lfoot{\em Polytech Nantes, Computer Science Department} 
+
+
+\begin{document}
+
+\pagestyle{fancy}		% on remet le header et footer
+\pagenumbering{arabic} 	% numérotation 1, 2, 3
+
+\include{pages/couverture/stage}
+
+\tableofcontents 
+
+\section{Abstract}
+% le problème à résoudre
+
+
+This project involves moving an autonomous robot in an unknown environment, with a minimum of time and energy concuption. For example, the robot will have to explore and search into an unknown environment, such as a the planet Mars or a submarin field. An autonomus robot could be used in differents domains, such as  surveillance (drones), transport, or cleaning. The robot will have to generate a 3D map of his surrounding, take a decision accordingly, move and then learn from this decision. The robot will use reinforcment learning to learn from his previous decisions. As for the generation of the 3D map, we will be using \gls{DEM} and Symbolic Computing. 
+
+~~
+
+\textbf{keywords :} 3D Map Generation, Autonomous Navigation, DEM, Symbolic Computing, STRT 
+
+
+\section{Objectives}
+% qu'est ce qu'on va faire pour résoudre ce problème 
+
+In order to generate the 3D map, we will use \gls{DEM}, Symbolic Computing and a \gls{CLAP} algorithm (which is used for image processing and pattern recognition). The \gls{DEM} images will have to be transform with a \gls{STRT}, a tranformation involving Symbolic Computing. Nowadays 3D map generation technologies generally use DIP methods, but \gls{DEM} method was selected because it is faster during the compilation time. 
+
+
+In order to visualize the effects of the differents techniques we will use, we will develop a \gls{GUI} where each steps could be done separately. The user will have to charge an image and apply a transformation on it by selecting one. A new image will be generated, with the name of the operation and the time it has taken to process. 
+
+
+The reinforment learning algorithm, which will allow the robot to self-learning through experiences, will use a reward policy. 
+
+
+As the University doesn't have the actual robot for the moment, this project will be conduct under a simulated environnement. 
+
+
+\section{Introduction}
+% les topiques 
+
+The robot will be equiped by differents camera, allowing it to take pictures from different angles. Those pictures, or input images, correspond to the surrounding of the robot. It will also be equiped with differents sensors that will provide additionnal information, such as depth, hight or spacial position (x, y, z). In order to be able to use some algorithms, it is required that the number of input images is a power of 2. As the University doesn't have a robot yet, those pictures will be provided by the University. 
+
+~~
+
+After having those input images, the robot will have to : 
+\begin{enumerate}
+	\item process the input images of his surrounding, in order to create a \gls{DEM} 
+	\item generate the 3D map by analysing the \gls{DEM} 
+	\item analyse this 3D map and take a decision (knowing his previous decisions, if they exist), it will decide were to go
+	\item analyse his decision, and learn from it 
+\end{enumerate}
+
+~~
+
+<image of the process (dem generation -> map generation -> taking a decision -> AI part)> 
+
+~~
+
+The following sections will present the \gls{DEM} generation and the technics we will use in order to perform it. 
+
+
+\subsection{DEM generation}
+
+The first part of the process will be handeling the input images and apply a \gls{STRT} on them. So the \gls{STRT} would work, it is important to have $2^{k}$ numbers of input images. 
+
+~~
+
+The result of the \gls{STRT} will be noised images. To remove the added noise, we will use a higth pass filter on them (as a higth pass filter sharpen some image details, such as edges and noise, \cite{bib:performance_comparaison_gaussian_butterworth_filter}). 
+
+~~
+
+<image of higth pass filter (histogram/diagram)>
+
+
+It has been decided to use a butterworth filter for multiple reasons. First, because it as been descovered that a butterworth filter gives better results than a gaussian filter, \cite{bib:performance_comparaison_gaussian_butterworth_filter}. And also, because another advantage of the butterworth filter is that it allow to control the sharpness of the filter order, \cite{bib:performance_comparaison_gaussian_butterworth_filter}. 
+
+~~ 
+
+After the noise has been removed from all of the images, a \gls{PSO} technique. It will take all of the input images which have been treated, ans return a single matrix. This matrix is called a classification map. In this map, every object will be classified. This map will also help to see where are the depths and the higths, as it is a 3D matrix.
+
+~~
+
+Finally, a color countour processing will be applied on this map in order to represent each object classified by a color. The result will be the DEM. 
+
+~~
+
+<image of the process (images -> STRT -> BHPF -> PSO -> map)>
+
+
+
+\subsection{Rajan Transformation and it's application in the sets}
+
+\subsubsection{Rajan Transformation}
+
+<image + ->
+
+\subsubsection{Set Theoretic Rajan Transformation}
+
+<image U diff>
+
+
+\subsection{Butterworth Higth Pass Filter}
+
+
+<image (img -> *(-1) -> TF -> H(u,v) -> TF-1 -> *(-1) -> img without noise)>
+
+
+
+
+\section{Methodology}
+% comment je vais le faire (lire doc, comprendre les techno, écrire algo, implémenter, documenter)
+
+I am planning to divise this work into 3 parts, which will concern : 
+\begin{enumerate} 
+	\item the DEM generation (which involves Symbolic Computing, STRT, and butterworth filter)
+	\item the 3D Map Generation 
+	\item the Autonomous Navigation and the Renforcement Learning 
+\end{enumerate}
+
+During each part, I will document myself on the subject, then write an algorithm, implement it, and finally document my work. 
+
+
+\printbibliography
+\printglossaries
+
+\end{document}
