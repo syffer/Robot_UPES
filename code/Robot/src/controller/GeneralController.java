@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -16,6 +13,10 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+
+import filter.AbstractFilter;
+import filter.Laplacian;
+import filter.Sobel;
 
 import rajan.Rajan;
 import rajan.RajanException;
@@ -33,7 +34,7 @@ import view.View;
 
 public class GeneralController {
 
-	protected GeneralModel generalModel;
+	protected GeneralModel model;
 	protected View view;
 	
 	protected ActionLoad actionLoad;
@@ -44,9 +45,12 @@ public class GeneralController {
 	protected ActionMonochromatic actionMonochromatic;	
 	protected ActionSTRT actionSTRT;
 	
+	protected ActionSobel actionSobel;
+	protected ActionLaplacian actionLaplacian;
+	
 	public GeneralController(GeneralModel generalModel) {
 		
-		this.generalModel = generalModel;
+		this.model = generalModel;
 		this.view = new View();	
 		
 		//  create actions 
@@ -58,6 +62,9 @@ public class GeneralController {
 		this.actionMonochromatic = new ActionMonochromatic();
 		this.actionSTRT = new ActionSTRT();
 		
+		this.actionSobel = new ActionSobel();
+		this.actionLaplacian = new ActionLaplacian();
+		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
 		this.view.menuSave.setAction(this.actionSave);
@@ -67,8 +74,11 @@ public class GeneralController {
 		this.view.buttonMonochrome.setAction(this.actionMonochromatic);
 		this.view.buttonSTRT.setAction(this.actionSTRT);
 		
+		this.view.menuSobel.setAction(this.actionSobel);
+		this.view.menuLaplacian.setAction(this.actionLaplacian);
+		
 		// initialise observers (setting default values)
-		this.generalModel.initialise();
+		this.model.initialise();
 	}
 	
 	
@@ -89,7 +99,7 @@ public class GeneralController {
 		public ActionLoad() {
 			super("Load"); 
 			
-			generalModel.addObserver(this);
+			model.addObserver(this);
 		}
 		
 		@Override
@@ -126,7 +136,7 @@ public class GeneralController {
 
 		public ActionSave() {
 			super("Save");
-			generalModel.addObserver(this);
+			model.addObserver(this);
 		}
 		
 		@Override
@@ -137,7 +147,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) { 			
-			this.setEnabled(generalModel.hasImageModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}
@@ -149,7 +159,7 @@ public class GeneralController {
 		public ActionSaveAs() {
 			super("Save as ...");
 			
-			generalModel.addObserver(this);
+			model.addObserver(this);
 		}
 		
 		@Override
@@ -158,7 +168,7 @@ public class GeneralController {
 			try {
 				File file = view.getFileToSave();
 				
-				ImageModel imageModel = generalModel.getSelectedImageModel();
+				ImageModel imageModel = model.getSelectedImageModel();
 				imageModel.saveAs(file);
 				
 			} catch (ChoiceCanceledException e) {
@@ -171,7 +181,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(generalModel.hasImageModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}
@@ -184,12 +194,12 @@ public class GeneralController {
 		public void internalFrameActivated(InternalFrameEvent event) { 			
 			ImageView selectedView = view.getSelectedImageView();
 			ImageModel selectedImageModel = selectedView.getImageModel();
-			generalModel.setSelectedImageModel(selectedImageModel);
+			model.setSelectedImageModel(selectedImageModel);
 		}
 
 		@Override
 		public void internalFrameDeactivated(InternalFrameEvent event) { 
-			generalModel.setSelectedImageModel(null);			
+			model.setSelectedImageModel(null);			
 		}
 		
 		@Override
@@ -224,12 +234,12 @@ public class GeneralController {
 
 		public ActionGreyScale() {
 			super("Grey Scale"); 
-			generalModel.addObserver(this);
+			model.addObserver(this);
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel imageModel = generalModel.getSelectedImageModel();
+			ImageModel imageModel = model.getSelectedImageModel();
 			
 			long startTime = System.currentTimeMillis();
 			ImageModel greyImageModel = new GreyImageModel(imageModel.getBufferedImage());
@@ -240,7 +250,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(generalModel.hasImageModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}
@@ -251,7 +261,7 @@ public class GeneralController {
 
 		public ActionMonochromatic() {
 			super("Mono image");
-			generalModel.addObserver(this);
+			model.addObserver(this);
 		}
 		
 		@Override
@@ -259,7 +269,7 @@ public class GeneralController {
 			try {
 				int threshold = JOptionPaneSlider.showConfirmDialog(view, "Monochromatic", 0, 255);
 				
-				ImageModel imageModel = generalModel.getSelectedImageModel();
+				ImageModel imageModel = model.getSelectedImageModel();
 				
 				long startTime = System.currentTimeMillis();
 				MonoImageModel monoImageModel = new MonoImageModel(imageModel, threshold);
@@ -274,7 +284,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(generalModel.hasImageModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}
@@ -285,7 +295,7 @@ public class GeneralController {
 
 		public ActionSTRT() {
 			super("STRT");
-			generalModel.addObserver(this);
+			model.addObserver(this);
 		}
 		
 		@Override
@@ -293,7 +303,7 @@ public class GeneralController {
 			
 			try {
 				
-				ImageModel imageModel = generalModel.getSelectedImageModel();
+				ImageModel imageModel = model.getSelectedImageModel();
 				List<Set<Integer>> sequence = imageModel.toSequence();
 				
 				/*
@@ -322,19 +332,78 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(generalModel.hasImageModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}
 	
 	
 	
-	public class Action extends AbstractAction implements Observer {
+	public class ActionSobel extends AbstractAction implements Observer {
 		private static final long serialVersionUID = 1L;
 
-		public Action() {
-			super("name");
-			generalModel.addObserver(this);
+		public ActionSobel() {
+			super("Sobel");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			ImageModel image = model.getSelectedImageModel();
+			
+			AbstractFilter filter = new Sobel();
+			
+			long startTime = System.currentTimeMillis();
+			ImageModel imageFiltered = filter.filter(image);
+			long endTime = System.currentTimeMillis();
+			
+			GeneralController.this.addImageModel(imageFiltered, "Sobel", endTime - startTime);
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+		
+	}
+	
+	
+	public class ActionLaplacian extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionLaplacian() {
+			super("Laplacian");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			ImageModel image = model.getSelectedImageModel();
+			
+			AbstractFilter filter = new Laplacian();
+			
+			long startTime = System.currentTimeMillis();
+			ImageModel imageFiltered = filter.filter(image);
+			long endTime = System.currentTimeMillis();
+			
+			GeneralController.this.addImageModel(imageFiltered, "Laplacian", endTime - startTime);
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+		
+	}
+	
+	
+	
+	public class ActionCanny extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionCanny() {
+			super("Canny");
+			model.addObserver(this);
 		}
 		
 		@Override
@@ -345,7 +414,32 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(generalModel.hasImageModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+		
+	}
+	
+	
+	
+	
+	
+	public class Action extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public Action() {
+			super("name");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}

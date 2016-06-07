@@ -27,15 +27,20 @@ public class View extends JFrame {
 	public JMenuItem menuSave;
 	public JMenuItem menuSaveAs;
 	
+	public JMenuItem menuSobel;
+	public JMenuItem menuLaplacian;
+	public JMenuItem menuCanny;
+	//public JMenuItem menuCanny;
+	
 	// toolbar 
 	public JToolBar toolBar;
-	
-	// internals windows 
-	public JDesktopPane desktop;
 	public JButton buttonGreyScale;
 	public JButton buttonSTRT;
 	public JButton buttonISTRT;
 	public JButton buttonMonochrome;
+	
+	// internals windows 
+	public JDesktopPane desktop;
 	
 	// open and save file 
 	public JFileChooser fileChooserOpen;
@@ -70,7 +75,17 @@ public class View extends JFrame {
 		//menuFile.add(this.menuSave);
 		menuFile.add(this.menuSaveAs);
 		
+		
+		JMenu menuFilter = new JMenu("Filter");
+		this.menuSobel = new JMenuItem("Sobel");
+		this.menuLaplacian = new JMenuItem("Laplacian");
+		this.menuCanny = new JMenuItem("Canny");
+		menuFilter.add(this.menuSobel);
+		menuFilter.add(this.menuLaplacian);
+		menuFilter.add(this.menuCanny);
+		
 		menuBar.add(menuFile);
+		menuBar.add(menuFilter);
 		
 		this.setJMenuBar(menuBar);
 	}

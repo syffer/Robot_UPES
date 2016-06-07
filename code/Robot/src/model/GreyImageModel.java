@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class GreyImageModel extends MatrixImageModel {
-			
+	
+	public GreyImageModel(int[][] data) {
+		super(data);
+	}
+	
 	public GreyImageModel(BufferedImage bufferedImage) {
 		super(bufferedImage.getWidth(), bufferedImage.getHeight()); 	
 		

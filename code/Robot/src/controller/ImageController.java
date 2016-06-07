@@ -9,7 +9,7 @@ public class ImageController {
 	public ImageView imageView;
 	
 	public ImageController(ImageModel imageModel, String operationName, double executionTime) {
-		this(imageModel, new ImageView(imageModel, operationName, executionTime));
+		this(imageModel, new ImageView(imageModel, operationName, executionTime / 1000.0));
 	}
 	
 	public ImageController(ImageModel imageModel, ImageView imageView) { 

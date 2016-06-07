@@ -38,7 +38,7 @@ public class ImageView extends JInternalFrame  {
 		
 		// creating components
 		this.labelOperationName = new JLabel(operationName, JLabel.CENTER);
-		this.labelexecutionTime = new JLabel("Execution time : " + executionTime + " ms", JLabel.CENTER);
+		this.labelexecutionTime = new JLabel("Execution time : " + executionTime + " s", JLabel.CENTER);
 		
 		// adding compponents 
 		this.add(this.labelOperationName, gbc);

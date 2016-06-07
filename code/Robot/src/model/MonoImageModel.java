@@ -5,13 +5,18 @@ import java.awt.image.BufferedImage;
 
 public class MonoImageModel extends MatrixImageModel {
 	
+	public MonoImageModel(int[][] data) {
+		super(data);
+	}
+	
+	
 	public MonoImageModel(GreyImageModel greyImageModel, int threshold) {
 		super(greyImageModel.getWidth(), greyImageModel.getHeight());
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
 				int grey = greyImageModel.get(i, j);				
-				this.matrix[i][j] = (grey >= threshold) ? 1 : 0;
+				this.matrix[i][j] = (grey >= threshold) ? 255 : 0;
 			}
 		}
 	}
@@ -29,7 +34,7 @@ public class MonoImageModel extends MatrixImageModel {
 				Color color = new Color(bufferedImage.getRGB(i, j));
 				int grey = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
 				
-				this.matrix[i][j] = (grey >= threshold) ? 1 : 0;
+				this.matrix[i][j] = (grey >= threshold) ? 255 : 0;
 			}
 		}
 	}
@@ -40,7 +45,7 @@ public class MonoImageModel extends MatrixImageModel {
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
-				int grey = this.matrix[i][j] * 255;
+				int grey = this.matrix[i][j];// * 255;
 				Color c = new Color(grey, grey, grey);
 				bufferedImage.setRGB(i, j, c.getRGB());
 			}
