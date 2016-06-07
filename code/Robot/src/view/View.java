@@ -31,6 +31,7 @@ public class View extends JFrame {
 	public JMenuItem menuLaplacian;
 	public JMenuItem menuCanny;
 	//public JMenuItem menuCanny;
+	public JMenuItem menuMediumFilter;
 	
 	// toolbar 
 	public JToolBar toolBar;
@@ -80,9 +81,11 @@ public class View extends JFrame {
 		this.menuSobel = new JMenuItem("Sobel");
 		this.menuLaplacian = new JMenuItem("Laplacian");
 		this.menuCanny = new JMenuItem("Canny");
+		this.menuMediumFilter = new JMenuItem("Medium Filter");
 		menuFilter.add(this.menuSobel);
 		menuFilter.add(this.menuLaplacian);
 		menuFilter.add(this.menuCanny);
+		menuFilter.add(this.menuMediumFilter);
 		
 		menuBar.add(menuFile);
 		menuBar.add(menuFilter);

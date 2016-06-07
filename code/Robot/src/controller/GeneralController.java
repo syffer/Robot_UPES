@@ -15,7 +15,9 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import filter.AbstractFilter;
+import filter.Canny;
 import filter.Laplacian;
+import filter.MediumFilter;
 import filter.Sobel;
 
 import rajan.Rajan;
@@ -47,6 +49,8 @@ public class GeneralController {
 	
 	protected ActionSobel actionSobel;
 	protected ActionLaplacian actionLaplacian;
+	protected ActionCanny actionCanny;
+	protected ActionMediumFilter actionMediumFilter;
 	
 	public GeneralController(GeneralModel generalModel) {
 		
@@ -64,6 +68,8 @@ public class GeneralController {
 		
 		this.actionSobel = new ActionSobel();
 		this.actionLaplacian = new ActionLaplacian();
+		this.actionCanny = new ActionCanny();
+		this.actionMediumFilter = new ActionMediumFilter();
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
@@ -76,6 +82,8 @@ public class GeneralController {
 		
 		this.view.menuSobel.setAction(this.actionSobel);
 		this.view.menuLaplacian.setAction(this.actionLaplacian);
+		this.view.menuCanny.setAction(this.actionCanny);
+		this.view.menuMediumFilter.setAction(this.actionMediumFilter);
 		
 		// initialise observers (setting default values)
 		this.model.initialise();
@@ -408,8 +416,15 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			// TODO Auto-generated method stub
+			ImageModel image = model.getSelectedImageModel();
 			
+			AbstractFilter filter = new Canny();
+			
+			long startTime = System.currentTimeMillis();
+			ImageModel imageFiltered = filter.filter(image);
+			long endTime = System.currentTimeMillis();
+			
+			GeneralController.this.addImageModel(imageFiltered, "Canny", endTime - startTime);			
 		}
 
 		@Override
@@ -420,6 +435,33 @@ public class GeneralController {
 	}
 	
 	
+	public class ActionMediumFilter extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionMediumFilter() {
+			super("Medium Filter");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			ImageModel image = model.getSelectedImageModel();
+			
+			AbstractFilter filter = new MediumFilter();
+			
+			long startTime = System.currentTimeMillis();
+			ImageModel imageFiltered = filter.filter(image);
+			long endTime = System.currentTimeMillis();
+			
+			GeneralController.this.addImageModel(imageFiltered, "Medium Filter", endTime - startTime);			
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+		
+	}
 	
 	
 	
