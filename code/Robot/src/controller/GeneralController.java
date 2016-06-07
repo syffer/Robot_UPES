@@ -14,14 +14,14 @@ import javax.swing.AbstractAction;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
-import filter.AbstractFilter;
-import filter.Canny;
-import filter.Laplacian;
-import filter.MediumFilter;
-import filter.Sobel;
 
 import rajan.Rajan;
 import rajan.RajanException;
+import transform.filter.AbstractFilter;
+import transform.filter.Canny;
+import transform.filter.Laplacian;
+import transform.filter.MediumFilter;
+import transform.filter.Sobel;
 
 import model.GeneralModel;
 import model.GreyImageModel;

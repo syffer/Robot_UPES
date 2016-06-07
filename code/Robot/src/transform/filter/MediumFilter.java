@@ -1,4 +1,4 @@
-package filter;
+package transform.filter;
 
 import model.GreyImageModel;
 import model.ImageModel;
@@ -21,13 +21,14 @@ public class MediumFilter extends AbstractFilter {
 							mask[1][0] * image.get(i-1, j)   + mask[1][1] * image.get(i, j)   + mask[1][2] * image.get(i+1, j) +
 							mask[2][0] * image.get(i-1, j+1) + mask[2][1] * image.get(i, j+1) + mask[2][2] * image.get(i+1, j+1);
 				
-				int nbPixels;
-				if((i == 1 || i == image.getWidth() - 2) && (j == 1 || j == image.getHeight() - 2) ) nbPixels = 4;
-				else if((i == 1 || i == image.getWidth() - 2) || (j == 1 || j == image.getHeight() - 2)) nbPixels = 6;
-				else nbPixels = 9;
-								
+				int nbPixels = 9;
+				
+				if((i == 1 || i == image.getWidth() - 2) && (j == 1 || j == image.getHeight() - 2) ) nbPixels = 11;
+				else if((i == 1 || i == image.getWidth() - 2) || (j == 1 || j == image.getHeight() - 2)) nbPixels = 13;
+				else nbPixels = 16;
+				
 				value = value / nbPixels;
-				newData[i][j] = Math.max(255, Math.min(0,  value));
+				newData[i][j] = Math.max(0, Math.min(255,  value));
 			}
 		}
 		

@@ -1,4 +1,4 @@
-package filter;
+package transform.filter;
 
 import model.ImageModel;
 
