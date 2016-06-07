@@ -231,7 +231,7 @@ public class GeneralController {
 		public void actionPerformed(ActionEvent event) {
 			ImageModel imageModel = generalModel.getSelectedImageModel();
 			
-			double startTime = System.currentTimeMillis();
+			long startTime = System.currentTimeMillis();
 			ImageModel greyImageModel = new GreyImageModel(imageModel.getBufferedImage());
 			long endTime = System.currentTimeMillis();
 			
@@ -261,7 +261,7 @@ public class GeneralController {
 				
 				ImageModel imageModel = generalModel.getSelectedImageModel();
 				
-				double startTime = System.currentTimeMillis();
+				long startTime = System.currentTimeMillis();
 				MonoImageModel monoImageModel = new MonoImageModel(imageModel, threshold);
 				long endTime = System.currentTimeMillis();
 				
@@ -296,14 +296,20 @@ public class GeneralController {
 				ImageModel imageModel = generalModel.getSelectedImageModel();
 				List<Set<Integer>> sequence = imageModel.toSequence();
 				
+				/*
 				List<Set<Integer>> test = new ArrayList<Set<Integer>>();
 				test.add(new HashSet<Integer>(Arrays.asList(1, 2, 3, 4)));
 				test.add(new HashSet<Integer>());
 				test.add(new HashSet<Integer>());
 				
 				Rajan.forward(test);
+				*/
 				
-				//List<Set<Integer>> sequenceTransformed = Rajan.forward(sequence);
+				long startTime = System.currentTimeMillis();
+				List<Set<Integer>> sequenceTransformed = Rajan.forward(sequence);
+				long endTime = System.currentTimeMillis();
+							
+				System.out.println((endTime - startTime) + " ms");
 				
 				//System.out.println(sequenceTransformed.get(1));
 				

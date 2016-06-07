@@ -19,47 +19,39 @@ public class Rajan {
 		
 		System.out.println("Number of sequences : " + sequence.size());
 		System.out.println("Number of steps : " + Utils.log2(sequence.size()));	
-		
-		System.out.println(sequence);
-		
+				
 		forwardRecursive(sequence, 0, sequence.size() - 1);
-		
-		System.out.println(sequence);
-		
+				
 		return sequence;
 	}
 		
 	private static <E> void forwardRecursive(List<Set<E>> sequence, int indexBegin, int indexEnd) {
 		if(indexBegin >= indexEnd) return;
 		
-		int mid = (indexEnd + indexBegin + 1) / 2;
+		int indexMid = (indexEnd + indexBegin + 1) / 2;
+		int step = indexMid - indexBegin;
 		
-		System.out.println(indexBegin + " " + indexEnd + " " + mid);
-		
-		
-				
-		for(int i = indexBegin; i < mid; i++) {
-			System.out.println("- " + i + " " + (i+mid));
-			
+		for(int i = indexBegin; i < indexMid; i++) {			
 			Set<E> a = sequence.get(i);
-			Set<E> b = sequence.get(i+mid);
+			Set<E> b = sequence.get(i+step);
 			
 			Set<E> intersectionAB = new HashSet<E>(a);
 			intersectionAB.retainAll(b);
-						
+			
 			// union 
 			a.addAll(b);
 			
 			// symetric difference 
 			b.addAll(a);
 			b.removeAll(intersectionAB);
+			
+			//System.out.println("- " + sequence.size() + " " + sequence.get(i).size() + " " + sequence.get(i+step).size());
 		}
 		
-		//forwardRecursive(sequence, indexBegin, mid - 1);
-		forwardRecursive(sequence, mid, indexEnd);
+		//System.out.println(sequence.get(0));
 		
-		System.out.println(sequence);
-		
+		forwardRecursive(sequence, indexBegin, indexMid - 1);
+		forwardRecursive(sequence, indexMid, indexEnd);		
 	}
 	
 	public static List<Set<Integer>> reverse(List<Set<Integer>> sequences) throws RajanException { 

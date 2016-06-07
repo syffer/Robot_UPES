@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 
@@ -54,10 +55,7 @@ public abstract class ImageModel {
 				sequence.add(set);
 			}
 		}
-		
-		// padding 
-		
-		
+				
 		return sequence;
 	}
 	
