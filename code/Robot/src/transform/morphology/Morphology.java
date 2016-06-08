@@ -19,13 +19,16 @@ public class Morphology {
 				int minimum = image.get(i, j); 
 				
 				for(int k = 0; k < structuringElement.length; k++) {
-					for(int l = 0; l < structuringElement[0].length; l++) {
+					for(int l = 0; l < structuringElement[k].length; l++) {
 						
-						if(minimum * structuringElement[k][l] < minimum) minimum = minimum * structuringElement[k][l];
+						if(minimum - structuringElement[k][l]*255 < minimum) minimum = minimum - structuringElement[k][l]*255;
 						
 					}
 				}
 				
+				System.out.println(minimum + " " + image.get(i, j));
+				
+				minimum = Math.max(0, minimum);
 				newData[i][j] = minimum;
 			}
 		}

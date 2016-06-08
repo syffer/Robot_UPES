@@ -22,6 +22,7 @@ import transform.filter.Canny;
 import transform.filter.Laplacian;
 import transform.filter.MediumFilter;
 import transform.filter.Sobel;
+import transform.morphology.Morphology;
 
 import model.GeneralModel;
 import model.GreyImageModel;
@@ -50,7 +51,9 @@ public class GeneralController {
 	protected ActionSobel actionSobel;
 	protected ActionLaplacian actionLaplacian;
 	protected ActionCanny actionCanny;
-	protected ActionMediumFilter actionMediumFilter;
+	protected ActionWeightedAverage actionWeightedAverage;
+	
+	protected ActionErosion actionErosion;
 	
 	public GeneralController(GeneralModel generalModel) {
 		
@@ -69,7 +72,9 @@ public class GeneralController {
 		this.actionSobel = new ActionSobel();
 		this.actionLaplacian = new ActionLaplacian();
 		this.actionCanny = new ActionCanny();
-		this.actionMediumFilter = new ActionMediumFilter();
+		this.actionWeightedAverage = new ActionWeightedAverage();
+		
+		this.actionErosion = new ActionErosion();
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
@@ -83,7 +88,9 @@ public class GeneralController {
 		this.view.menuSobel.setAction(this.actionSobel);
 		this.view.menuLaplacian.setAction(this.actionLaplacian);
 		this.view.menuCanny.setAction(this.actionCanny);
-		this.view.menuMediumFilter.setAction(this.actionMediumFilter);
+		this.view.menuWeightedAverage.setAction(this.actionWeightedAverage);
+		
+		this.view.menuMorphologyErosion.setAction(this.actionErosion);
 		
 		// initialise observers (setting default values)
 		this.model.initialise();
@@ -435,11 +442,11 @@ public class GeneralController {
 	}
 	
 	
-	public class ActionMediumFilter extends AbstractAction implements Observer {
+	public class ActionWeightedAverage extends AbstractAction implements Observer {
 		private static final long serialVersionUID = 1L;
 
-		public ActionMediumFilter() {
-			super("Medium Filter");
+		public ActionWeightedAverage() {
+			super("Weighted Average");
 			model.addObserver(this);
 		}
 		
@@ -463,6 +470,34 @@ public class GeneralController {
 		
 	}
 	
+	
+	
+	
+	public class ActionErosion extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionErosion() {
+			super("Erosion");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			ImageModel image = model.getSelectedImageModel();
+						
+			long startTime = System.currentTimeMillis();
+			ImageModel imageFiltered = Morphology.erosion(image);
+			long endTime = System.currentTimeMillis();
+			
+			GeneralController.this.addImageModel(imageFiltered, "Erosion", endTime - startTime);		
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+		
+	}
 	
 	
 	public class Action extends AbstractAction implements Observer {

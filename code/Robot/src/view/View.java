@@ -31,7 +31,10 @@ public class View extends JFrame {
 	public JMenuItem menuLaplacian;
 	public JMenuItem menuCanny;
 	//public JMenuItem menuCanny;
-	public JMenuItem menuMediumFilter;
+	public JMenuItem menuWeightedAverage;
+	
+	public JMenuItem menuMorphologyErosion;
+	public JMenuItem menuMorphologyDilation;
 	
 	// toolbar 
 	public JToolBar toolBar;
@@ -76,19 +79,28 @@ public class View extends JFrame {
 		//menuFile.add(this.menuSave);
 		menuFile.add(this.menuSaveAs);
 		
+		JMenu menuNoiseRemoval = new JMenu("Noise Removal");
+		this.menuWeightedAverage = new JMenuItem("Weighted Average");
+		menuNoiseRemoval.add(this.menuWeightedAverage);
 		
-		JMenu menuFilter = new JMenu("Filter");
+		JMenu menuFilter = new JMenu("Edge Detection");
 		this.menuSobel = new JMenuItem("Sobel");
 		this.menuLaplacian = new JMenuItem("Laplacian");
 		this.menuCanny = new JMenuItem("Canny");
-		this.menuMediumFilter = new JMenuItem("Medium Filter");
 		menuFilter.add(this.menuSobel);
 		menuFilter.add(this.menuLaplacian);
 		menuFilter.add(this.menuCanny);
-		menuFilter.add(this.menuMediumFilter);
+		
+		JMenu menuMorphology = new JMenu("Morphology");
+		this.menuMorphologyErosion = new JMenuItem("Erosion");
+		this.menuMorphologyDilation = new JMenuItem("Dilation");
+		menuMorphology.add(this.menuMorphologyErosion);
+		menuMorphology.add(this.menuMorphologyDilation);
 		
 		menuBar.add(menuFile);
+		menuBar.add(menuNoiseRemoval);
 		menuBar.add(menuFilter);
+		menuBar.add(menuMorphology);
 		
 		this.setJMenuBar(menuBar);
 	}

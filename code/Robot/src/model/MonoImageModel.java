@@ -47,7 +47,7 @@ public class MonoImageModel extends MatrixImageModel {
 			for(int j = 0; j < this.height; j++) {
 				int grey = this.matrix[i][j];// * 255;
 				Color c = new Color(grey, grey, grey);
-				bufferedImage.setRGB(i, j, c.getRGB());
+				bufferedImage.setRGB(i, j, c.getRGB()); 
 			}
 		}
 		
