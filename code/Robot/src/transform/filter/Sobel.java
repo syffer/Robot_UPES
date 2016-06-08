@@ -1,10 +1,7 @@
 package transform.filter;
 
-import java.awt.Color;
-
 import model.GreyImageModel;
 import model.ImageModel;
-import model.MonoImageModel;
 
 public class Sobel extends AbstractFilter {
 

@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Point;
+import java.beans.PropertyVetoException;
 import java.io.File;
 
 import javax.imageio.ImageIO;
@@ -24,7 +26,6 @@ public class View extends JFrame {
 	
 	// menu 
 	public JMenuItem menuLoad;
-	public JMenuItem menuSave;
 	public JMenuItem menuSaveAs;
 	
 	public JMenuItem menuSobel;
@@ -73,10 +74,8 @@ public class View extends JFrame {
 		
 		JMenu menuFile = new JMenu("File");
 		this.menuLoad = new JMenuItem("Load");
-		this.menuSave = new JMenuItem("Save");
 		this.menuSaveAs = new JMenuItem("Save as ...");
 		menuFile.add(this.menuLoad);
-		//menuFile.add(this.menuSave);
 		menuFile.add(this.menuSaveAs);
 		
 		JMenu menuNoiseRemoval = new JMenu("Noise Removal");
@@ -141,6 +140,30 @@ public class View extends JFrame {
 	
 	public ImageView getSelectedImageView() {
 		return (ImageView) this.desktop.getSelectedFrame();
+	}
+	
+	
+	public void addImageView(ImageView imageView, boolean newImage) {
+		
+		// calculate the new position 
+		Point position = new Point(0, 0);
+		if(this.desktop.getSelectedFrame() != null && !newImage) {
+			Point previousPosition = this.desktop.getSelectedFrame().getLocation();
+			position.setLocation(previousPosition.getX() + 50, previousPosition.getY() + 50);
+		}
+		
+		// add the iframe 
+		this.desktop.add(imageView);
+		
+		imageView.setLocation(position);
+		imageView.toFront();
+		
+		try {
+			imageView.setSelected(true);
+		} catch (PropertyVetoException e) {
+			
+		}
+		
 	}
 	
 	

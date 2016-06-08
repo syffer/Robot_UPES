@@ -41,7 +41,6 @@ public class GeneralController {
 	protected View view;
 	
 	protected ActionLoad actionLoad;
-	protected ActionSave actionSave;
 	protected ActionSaveAs actionSaveAs;
 	
 	protected ActionGreyScale actionGreyScale;
@@ -62,7 +61,6 @@ public class GeneralController {
 		
 		//  create actions 
 		this.actionLoad = new ActionLoad();
-		this.actionSave = new ActionSave();
 		this.actionSaveAs = new ActionSaveAs();
 		
 		this.actionGreyScale = new ActionGreyScale();
@@ -78,7 +76,6 @@ public class GeneralController {
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
-		this.view.menuSave.setAction(this.actionSave);
 		this.view.menuSaveAs.setAction(this.actionSaveAs);
 		
 		this.view.buttonGreyScale.setAction(this.actionGreyScale);
@@ -103,7 +100,7 @@ public class GeneralController {
 		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
 		imageController.imageView.addInternalFrameListener(new InternalFrameAction());
 		
-		view.desktop.add(imageController.imageView);
+		view.addImageView(imageController.imageView, operation.equals("Loading")); 
 	}
 		
 	
@@ -113,7 +110,6 @@ public class GeneralController {
 
 		public ActionLoad() {
 			super("Load"); 
-			
 			model.addObserver(this);
 		}
 		
@@ -121,7 +117,6 @@ public class GeneralController {
 		public void actionPerformed(ActionEvent event) {
 			
 			try { 
-				
 				File choosenFile = view.getFileToLoad();
 				
 				long startTime = System.currentTimeMillis();
@@ -134,7 +129,6 @@ public class GeneralController {
 			} catch (ChoiceCanceledException e) {
 				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 		}
@@ -145,29 +139,7 @@ public class GeneralController {
 		}
 	}
 		
-	
-	public class ActionSave extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionSave() {
-			super("Save");
-			model.addObserver(this);
-		}
 		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void update(Observable observable, Object params) { 			
-			this.setEnabled(model.hasImageModelSelected());
-		} 
-		
-	}
-	
-	
 	public class ActionSaveAs extends AbstractAction implements Observer {
 		private static final long serialVersionUID = 1L;
 
@@ -219,27 +191,27 @@ public class GeneralController {
 		
 		@Override
 		public void internalFrameOpened(InternalFrameEvent event) {
-			// TODO Auto-generated method stub
+			
 		}
 		
 		@Override
 		public void internalFrameClosed(InternalFrameEvent event) {
-			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
 		public void internalFrameClosing(InternalFrameEvent event) {
-			// TODO Auto-generated method stub
+			
 		}
 		
 		@Override
 		public void internalFrameDeiconified(InternalFrameEvent event) {
-			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
 		public void internalFrameIconified(InternalFrameEvent event) {
-			// TODO Auto-generated method stub
+			
 		} 
 	}
 	
@@ -267,7 +239,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -301,7 +272,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -330,16 +300,11 @@ public class GeneralController {
 				Rajan.forward(test);
 				*/
 				
-				long startTime = System.currentTimeMillis();
-				List<Set<Integer>> sequenceTransformed = Rajan.forward(sequence);
-				long endTime = System.currentTimeMillis();
-							
-				System.out.println((endTime - startTime) + " ms");
-				
-				//System.out.println(sequenceTransformed.get(1));
-				
+				//long startTime = System.currentTimeMillis();
+				Rajan.forward(sequence);
+				//long endTime = System.currentTimeMillis();
+												
 			} catch (RajanException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -349,7 +314,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -379,7 +343,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -408,7 +371,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -438,7 +400,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -467,7 +428,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 	
@@ -495,9 +455,10 @@ public class GeneralController {
 		@Override
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
-		} 
-		
+		} 	
 	}
+	
+	
 	
 	
 	public class Action extends AbstractAction implements Observer {

@@ -9,6 +9,10 @@ public class GreyImageModel extends MatrixImageModel {
 		super(data);
 	}
 	
+	public GreyImageModel(ImageModel image) {
+		this(image.getBufferedImage());
+	}
+	
 	public GreyImageModel(BufferedImage bufferedImage) {
 		super(bufferedImage.getWidth(), bufferedImage.getHeight()); 	
 		
@@ -21,6 +25,11 @@ public class GreyImageModel extends MatrixImageModel {
 				this.matrix[i][j] = grey;
 			}
 		}
+	}
+	
+	public GreyImageModel(GreyImageModel greyImage) {
+		super(greyImage.getWidth(), greyImage.getHeight());
+		this.matrix = greyImage.matrix.clone();
 	}
 	
 	public GreyImageModel(RGBImageModel rgbImageModel) {
