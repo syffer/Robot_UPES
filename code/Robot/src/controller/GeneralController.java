@@ -20,7 +20,7 @@ import rajan.RajanException;
 import transform.filter.AbstractFilter;
 import transform.filter.Canny;
 import transform.filter.Laplacian;
-import transform.filter.MediumFilter;
+import transform.filter.WeightedAverageFilter;
 import transform.filter.Sobel;
 import transform.morphology.Morphology;
 
@@ -454,7 +454,7 @@ public class GeneralController {
 		public void actionPerformed(ActionEvent event) {
 			ImageModel image = model.getSelectedImageModel();
 			
-			AbstractFilter filter = new MediumFilter();
+			AbstractFilter filter = new WeightedAverageFilter();
 			
 			long startTime = System.currentTimeMillis();
 			ImageModel imageFiltered = filter.filter(image);
