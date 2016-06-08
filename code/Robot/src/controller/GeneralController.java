@@ -446,7 +446,7 @@ public class GeneralController {
 			ImageModel image = model.getSelectedImageModel();
 						
 			long startTime = System.currentTimeMillis();
-			ImageModel imageFiltered = Morphology.erosion(image);
+			ImageModel imageFiltered = Morphology.erode(image);
 			long endTime = System.currentTimeMillis();
 			
 			GeneralController.this.addImageModel(imageFiltered, "Erosion", endTime - startTime);		
