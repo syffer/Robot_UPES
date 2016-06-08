@@ -42,6 +42,7 @@ public class GeneralController {
 	
 	protected ActionLoad actionLoad;
 	protected ActionSaveAs actionSaveAs;
+	protected ActionCloseAll actionCloseAll;
 	
 	protected ActionGreyScale actionGreyScale;
 	protected ActionMonochromatic actionMonochromatic;	
@@ -62,6 +63,7 @@ public class GeneralController {
 		//  create actions 
 		this.actionLoad = new ActionLoad();
 		this.actionSaveAs = new ActionSaveAs();
+		this.actionCloseAll = new ActionCloseAll();
 		
 		this.actionGreyScale = new ActionGreyScale();
 		this.actionMonochromatic = new ActionMonochromatic();
@@ -77,6 +79,7 @@ public class GeneralController {
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
 		this.view.menuSaveAs.setAction(this.actionSaveAs);
+		this.view.menuCloseAll.setAction(this.actionCloseAll);
 		
 		this.view.buttonGreyScale.setAction(this.actionGreyScale);
 		this.view.buttonMonochrome.setAction(this.actionMonochromatic);
@@ -103,6 +106,8 @@ public class GeneralController {
 		view.addImageView(imageController.imageView, operation.equals("Loading")); 
 	}
 		
+	
+	
 	
 	
 	public class ActionLoad extends AbstractAction implements Observer {
@@ -173,6 +178,24 @@ public class GeneralController {
 		
 	}
 	
+	public class ActionCloseAll extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionCloseAll() {
+			super("Close All");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			view.closeAllImageView();
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+	}
 	
 	
 	public class InternalFrameAction implements InternalFrameListener {
@@ -421,7 +444,7 @@ public class GeneralController {
 			ImageModel imageFiltered = filter.filter(image);
 			long endTime = System.currentTimeMillis();
 			
-			GeneralController.this.addImageModel(imageFiltered, "Medium Filter", endTime - startTime);			
+			GeneralController.this.addImageModel(imageFiltered, "Weighted Average", endTime - startTime);			
 		}
 
 		@Override

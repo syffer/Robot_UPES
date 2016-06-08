@@ -15,8 +15,8 @@ public class Canny extends AbstractFilter {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
-		for(int i = 1; i < image.getWidth() - 2; i++) {
-			for(int j = 1; j < image.getHeight() - 2; j++) {
+		for(int i = 1; i < image.getWidth() - 1; i++) {
+			for(int j = 1; j < image.getHeight() - 1; j++) {
 				/*
 				int newV = 	mask2[0][0] * image.get(i-1, j-1) + mask2[0][1] * image.get(i, j-1) + mask2[0][2] * image.get(i+1, j-1) + 
 							mask2[1][0] * image.get(i-1, j)   + mask2[1][1] * image.get(i, j)   + mask2[1][2] * image.get(i+1, j) +

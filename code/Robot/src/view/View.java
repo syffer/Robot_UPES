@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -27,6 +28,7 @@ public class View extends JFrame {
 	// menu 
 	public JMenuItem menuLoad;
 	public JMenuItem menuSaveAs;
+	public JMenuItem menuCloseAll;
 	
 	public JMenuItem menuSobel;
 	public JMenuItem menuLaplacian;
@@ -75,8 +77,10 @@ public class View extends JFrame {
 		JMenu menuFile = new JMenu("File");
 		this.menuLoad = new JMenuItem("Load");
 		this.menuSaveAs = new JMenuItem("Save as ...");
+		this.menuCloseAll = new JMenuItem("Close All");
 		menuFile.add(this.menuLoad);
 		menuFile.add(this.menuSaveAs);
+		menuFile.add(this.menuCloseAll);
 		
 		JMenu menuNoiseRemoval = new JMenu("Noise Removal");
 		this.menuWeightedAverage = new JMenuItem("Weighted Average");
@@ -163,7 +167,12 @@ public class View extends JFrame {
 		} catch (PropertyVetoException e) {
 			
 		}
-		
+	}
+	
+	public void closeAllImageView() {
+		for(JInternalFrame imageView : this.desktop.getAllFrames()) {
+			imageView.dispose();
+		}
 	}
 	
 	

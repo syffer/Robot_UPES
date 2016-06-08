@@ -7,9 +7,11 @@ public class Morphology {
 
 	// http://cdn.intechopen.com/pdfs-wm/11306.pdf 
 	
+	// http://stackoverflow.com/questions/1472768/implementing-erosion-dilation-in-c-c 
+	
 	public static ImageModel erode(ImageModel image) {
 		
-		int[][] structuringElement = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+		int[][] structuringElement = {{1, 1}, {1, 1}, {1, 1}};
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -22,8 +24,7 @@ public class Morphology {
 					for(int l = 0; l < structuringElement[k].length; l++) {
 						
 						if(structuringElement[k][l] == 1) {
-							int value = image.get(i + k, j + l);
-							if(minimum > value) minimum = value;
+							minimum = Math.min(image.get(i + k, j + l), minimum);
 						}
 						
 					}
