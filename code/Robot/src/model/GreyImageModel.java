@@ -3,7 +3,9 @@ package model;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class GreyImageModel extends MatrixImageModel {
+import transform.Transformation;
+
+public class GreyImageModel extends ImageModel {
 	
 	public GreyImageModel(int[][] data) {
 		super(data);
@@ -60,6 +62,11 @@ public class GreyImageModel extends MatrixImageModel {
 		}
 		
 		return bufferedImage;
+	}
+
+	@Override
+	public void accept(Transformation transformation) {
+		transformation.apply(this);
 	}
 	
 }

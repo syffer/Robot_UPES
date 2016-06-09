@@ -2,12 +2,18 @@ package model;
 
 import java.awt.image.BufferedImage;
 
-public class RGBImageModel extends MatrixImageModel {
+import transform.Transformation;
+
+public class RGBImageModel extends ImageModel {
 
 	protected RGBImageModel(int width, int heigth) {
 		super(width, heigth);
 	}
 
+	public RGBImageModel(int[][] data) {
+		super(data);
+	}
+	
 	public RGBImageModel(BufferedImage bufferedImage) {
 		this(bufferedImage.getWidth(), bufferedImage.getHeight());
 		
@@ -31,4 +37,10 @@ public class RGBImageModel extends MatrixImageModel {
 		return bufferedImage;
 	}
 
+	
+	@Override
+	public void accept(Transformation transformation) {
+		transformation.apply(this);
+	}
+	
 }

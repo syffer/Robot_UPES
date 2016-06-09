@@ -33,7 +33,8 @@ public class View extends JFrame {
 	public JMenuItem menuSobel;
 	public JMenuItem menuLaplacian;
 	public JMenuItem menuCanny;
-	//public JMenuItem menuCanny;
+	public JMenuItem menuClap;
+	
 	public JMenuItem menuWeightedAverage;
 	
 	public JMenuItem menuMorphologyErosion;
@@ -86,13 +87,15 @@ public class View extends JFrame {
 		this.menuWeightedAverage = new JMenuItem("Weighted Average");
 		menuNoiseRemoval.add(this.menuWeightedAverage);
 		
-		JMenu menuFilter = new JMenu("Edge Detection");
+		JMenu menuEdgeDetection = new JMenu("Edge Detection");
 		this.menuSobel = new JMenuItem("Sobel");
 		this.menuLaplacian = new JMenuItem("Laplacian");
 		this.menuCanny = new JMenuItem("Canny");
-		menuFilter.add(this.menuSobel);
-		menuFilter.add(this.menuLaplacian);
-		menuFilter.add(this.menuCanny);
+		this.menuClap = new JMenuItem("CLAP");
+		menuEdgeDetection.add(this.menuSobel);
+		menuEdgeDetection.add(this.menuLaplacian);
+		menuEdgeDetection.add(this.menuCanny);
+		menuEdgeDetection.add(this.menuClap);
 		
 		JMenu menuMorphology = new JMenu("Morphology");
 		this.menuMorphologyErosion = new JMenuItem("Erosion");
@@ -102,7 +105,7 @@ public class View extends JFrame {
 		
 		menuBar.add(menuFile);
 		menuBar.add(menuNoiseRemoval);
-		menuBar.add(menuFilter);
+		menuBar.add(menuEdgeDetection);
 		menuBar.add(menuMorphology);
 		
 		this.setJMenuBar(menuBar);

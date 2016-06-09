@@ -2,15 +2,44 @@ package transform.filter;
 
 import model.GreyImageModel;
 import model.ImageModel;
+import model.MonoImageModel;
+import model.RGBImageModel;
 
 public class WeightedAverageFilter extends AbstractFilter {
 
-	private static final int[][] mask = {{1, 1, 1}, 
-										 {1, 8, 1}, 
-										 {1, 1, 1}};
+	private static final int[][] originalMask = {{1, 1, 1}, 
+										 		 {1, 8, 1}, 
+										 		 {1, 1, 1}};
+	
+	private final int[][] mask;
+	
+	public WeightedAverageFilter(int[][] mask) {
+		this.mask = mask;
+	}
+	
+	public WeightedAverageFilter() {
+		this(WeightedAverageFilter.originalMask);
+	}
+	
+	
 	
 	@Override
-	public ImageModel filter(ImageModel image) {
+	public void apply(RGBImageModel image) {
+		this.imageTransformed = new GreyImageModel(this.filter(image));
+	}
+
+	@Override
+	public void apply(GreyImageModel image) {
+		this.imageTransformed = new GreyImageModel(this.filter(image));
+	}
+
+	@Override
+	public void apply(MonoImageModel image) {
+		this.imageTransformed = new GreyImageModel(this.filter(image));
+	}
+	
+	
+	private int[][] filter(ImageModel image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -32,7 +61,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 			}
 		}
 		
-		return new GreyImageModel(newData);
+		return newData;
 	}
-
+	
 }

@@ -2,11 +2,10 @@ package transform.filter;
 
 import model.GreyImageModel;
 import model.ImageModel;
+import model.MonoImageModel;
+import model.RGBImageModel;
 
 public class Sobel extends AbstractFilter {
-
-	// https://blog.saush.com/2011/04/20/edge-detection-with-the-sobel-operator-in-ruby/ 
-	// http://stackoverflow.com/questions/19331515/implenting-a-sobel-filter-in-imagej 
 	
 	private static final int[][] maskX = {{-1, 0, 1}, 
 										  {-2, 0, 2}, 
@@ -16,7 +15,27 @@ public class Sobel extends AbstractFilter {
 										  { 0,  0,  0}, 
 										  { 1,  2,  1}};
 	
-	public ImageModel filter(ImageModel image) {
+	
+	@Override
+	public void apply(RGBImageModel image) {
+		this.imageTransformed = new GreyImageModel(this.filter(image));
+	}
+
+	@Override
+	public void apply(GreyImageModel image) {
+		this.imageTransformed = new GreyImageModel(this.filter(image));
+	}
+
+	@Override
+	public void apply(MonoImageModel image) {
+		this.imageTransformed = new GreyImageModel(this.filter(image));
+	}
+	
+	
+	// https://blog.saush.com/2011/04/20/edge-detection-with-the-sobel-operator-in-ruby/ 
+	// http://stackoverflow.com/questions/19331515/implenting-a-sobel-filter-in-imagej 
+	
+	private int[][] filter(ImageModel image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -39,6 +58,8 @@ public class Sobel extends AbstractFilter {
 			}
 		}
 				
-		return new GreyImageModel(newData);		
+		return newData;		
 	}
+
+	
 }

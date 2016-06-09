@@ -3,7 +3,9 @@ package model;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-public class MonoImageModel extends MatrixImageModel {
+import transform.Transformation;
+
+public class MonoImageModel extends ImageModel {
 	
 	public MonoImageModel(int[][] data) {
 		super(data);
@@ -52,6 +54,12 @@ public class MonoImageModel extends MatrixImageModel {
 		}
 		
 		return bufferedImage;
+	}
+	
+	
+	@Override
+	public void accept(Transformation transformation) {
+		transformation.apply(this);
 	}
 	
 }

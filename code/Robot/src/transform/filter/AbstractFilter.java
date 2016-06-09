@@ -1,9 +1,9 @@
 package transform.filter;
 
-import model.ImageModel;
+import transform.Transformation;
 
-public abstract class AbstractFilter {
+public abstract class AbstractFilter extends Transformation {
 
-	public abstract ImageModel filter(ImageModel image);
+	//public abstract ImageModel filter(ImageModel image);
 	
 }

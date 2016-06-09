@@ -17,11 +17,14 @@ import javax.swing.event.InternalFrameListener;
 
 import rajan.Rajan;
 import rajan.RajanException;
+import transform.Clap;
 import transform.filter.AbstractFilter;
 import transform.filter.Canny;
 import transform.filter.Laplacian;
 import transform.filter.WeightedAverageFilter;
 import transform.filter.Sobel;
+import transform.morphology.Dilation;
+import transform.morphology.Erosion;
 import transform.morphology.Morphology;
 
 import model.GeneralModel;
@@ -51,9 +54,11 @@ public class GeneralController {
 	protected ActionSobel actionSobel;
 	protected ActionLaplacian actionLaplacian;
 	protected ActionCanny actionCanny;
+	protected ActionClap actionClap;
 	protected ActionWeightedAverage actionWeightedAverage;
 	
 	protected ActionErosion actionErosion;
+	protected ActionDilation actionDilation;
 	
 	public GeneralController(GeneralModel generalModel) {
 		
@@ -72,9 +77,12 @@ public class GeneralController {
 		this.actionSobel = new ActionSobel();
 		this.actionLaplacian = new ActionLaplacian();
 		this.actionCanny = new ActionCanny();
+		this.actionClap = new ActionClap();
+		
 		this.actionWeightedAverage = new ActionWeightedAverage();
 		
 		this.actionErosion = new ActionErosion();
+		this.actionDilation = new ActionDilation();
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
@@ -88,9 +96,12 @@ public class GeneralController {
 		this.view.menuSobel.setAction(this.actionSobel);
 		this.view.menuLaplacian.setAction(this.actionLaplacian);
 		this.view.menuCanny.setAction(this.actionCanny);
+		this.view.menuClap.setAction(this.actionClap);
+		
 		this.view.menuWeightedAverage.setAction(this.actionWeightedAverage);
 		
 		this.view.menuMorphologyErosion.setAction(this.actionErosion);
+		this.view.menuMorphologyDilation.setAction(this.actionDilation);
 		
 		// initialise observers (setting default values)
 		this.model.initialise();
@@ -356,9 +367,10 @@ public class GeneralController {
 			AbstractFilter filter = new Sobel();
 			
 			long startTime = System.currentTimeMillis();
-			ImageModel imageFiltered = filter.filter(image);
+			image.accept(filter);
 			long endTime = System.currentTimeMillis();
 			
+			ImageModel imageFiltered = filter.getTransformedImage();
 			GeneralController.this.addImageModel(imageFiltered, "Sobel", endTime - startTime);
 		}
 
@@ -384,9 +396,10 @@ public class GeneralController {
 			AbstractFilter filter = new Laplacian();
 			
 			long startTime = System.currentTimeMillis();
-			ImageModel imageFiltered = filter.filter(image);
+			image.accept(filter);
 			long endTime = System.currentTimeMillis();
 			
+			ImageModel imageFiltered = filter.getTransformedImage();
 			GeneralController.this.addImageModel(imageFiltered, "Laplacian", endTime - startTime);
 		}
 
@@ -413,9 +426,10 @@ public class GeneralController {
 			AbstractFilter filter = new Canny();
 			
 			long startTime = System.currentTimeMillis();
-			ImageModel imageFiltered = filter.filter(image);
+			image.accept(filter);
 			long endTime = System.currentTimeMillis();
 			
+			ImageModel imageFiltered = filter.getTransformedImage();
 			GeneralController.this.addImageModel(imageFiltered, "Canny", endTime - startTime);			
 		}
 
@@ -441,9 +455,10 @@ public class GeneralController {
 			AbstractFilter filter = new WeightedAverageFilter();
 			
 			long startTime = System.currentTimeMillis();
-			ImageModel imageFiltered = filter.filter(image);
+			image.accept(filter);
 			long endTime = System.currentTimeMillis();
 			
+			ImageModel imageFiltered = filter.getTransformedImage();
 			GeneralController.this.addImageModel(imageFiltered, "Weighted Average", endTime - startTime);			
 		}
 
@@ -467,11 +482,14 @@ public class GeneralController {
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			ImageModel image = model.getSelectedImageModel();
-						
+			
+			Morphology morphology = new Erosion();
+			
 			long startTime = System.currentTimeMillis();
-			ImageModel imageFiltered = Morphology.erode(image);
+			image.accept(morphology);
 			long endTime = System.currentTimeMillis();
 			
+			ImageModel imageFiltered = morphology.getTransformedImage();
 			GeneralController.this.addImageModel(imageFiltered, "Erosion", endTime - startTime);		
 		}
 
@@ -481,6 +499,72 @@ public class GeneralController {
 		} 	
 	}
 	
+	
+	
+	public class ActionDilation extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionDilation() {
+			super("Dilation");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			ImageModel image = model.getSelectedImageModel();
+			
+			Morphology morphology = new Dilation();
+			
+			long startTime = System.currentTimeMillis();
+			image.accept(morphology);
+			long endTime = System.currentTimeMillis();
+			
+			ImageModel imageFiltered = morphology.getTransformedImage();
+			GeneralController.this.addImageModel(imageFiltered, "Dilation", endTime - startTime);		
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 	
+	}
+	
+	
+	
+	public class ActionClap extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionClap() {
+			super("CLAP");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			
+			try {
+				ImageModel image = model.getSelectedImageModel();
+				
+				int threshold = JOptionPaneSlider.showConfirmDialog(view, "CLAP", 0, 255);
+				Clap clap = new Clap(threshold);
+				
+				long startTime = System.currentTimeMillis();
+				image.accept(clap);
+				long endTime = System.currentTimeMillis();
+				
+				ImageModel imageFiltered = clap.getTransformedImage();
+				GeneralController.this.addImageModel(imageFiltered, "CLAP", endTime - startTime);	
+				
+			} catch (ChoiceCanceledException e) {
+				
+			}		
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+	}
 	
 	
 	
@@ -502,7 +586,6 @@ public class GeneralController {
 		public void update(Observable observable, Object params) {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
-		
 	}
 	
 }
