@@ -1,6 +1,9 @@
-package transform;
+package transform.symbolic;
 
 import java.util.Set;
+
+import transform.Pair;
+import transform.Transformation;
 
 import model.GreyImageModel;
 import model.ImageModel;

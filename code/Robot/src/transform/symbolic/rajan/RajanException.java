@@ -1,4 +1,4 @@
-package rajan;
+package transform.symbolic.rajan;
 
 public class RajanException extends Exception {
 	

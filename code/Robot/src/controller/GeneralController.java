@@ -15,9 +15,6 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 
-import rajan.Rajan;
-import rajan.RajanException;
-import transform.Clap;
 import transform.filter.AbstractFilter;
 import transform.filter.Canny;
 import transform.filter.Laplacian;
@@ -26,6 +23,9 @@ import transform.filter.Sobel;
 import transform.morphology.Dilation;
 import transform.morphology.Erosion;
 import transform.morphology.Morphology;
+import transform.symbolic.Clap;
+import transform.symbolic.rajan.Rajan;
+import transform.symbolic.rajan.RajanException;
 
 import model.GeneralModel;
 import model.GreyImageModel;
