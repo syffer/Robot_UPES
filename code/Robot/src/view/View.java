@@ -36,6 +36,11 @@ public class View extends JFrame {
 	public JMenuItem menuClap;
 	
 	public JMenuItem menuWeightedAverage;
+	public JMenuItem menuMeanFilter;
+	public JMenuItem menuMedianFilter;
+	public JMenuItem menuGaussianFilter;
+	public JMenuItem menuCellularAutomataI;
+	public JMenuItem menuCellularAutomataII;
 	
 	public JMenuItem menuMorphologyErosion;
 	public JMenuItem menuMorphologyDilation;
@@ -83,9 +88,22 @@ public class View extends JFrame {
 		menuFile.add(this.menuSaveAs);
 		menuFile.add(this.menuCloseAll);
 		
+		// submenu of noise removal 
+		JMenu menuCellularAutomata = new JMenu("Cellular Automata");
+		this.menuCellularAutomataI = new JMenuItem("Algorithm I");
+		this.menuCellularAutomataII = new JMenuItem("Algorithm II");
+		//menuCellularAutomata.add(this.menuCellularAutomataI);
+		menuCellularAutomata.add(this.menuCellularAutomataII);
+		
 		JMenu menuNoiseRemoval = new JMenu("Noise Removal");
 		this.menuWeightedAverage = new JMenuItem("Weighted Average");
+		this.menuMeanFilter = new JMenuItem("Mean Filter");
+		this.menuMedianFilter = new JMenuItem("Median Filter");
+		this.menuGaussianFilter = new JMenuItem("Gaussian Filter");		
 		menuNoiseRemoval.add(this.menuWeightedAverage);
+		//menuNoiseRemoval.add(this.menuMeanFilter);
+		//menuNoiseRemoval.add(this.menuMedianFilter);
+		menuNoiseRemoval.add(menuCellularAutomata);
 		
 		JMenu menuEdgeDetection = new JMenu("Edge Detection");
 		this.menuSobel = new JMenuItem("Sobel");
