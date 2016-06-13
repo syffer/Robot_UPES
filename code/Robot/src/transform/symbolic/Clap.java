@@ -44,7 +44,9 @@ public class Clap extends Transformation {
 				int minimum = newData[i][j];
 				
 				// bornes 
-				Set<Pair<Integer, Integer>> neighborsIndex = image.getIndexNeighbor4Connexity(i, j);
+				Set<Pair<Integer, Integer>> neighborsIndex = image.getVonNeumannNeighborhoods(1,  i,  j);
+				//image.getIndexNeighbor4Connexity(i, j);
+				
 				
 				for(Pair<Integer, Integer> p : neighborsIndex) {
 					maximum = Math.max(maximum, image.get(p.first, p.second));
