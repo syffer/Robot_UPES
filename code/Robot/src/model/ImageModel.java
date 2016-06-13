@@ -49,23 +49,61 @@ public abstract class ImageModel {
 	}
 	
 	
+	public boolean isInBound(int i, int j) {
+		return i >= 0 && i < this.width && j >= 0 && j < this.height;
+	}
+	
 	public int get(int i, int j) {
 		return this.matrix[i][j];
 	}
 	
 	
+	// TODO delete it 
+	@Deprecated
 	public Set<Pair<Integer, Integer>> getIndexNeighbor4Connexity(int i, int j) {
+		// 4 connexe ? 
+		// à refaire ... 
 		
 		Set<Pair<Integer, Integer>> neighborsIndex = new HashSet<Pair<Integer, Integer>>();
 		
 		for(int k = -1; k < 2; k++) {
-			if(j+k >= 0 && j+k < this.width) neighborsIndex.add(new Pair<Integer, Integer>(i, j+k));
-			if(i+k >= 0 && i+k < this.height) neighborsIndex.add(new Pair<Integer, Integer>(i+k, j));			
+			if(this.isInBound(i, j+k)) neighborsIndex.add(new Pair<Integer, Integer>(i, j+k));
+			if(this.isInBound(i+k, j)) neighborsIndex.add(new Pair<Integer, Integer>(i+k, j));		
 		}
 				
 		return neighborsIndex;
 	}
 	
+	
+	public Set<Pair<Integer, Integer>> getMooreNeighborhoods(int range, int i, int j) {
+		// 8 connexe 
+		
+		Set<Pair<Integer, Integer>> neighborsIndex = new HashSet<Pair<Integer, Integer>>();
+		
+		for(int k = i - range; k <= i + range; k++) {
+			for(int l = j - range; l <= j + range; l++) {
+				if(this.isInBound(k, l)) neighborsIndex.add(new Pair<Integer, Integer>(k, l));
+			}
+		}
+		
+		return neighborsIndex;
+	}
+	
+	public Set<Pair<Integer, Integer>> getVonNeumannNeighborhoods(int range, int i, int j) {
+		// 4 connexe 
+		
+		Set<Pair<Integer, Integer>> neighborsIndex = new HashSet<Pair<Integer, Integer>>();
+		
+		for(int k = i - range; k <= i + range; k++) {
+			for(int l = j - range; l <= j + range; l++) {
+				if(this.isInBound(k, l) && Math.abs(k - i) + Math.abs(l - j) <= range) {
+					neighborsIndex.add(new Pair<Integer, Integer>(k, l));
+				}
+			}
+		}
+		
+		return neighborsIndex;
+	}
 	
 	
 	
