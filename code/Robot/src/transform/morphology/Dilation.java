@@ -26,7 +26,7 @@ public class Dilation extends Morphology {
 
 	private int[][] dilate(ImageModel image) {
 		
-int[][] newData = new int[image.getWidth()][image.getHeight()];
+		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			newData[i][0] = image.get(i, 0);
