@@ -51,6 +51,7 @@ public class View extends JFrame {
 	public JButton buttonSTRT;
 	public JButton buttonISTRT;
 	public JButton buttonMonochrome;
+	public JButton buttonStatisticAnalysis;
 	
 	// internals windows 
 	public JDesktopPane desktop;
@@ -148,11 +149,13 @@ public class View extends JFrame {
 		this.buttonSTRT = new JButton("STRT");
 		this.buttonISTRT = new JButton("ISTRT");
 		this.buttonMonochrome = new JButton("Monochrome");
+		this.buttonStatisticAnalysis = new JButton("Statistic Analysis");
 		
 		this.toolBar.add(this.buttonGreyScale);
-		this.toolBar.add(this.buttonSTRT);
-		this.toolBar.add(this.buttonISTRT);
+		//this.toolBar.add(this.buttonSTRT);
+		//this.toolBar.add(this.buttonISTRT);
 		this.toolBar.add(this.buttonMonochrome);
+		this.toolBar.add(this.buttonStatisticAnalysis);
 		
 		this.add(this.toolBar, BorderLayout.PAGE_START);
 	}
@@ -163,12 +166,12 @@ public class View extends JFrame {
 	}
 	
 	
-	public ImageView getSelectedImageView() {
-		return (ImageView) this.desktop.getSelectedFrame();
+	public ViewImage getSelectedImageView() {
+		return (ViewImage) this.desktop.getSelectedFrame();
 	}
 	
 	
-	public void addImageView(ImageView imageView, boolean newImage) {
+	public void addImageView(ViewImage imageView, boolean newImage) {
 		
 		// calculate the new position 
 		Point position = new Point(0, 0);

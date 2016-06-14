@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import transform.Pair;
-import model.GreyImageModel;
-import model.ImageModel;
-import model.MonoImageModel;
-import model.RGBImageModel;
+import model.image.GreyImageModel;
+import model.image.ImageModel;
+import model.image.MonoImageModel;
+import model.image.RGBImageModel;
 
 public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 

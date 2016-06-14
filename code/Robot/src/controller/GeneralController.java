@@ -28,13 +28,13 @@ import transform.symbolic.rajan.Rajan;
 import transform.symbolic.rajan.RajanException;
 
 import model.GeneralModel;
-import model.GreyImageModel;
-import model.ImageModel;
-import model.MonoImageModel;
-import model.RGBImageModel;
+import model.image.GreyImageModel;
+import model.image.ImageModel;
+import model.image.MonoImageModel;
+import model.image.RGBImageModel;
 
 import view.ChoiceCanceledException;
-import view.ImageView;
+import view.ViewImage;
 import view.JOptionPaneSlider;
 import view.View;
 
@@ -171,7 +171,7 @@ public class GeneralController {
 			try {
 				File file = view.getFileToSave();
 				
-				ImageModel imageModel = model.getSelectedImageModel();
+				ImageModel imageModel = (ImageModel) model.getSelectedModel();
 				imageModel.saveAs(file);
 				
 			} catch (ChoiceCanceledException e) {
@@ -184,7 +184,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 		
 	}
@@ -204,7 +204,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -213,14 +213,14 @@ public class GeneralController {
 		
 		@Override
 		public void internalFrameActivated(InternalFrameEvent event) { 			
-			ImageView selectedView = view.getSelectedImageView();
+			ViewImage selectedView = view.getSelectedImageView();
 			ImageModel selectedImageModel = selectedView.getImageModel();
-			model.setSelectedImageModel(selectedImageModel);
+			model.setSelectedModel(selectedImageModel);
 		}
 
 		@Override
 		public void internalFrameDeactivated(InternalFrameEvent event) { 
-			model.setSelectedImageModel(null);			
+			model.setSelectedModel(null);			
 		}
 		
 		@Override
@@ -260,7 +260,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel imageModel = model.getSelectedImageModel();
+			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			
 			long startTime = System.currentTimeMillis();
 			ImageModel greyImageModel = new GreyImageModel(imageModel.getBufferedImage());
@@ -271,7 +271,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -289,7 +289,7 @@ public class GeneralController {
 			try {
 				int threshold = JOptionPaneSlider.showConfirmDialog(view, "Monochromatic", 0, 255);
 				
-				ImageModel imageModel = model.getSelectedImageModel();
+				ImageModel imageModel = (ImageModel) model.getSelectedModel();
 				
 				long startTime = System.currentTimeMillis();
 				MonoImageModel monoImageModel = new MonoImageModel(imageModel, threshold);
@@ -304,7 +304,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -322,7 +322,7 @@ public class GeneralController {
 			
 			try {
 				
-				ImageModel imageModel = model.getSelectedImageModel();
+				ImageModel imageModel = (ImageModel) model.getSelectedModel();
 				List<Set<Integer>> sequence = imageModel.toSequence();
 				
 				/*
@@ -346,7 +346,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -362,7 +362,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel image = model.getSelectedImageModel();
+			ImageModel image = (ImageModel) model.getSelectedModel();
 			
 			AbstractFilter filter = new Sobel();
 			
@@ -376,7 +376,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -391,7 +391,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel image = model.getSelectedImageModel();
+			ImageModel image = (ImageModel) model.getSelectedModel();
 			
 			AbstractFilter filter = new Laplacian();
 			
@@ -405,7 +405,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -421,7 +421,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel image = model.getSelectedImageModel();
+			ImageModel image = (ImageModel) model.getSelectedModel();
 			
 			AbstractFilter filter = new Canny();
 			
@@ -435,7 +435,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -450,7 +450,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel image = model.getSelectedImageModel();
+			ImageModel image = (ImageModel) model.getSelectedModel();
 			
 			AbstractFilter filter = new WeightedAverageFilter();
 			
@@ -464,7 +464,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -481,7 +481,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel image = model.getSelectedImageModel();
+			ImageModel image = (ImageModel) model.getSelectedModel();
 			
 			Morphology morphology = new Erosion();
 			
@@ -495,7 +495,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 	
 	}
 	
@@ -511,7 +511,7 @@ public class GeneralController {
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			ImageModel image = model.getSelectedImageModel();
+			ImageModel image = (ImageModel) model.getSelectedModel();
 			
 			Morphology morphology = new Dilation();
 			
@@ -525,7 +525,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 	
 	}
 	
@@ -543,7 +543,7 @@ public class GeneralController {
 		public void actionPerformed(ActionEvent event) {
 			
 			try {
-				ImageModel image = model.getSelectedImageModel();
+				ImageModel image = (ImageModel) model.getSelectedModel();
 				
 				int threshold = JOptionPaneSlider.showConfirmDialog(view, "CLAP", 0, 255);
 				Clap clap = new Clap(threshold);
@@ -562,7 +562,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	
@@ -584,7 +584,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasImageModelSelected());
+			this.setEnabled(model.hasModelSelected());
 		} 
 	}
 	

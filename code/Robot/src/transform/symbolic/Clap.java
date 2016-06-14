@@ -5,10 +5,10 @@ import java.util.Set;
 import transform.Pair;
 import transform.Transformation;
 
-import model.GreyImageModel;
-import model.ImageModel;
-import model.MonoImageModel;
-import model.RGBImageModel;
+import model.image.GreyImageModel;
+import model.image.ImageModel;
+import model.image.MonoImageModel;
+import model.image.RGBImageModel;
 
 public class Clap extends Transformation {
 

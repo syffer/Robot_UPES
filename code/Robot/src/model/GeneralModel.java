@@ -4,10 +4,10 @@ import java.util.Observable;
 
 public class GeneralModel extends Observable {
 
-	private ImageModel selectedImageModel;
+	private InternalModel selectedModel;
 	
 	public GeneralModel() {
-		this.selectedImageModel = null;
+		this.selectedModel = null;
 	}
 	
 	public void initialise() { 
@@ -15,19 +15,19 @@ public class GeneralModel extends Observable {
 		this.notifyObservers();
 	}
 	
-	public ImageModel getSelectedImageModel() {
-		return this.selectedImageModel;
+	public InternalModel getSelectedModel() {
+		return this.selectedModel;
 	}
 	
-	public void setSelectedImageModel(ImageModel selectedImageModel) {
-		this.selectedImageModel = selectedImageModel;
+	public void setSelectedModel(InternalModel selectedModel) {
+		this.selectedModel = selectedModel;
 		
 		this.setChanged();
 		this.notifyObservers();
 	}
 	
-	public boolean hasImageModelSelected() {
-		return this.selectedImageModel != null;
+	public boolean hasModelSelected() {
+		return this.selectedModel != null;
 	}
 	
 	

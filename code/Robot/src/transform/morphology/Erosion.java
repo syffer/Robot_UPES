@@ -1,9 +1,9 @@
 package transform.morphology;
 
-import model.GreyImageModel;
-import model.ImageModel;
-import model.MonoImageModel;
-import model.RGBImageModel;
+import model.image.GreyImageModel;
+import model.image.ImageModel;
+import model.image.MonoImageModel;
+import model.image.RGBImageModel;
 
 public class Erosion extends Morphology {
 		
