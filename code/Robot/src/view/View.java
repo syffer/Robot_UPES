@@ -166,8 +166,8 @@ public class View extends JFrame {
 	}
 	
 	
-	public ImageView getSelectedImageView() {
-		return (ImageView) this.desktop.getSelectedFrame();
+	public InternalView getSelectedInternalView() {
+		return (InternalView) this.desktop.getSelectedFrame();
 	}
 	
 	

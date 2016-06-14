@@ -14,16 +14,14 @@ public class ImageView extends InternalView  {
 	private static final long serialVersionUID = 1383374106891634092L;
 
 	//private Container container;
-	private ImageModel imageModel;
 	
-	public JLabel labelOperationName;
-	public JLabel labelexecutionTime;
+	private JLabel labelOperationName;
+	private JLabel labelexecutionTime;
 	
 	public ImageView(ImageModel imageModel) {
-		super();
+		super(imageModel);
 		
 		//this.container = this.getContentPane();
-		this.imageModel = imageModel;
 		
 		// setting layout 
 		this.setLayout(new GridBagLayout());
@@ -61,10 +59,4 @@ public class ImageView extends InternalView  {
 		this.setVisible(true);
 				
 	}
-	
-	public ImageModel getImageModel() {
-		return this.imageModel;
-	}
-	
-	
 }

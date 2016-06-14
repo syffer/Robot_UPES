@@ -2,7 +2,7 @@ package model;
 
 import model.image.Image;
 
-public class StatisticAnalysInfo extends InternalModel {
+public class StatisticAnalysisInfo extends InternalModel {
 
 	//private Image image;
 	//private Image original;
@@ -13,7 +13,7 @@ public class StatisticAnalysInfo extends InternalModel {
 	private double variance;
 	private double standardDeviation;
 	
-	public StatisticAnalysInfo(Image image, Image original) {
+	public StatisticAnalysisInfo(Image image, Image original) {
 		//this.image = image;
 		//this.original = original;
 		
@@ -55,7 +55,7 @@ public class StatisticAnalysInfo extends InternalModel {
 		this.standardDeviation = Math.sqrt(this.variance);
 	}
 	
-	public StatisticAnalysInfo(Image image) {
+	public StatisticAnalysisInfo(Image image) {
 		
 		// first loop : mse, psnr, mean 
 		this.mse = 0;

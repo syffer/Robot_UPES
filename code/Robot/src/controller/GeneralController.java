@@ -24,13 +24,15 @@ import transform.symbolic.Clap;
 
 import model.GeneralModel;
 import model.ImageModel;
+import model.InternalModel;
+import model.StatisticAnalysisInfo;
 import model.image.GreyImage;
 import model.image.Image;
 import model.image.MonoImage;
 import model.image.RGBImage;
 
-import view.ChoiceCanceledException;
-import view.ImageView;
+import view.ChoiceCanceledException; 
+import view.InternalView;
 import view.JOptionPaneSlider;
 import view.View;
 
@@ -45,6 +47,7 @@ public class GeneralController {
 	
 	protected ActionGreyScale actionGreyScale;
 	protected ActionMonochromatic actionMonochromatic;
+	protected ActionStatisticAnalysis actionStatisticAnalysis;
 	
 	protected ActionTransformation actionSobel;
 	protected ActionTransformation actionLaplacian;
@@ -67,6 +70,7 @@ public class GeneralController {
 		
 		this.actionGreyScale = new ActionGreyScale();
 		this.actionMonochromatic = new ActionMonochromatic();
+		this.actionStatisticAnalysis = new ActionStatisticAnalysis();
 		
 		this.actionSobel = new ActionTransformation("Sobel", new Sobel());
 		this.actionLaplacian = new ActionTransformation("Laplacian", new Laplacian());
@@ -85,6 +89,7 @@ public class GeneralController {
 		
 		this.view.buttonGreyScale.setAction(this.actionGreyScale);
 		this.view.buttonMonochrome.setAction(this.actionMonochromatic);
+		this.view.buttonStatisticAnalysis.setAction(this.actionStatisticAnalysis);
 		
 		this.view.menuSobel.setAction(this.actionSobel);
 		this.view.menuLaplacian.setAction(this.actionLaplacian);
@@ -207,9 +212,9 @@ public class GeneralController {
 		
 		@Override
 		public void internalFrameActivated(InternalFrameEvent event) { 			
-			ImageView selectedView = view.getSelectedImageView();
-			ImageModel selectedImageModel = selectedView.getImageModel();
-			model.setSelectedModel(selectedImageModel);
+			InternalView selectedView = view.getSelectedInternalView();
+			InternalModel selectedInternalModel = selectedView.getInternalModel();
+			model.setSelectedModel(selectedInternalModel);
 		}
 
 		@Override
@@ -377,6 +382,33 @@ public class GeneralController {
 	
 	
 	
+	public class ActionStatisticAnalysis extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionStatisticAnalysis() {
+			super("Statistic Analysis");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			// TODO Auto-generated method stub
+			ImageModel imageModel = (ImageModel) model.getSelectedModel();
+			Image image = imageModel.getImage();
+			
+			StatisticAnalysisInfo statisticAnalysisInfo = new StatisticAnalysisInfo(image);
+			
+			System.out.println(statisticAnalysisInfo.getMean());
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+	}
+	
+	
+	
 	public class Action extends AbstractAction implements Observer {
 		private static final long serialVersionUID = 1L;
 
@@ -393,7 +425,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 	}
 	
