@@ -1,29 +1,29 @@
 package transform.morphology;
 
-import model.image.GreyImageModel;
-import model.image.ImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.image.GreyImage;
+import model.image.Image;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 public class Erosion extends Morphology {
 		
 	@Override
-	public void apply(RGBImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.erode(image));		
+	public void apply(RGBImage image) {
+		this.imageTransformed = new GreyImage(this.erode(image));		
 	}
 
 	@Override
-	public void apply(GreyImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.erode(image));
+	public void apply(GreyImage image) {
+		this.imageTransformed = new GreyImage(this.erode(image));
 	}
 
 	@Override
-	public void apply(MonoImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.erode(image));
+	public void apply(MonoImage image) {
+		this.imageTransformed = new GreyImage(this.erode(image));
 	}
 	
 
-	private int[][] erode(ImageModel image) {
+	private int[][] erode(Image image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

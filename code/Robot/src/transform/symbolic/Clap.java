@@ -5,10 +5,10 @@ import java.util.Set;
 import transform.Pair;
 import transform.Transformation;
 
-import model.image.GreyImageModel;
-import model.image.ImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.image.GreyImage;
+import model.image.Image;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 public class Clap extends Transformation {
 
@@ -19,22 +19,22 @@ public class Clap extends Transformation {
 	}
 	
 	@Override
-	public void apply(RGBImageModel image) {
-		this.imageTransformed = new RGBImageModel(this.process(image));
+	public void apply(RGBImage image) {
+		this.imageTransformed = new RGBImage(this.process(image));
 	}
 
 	@Override
-	public void apply(GreyImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.process(image));
+	public void apply(GreyImage image) {
+		this.imageTransformed = new GreyImage(this.process(image));
 	}
 
 	@Override
-	public void apply(MonoImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.process(image));
+	public void apply(MonoImage image) {
+		this.imageTransformed = new GreyImage(this.process(image));
 	}
 
 	
-	private int[][] process(ImageModel image) {
+	private int[][] process(Image image) {
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
 		for(int i = 0; i < image.getWidth(); i++) {

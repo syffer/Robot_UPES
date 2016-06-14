@@ -2,6 +2,7 @@ package model;
 
 import java.util.Observable;
 
+
 public class GeneralModel extends Observable {
 
 	private InternalModel selectedModel;
@@ -30,5 +31,8 @@ public class GeneralModel extends Observable {
 		return this.selectedModel != null;
 	}
 	
+	public boolean hasImageModelSelected() {
+		return this.selectedModel instanceof ImageModel;
+	}
 	
 }

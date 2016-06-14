@@ -1,9 +1,9 @@
 package transform.filter;
 
-import model.image.GreyImageModel;
-import model.image.ImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.image.GreyImage;
+import model.image.Image;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 public class Canny extends AbstractFilter {
 
@@ -12,24 +12,24 @@ public class Canny extends AbstractFilter {
 	
 	
 	@Override
-	public void apply(RGBImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.filter(image));
+	public void apply(RGBImage image) {
+		this.imageTransformed = new GreyImage(this.filter(image));
 	}
 
 
 	@Override
-	public void apply(GreyImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.filter(image));
+	public void apply(GreyImage image) {
+		this.imageTransformed = new GreyImage(this.filter(image));
 	}
 
 
 	@Override
-	public void apply(MonoImageModel image) {
-		this.imageTransformed = new GreyImageModel(this.filter(image));
+	public void apply(MonoImage image) {
+		this.imageTransformed = new GreyImage(this.filter(image));
 	}
 	
 	
-	private int[][] filter(ImageModel image) {
+	private int[][] filter(Image image) {
 		
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];

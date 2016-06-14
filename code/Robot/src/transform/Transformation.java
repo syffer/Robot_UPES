@@ -1,19 +1,19 @@
 package transform;
 
-import model.image.GreyImageModel;
-import model.image.ImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.image.GreyImage;
+import model.image.Image;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 public abstract class Transformation {
 
-	protected ImageModel imageTransformed;
+	protected Image imageTransformed;
 	
-	public abstract void apply(RGBImageModel image);
-	public abstract void apply(GreyImageModel image);
-	public abstract void apply(MonoImageModel image);
+	public abstract void apply(RGBImage image);
+	public abstract void apply(GreyImage image);
+	public abstract void apply(MonoImage image);
 	
-	public ImageModel getTransformedImage() {
+	public Image getTransformedImage() {
 		return this.imageTransformed;
 	}
 	

@@ -166,12 +166,17 @@ public class View extends JFrame {
 	}
 	
 	
-	public ViewImage getSelectedImageView() {
-		return (ViewImage) this.desktop.getSelectedFrame();
+	public ImageView getSelectedImageView() {
+		return (ImageView) this.desktop.getSelectedFrame();
 	}
 	
 	
-	public void addImageView(ViewImage imageView, boolean newImage) {
+	
+	public void addInternalView(InternalView internalView) {
+		this.addInternalView(internalView, false);
+	}
+	
+	public void addInternalView(InternalView internalView, boolean newImage) {
 		
 		// calculate the new position 
 		Point position = new Point(0, 0);
@@ -181,13 +186,13 @@ public class View extends JFrame {
 		}
 		
 		// add the iframe 
-		this.desktop.add(imageView);
+		this.desktop.add(internalView);
 		
-		imageView.setLocation(position);
-		imageView.toFront();
+		internalView.setLocation(position);
+		internalView.toFront();
 		
 		try {
-			imageView.setSelected(true);
+			internalView.setSelected(true);
 		} catch (PropertyVetoException e) {
 			
 		}

@@ -4,10 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
@@ -15,26 +13,24 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 
-import transform.filter.AbstractFilter;
+import transform.Transformation;
 import transform.filter.Canny;
 import transform.filter.Laplacian;
 import transform.filter.WeightedAverageFilter;
 import transform.filter.Sobel;
 import transform.morphology.Dilation;
 import transform.morphology.Erosion;
-import transform.morphology.Morphology;
 import transform.symbolic.Clap;
-import transform.symbolic.rajan.Rajan;
-import transform.symbolic.rajan.RajanException;
 
 import model.GeneralModel;
-import model.image.GreyImageModel;
-import model.image.ImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.ImageModel;
+import model.image.GreyImage;
+import model.image.Image;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 import view.ChoiceCanceledException;
-import view.ViewImage;
+import view.ImageView;
 import view.JOptionPaneSlider;
 import view.View;
 
@@ -48,17 +44,16 @@ public class GeneralController {
 	protected ActionCloseAll actionCloseAll;
 	
 	protected ActionGreyScale actionGreyScale;
-	protected ActionMonochromatic actionMonochromatic;	
-	protected ActionSTRT actionSTRT;
+	protected ActionMonochromatic actionMonochromatic;
 	
-	protected ActionSobel actionSobel;
-	protected ActionLaplacian actionLaplacian;
-	protected ActionCanny actionCanny;
+	protected ActionTransformation actionSobel;
+	protected ActionTransformation actionLaplacian;
+	protected ActionTransformation actionCanny;
 	protected ActionClap actionClap;
-	protected ActionWeightedAverage actionWeightedAverage;
+	protected ActionTransformation actionWeightedAverage;
 	
-	protected ActionErosion actionErosion;
-	protected ActionDilation actionDilation;
+	protected ActionTransformation actionErosion;
+	protected ActionTransformation actionDilation;
 	
 	public GeneralController(GeneralModel generalModel) {
 		
@@ -72,17 +67,16 @@ public class GeneralController {
 		
 		this.actionGreyScale = new ActionGreyScale();
 		this.actionMonochromatic = new ActionMonochromatic();
-		this.actionSTRT = new ActionSTRT();
 		
-		this.actionSobel = new ActionSobel();
-		this.actionLaplacian = new ActionLaplacian();
-		this.actionCanny = new ActionCanny();
+		this.actionSobel = new ActionTransformation("Sobel", new Sobel());
+		this.actionLaplacian = new ActionTransformation("Laplacian", new Laplacian());
+		this.actionCanny = new ActionTransformation("Canny", new Canny());
 		this.actionClap = new ActionClap();
 		
-		this.actionWeightedAverage = new ActionWeightedAverage();
+		this.actionWeightedAverage = new ActionTransformation("Weighted Average", new WeightedAverageFilter());
 		
-		this.actionErosion = new ActionErosion();
-		this.actionDilation = new ActionDilation();
+		this.actionErosion = new ActionTransformation("Erosion", new Erosion());
+		this.actionDilation = new ActionTransformation("Dilatation", new Dilation());
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
@@ -91,7 +85,6 @@ public class GeneralController {
 		
 		this.view.buttonGreyScale.setAction(this.actionGreyScale);
 		this.view.buttonMonochrome.setAction(this.actionMonochromatic);
-		this.view.buttonSTRT.setAction(this.actionSTRT);
 		
 		this.view.menuSobel.setAction(this.actionSobel);
 		this.view.menuLaplacian.setAction(this.actionLaplacian);
@@ -107,18 +100,19 @@ public class GeneralController {
 		this.model.initialise();
 	}
 	
-	
-	private void addImageModel(ImageModel imageModel, String operation, double executionTime) {
-		ImageController imageController = new ImageController(imageModel, operation, executionTime);
 		
-		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
-		imageController.imageView.addInternalFrameListener(new InternalFrameAction());
-		
-		view.addImageView(imageController.imageView, operation.equals("Loading")); 
+	private void addInternalModel(Image image, String operation, double executionTime) {
+		ImageModel imageModel = new ImageModel(image, operation, executionTime);
+		InternalController imageController = new InternalController(imageModel);
+		this.addInternalModel(imageController , operation.equals("Loading"));
 	}
+	
+	private void addInternalModel(InternalController internalController, boolean newInternalFrame) {		
+		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
+		internalController.internalView.addInternalFrameListener(new ActionInternalFrame());
 		
-	
-	
+		view.addInternalView(internalController.internalView, newInternalFrame); 
+	}
 	
 	
 	public class ActionLoad extends AbstractAction implements Observer {
@@ -139,8 +133,8 @@ public class GeneralController {
 				BufferedImage bufferedImage = ImageIO.read(choosenFile);
 				long endTime = System.currentTimeMillis();
 				
-				ImageModel imageModel = new RGBImageModel(bufferedImage);
-				GeneralController.this.addImageModel(imageModel, "Loading", endTime - startTime);
+				Image imageModel = new RGBImage(bufferedImage);
+				GeneralController.this.addInternalModel(imageModel, "Loading", endTime - startTime);
 				
 			} catch (ChoiceCanceledException e) {
 				
@@ -172,7 +166,7 @@ public class GeneralController {
 				File file = view.getFileToSave();
 				
 				ImageModel imageModel = (ImageModel) model.getSelectedModel();
-				imageModel.saveAs(file);
+				imageModel.saveImageAs(file);
 				
 			} catch (ChoiceCanceledException e) {
 				
@@ -209,11 +203,11 @@ public class GeneralController {
 	}
 	
 	
-	public class InternalFrameAction implements InternalFrameListener {
+	public class ActionInternalFrame implements InternalFrameListener {
 		
 		@Override
 		public void internalFrameActivated(InternalFrameEvent event) { 			
-			ViewImage selectedView = view.getSelectedImageView();
+			ImageView selectedView = view.getSelectedImageView();
 			ImageModel selectedImageModel = selectedView.getImageModel();
 			model.setSelectedModel(selectedImageModel);
 		}
@@ -263,10 +257,10 @@ public class GeneralController {
 			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			
 			long startTime = System.currentTimeMillis();
-			ImageModel greyImageModel = new GreyImageModel(imageModel.getBufferedImage());
+			Image greyImageModel = new GreyImage(imageModel.getBufferedImage());
 			long endTime = System.currentTimeMillis();
 			
-			GeneralController.this.addImageModel(greyImageModel, "Grey Scale", endTime - startTime);
+			GeneralController.this.addInternalModel(greyImageModel, "Grey Scale", endTime - startTime);
 		}
 
 		@Override
@@ -290,12 +284,13 @@ public class GeneralController {
 				int threshold = JOptionPaneSlider.showConfirmDialog(view, "Monochromatic", 0, 255);
 				
 				ImageModel imageModel = (ImageModel) model.getSelectedModel();
+				Image image = imageModel.getImage();
 				
 				long startTime = System.currentTimeMillis();
-				MonoImageModel monoImageModel = new MonoImageModel(imageModel, threshold);
+				MonoImage monoImageModel = new MonoImage(image, threshold);
 				long endTime = System.currentTimeMillis();
 				
-				GeneralController.this.addImageModel(monoImageModel, "Monochromatic", endTime - startTime);
+				GeneralController.this.addInternalModel(monoImageModel, "Monochromatic", endTime - startTime);
 				
 			} catch (ChoiceCanceledException e) {
 				// don't do anything
@@ -309,224 +304,37 @@ public class GeneralController {
 	}
 	
 	
-	public class ActionSTRT extends AbstractAction implements Observer {
+	public class ActionTransformation extends AbstractAction implements Observer {
 		private static final long serialVersionUID = 1L;
 
-		public ActionSTRT() {
-			super("STRT");
+		private String name;
+		private Transformation transformation;
+		
+		public ActionTransformation(String name, Transformation transformation) {
+			super(name);
 			model.addObserver(this);
+			
+			this.name = name;
+			this.transformation = transformation;
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent event) {
+			ImageModel imageModel = (ImageModel) model.getSelectedModel();
+			Image image = imageModel.getImage();
+						
+			long startTime = System.currentTimeMillis();
+			image.accept(this.transformation);
+			long endTime = System.currentTimeMillis();
 			
-			try {
-				
-				ImageModel imageModel = (ImageModel) model.getSelectedModel();
-				List<Set<Integer>> sequence = imageModel.toSequence();
-				
-				/*
-				List<Set<Integer>> test = new ArrayList<Set<Integer>>();
-				test.add(new HashSet<Integer>(Arrays.asList(1, 2, 3, 4)));
-				test.add(new HashSet<Integer>());
-				test.add(new HashSet<Integer>());
-				
-				Rajan.forward(test);
-				*/
-				
-				//long startTime = System.currentTimeMillis();
-				Rajan.forward(sequence);
-				//long endTime = System.currentTimeMillis();
-												
-			} catch (RajanException e) {
-				e.printStackTrace();
-			}
-			
+			Image transformedImage = this.transformation.getTransformedImage();
+			GeneralController.this.addInternalModel(transformedImage, this.name, endTime - startTime);
 		}
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
-	}
-	
-	
-	
-	public class ActionSobel extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionSobel() {
-			super("Sobel");
-			model.addObserver(this);
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			ImageModel image = (ImageModel) model.getSelectedModel();
-			
-			AbstractFilter filter = new Sobel();
-			
-			long startTime = System.currentTimeMillis();
-			image.accept(filter);
-			long endTime = System.currentTimeMillis();
-			
-			ImageModel imageFiltered = filter.getTransformedImage();
-			GeneralController.this.addImageModel(imageFiltered, "Sobel", endTime - startTime);
-		}
-
-		@Override
-		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
-		} 
-	}
-	
-	
-	public class ActionLaplacian extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionLaplacian() {
-			super("Laplacian");
-			model.addObserver(this);
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			ImageModel image = (ImageModel) model.getSelectedModel();
-			
-			AbstractFilter filter = new Laplacian();
-			
-			long startTime = System.currentTimeMillis();
-			image.accept(filter);
-			long endTime = System.currentTimeMillis();
-			
-			ImageModel imageFiltered = filter.getTransformedImage();
-			GeneralController.this.addImageModel(imageFiltered, "Laplacian", endTime - startTime);
-		}
-
-		@Override
-		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
-		} 
-	}
-	
-	
-	
-	public class ActionCanny extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionCanny() {
-			super("Canny");
-			model.addObserver(this);
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			ImageModel image = (ImageModel) model.getSelectedModel();
-			
-			AbstractFilter filter = new Canny();
-			
-			long startTime = System.currentTimeMillis();
-			image.accept(filter);
-			long endTime = System.currentTimeMillis();
-			
-			ImageModel imageFiltered = filter.getTransformedImage();
-			GeneralController.this.addImageModel(imageFiltered, "Canny", endTime - startTime);			
-		}
-
-		@Override
-		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
-		} 
-	}
-	
-	
-	public class ActionWeightedAverage extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionWeightedAverage() {
-			super("Weighted Average");
-			model.addObserver(this);
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			ImageModel image = (ImageModel) model.getSelectedModel();
-			
-			AbstractFilter filter = new WeightedAverageFilter();
-			
-			long startTime = System.currentTimeMillis();
-			image.accept(filter);
-			long endTime = System.currentTimeMillis();
-			
-			ImageModel imageFiltered = filter.getTransformedImage();
-			GeneralController.this.addImageModel(imageFiltered, "Weighted Average", endTime - startTime);			
-		}
-
-		@Override
-		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
-		} 
-	}
-	
-	
-	
-	
-	public class ActionErosion extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionErosion() {
-			super("Erosion");
-			model.addObserver(this);
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			ImageModel image = (ImageModel) model.getSelectedModel();
-			
-			Morphology morphology = new Erosion();
-			
-			long startTime = System.currentTimeMillis();
-			image.accept(morphology);
-			long endTime = System.currentTimeMillis();
-			
-			ImageModel imageFiltered = morphology.getTransformedImage();
-			GeneralController.this.addImageModel(imageFiltered, "Erosion", endTime - startTime);		
-		}
-
-		@Override
-		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
-		} 	
-	}
-	
-	
-	
-	public class ActionDilation extends AbstractAction implements Observer {
-		private static final long serialVersionUID = 1L;
-
-		public ActionDilation() {
-			super("Dilation");
-			model.addObserver(this);
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			ImageModel image = (ImageModel) model.getSelectedModel();
-			
-			Morphology morphology = new Dilation();
-			
-			long startTime = System.currentTimeMillis();
-			image.accept(morphology);
-			long endTime = System.currentTimeMillis();
-			
-			ImageModel imageFiltered = morphology.getTransformedImage();
-			GeneralController.this.addImageModel(imageFiltered, "Dilation", endTime - startTime);		
-		}
-
-		@Override
-		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
-		} 	
 	}
 	
 	
@@ -543,7 +351,8 @@ public class GeneralController {
 		public void actionPerformed(ActionEvent event) {
 			
 			try {
-				ImageModel image = (ImageModel) model.getSelectedModel();
+				ImageModel imageModel = (ImageModel) model.getSelectedModel();
+				Image image = imageModel.getImage();
 				
 				int threshold = JOptionPaneSlider.showConfirmDialog(view, "CLAP", 0, 255);
 				Clap clap = new Clap(threshold);
@@ -552,8 +361,8 @@ public class GeneralController {
 				image.accept(clap);
 				long endTime = System.currentTimeMillis();
 				
-				ImageModel imageFiltered = clap.getTransformedImage();
-				GeneralController.this.addImageModel(imageFiltered, "CLAP", endTime - startTime);	
+				Image imageFiltered = clap.getTransformedImage();
+				GeneralController.this.addInternalModel(imageFiltered, "CLAP", endTime - startTime);	
 				
 			} catch (ChoiceCanceledException e) {
 				
@@ -562,7 +371,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 	}
 	

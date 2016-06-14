@@ -6,32 +6,32 @@ import java.util.List;
 import java.util.Set;
 
 import transform.Pair;
-import model.image.GreyImageModel;
-import model.image.ImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.image.GreyImage;
+import model.image.Image;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 
 	@Override
-	public void apply(RGBImageModel image) {
+	public void apply(RGBImage image) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void apply(GreyImageModel image) {
+	public void apply(GreyImage image) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void apply(MonoImageModel image) {
+	public void apply(MonoImage image) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	private int[][] process(ImageModel image) {
+	private int[][] process(Image image) {
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
 		// the update rule is only applied to nonboundary cells 

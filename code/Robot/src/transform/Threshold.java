@@ -2,9 +2,9 @@ package transform;
 
 import java.awt.Color;
 
-import model.image.GreyImageModel;
-import model.image.MonoImageModel;
-import model.image.RGBImageModel;
+import model.image.GreyImage;
+import model.image.MonoImage;
+import model.image.RGBImage;
 
 public class Threshold extends Transformation {
 
@@ -15,7 +15,7 @@ public class Threshold extends Transformation {
 	}
 	
 	@Override
-	public void apply(RGBImageModel image) {
+	public void apply(RGBImage image) {
 		
 		int[][] matrix = new int[image.getWidth()][image.getHeight()];
 		
@@ -27,11 +27,11 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImageModel(matrix);
+		this.imageTransformed = new MonoImage(matrix);
 	}
 
 	@Override
-	public void apply(GreyImageModel image) {
+	public void apply(GreyImage image) {
 		
 		int[][] matrix = new int[image.getWidth()][image.getHeight()];
 		
@@ -42,11 +42,11 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImageModel(matrix);
+		this.imageTransformed = new MonoImage(matrix);
 	}
 
 	@Override
-	public void apply(MonoImageModel image) {
+	public void apply(MonoImage image) {
 		
 	}
 
