@@ -104,8 +104,8 @@ public class View extends JFrame {
 		this.menuGaussianFilter = new JMenuItem("Gaussian Filter");		
 		menuNoiseRemoval.add(this.menuWeightedAverage);
 		//menuNoiseRemoval.add(this.menuMeanFilter);
-		//menuNoiseRemoval.add(this.menuMedianFilter);
-		menuNoiseRemoval.add(menuCellularAutomata);
+		menuNoiseRemoval.add(this.menuMedianFilter);
+		//menuNoiseRemoval.add(menuCellularAutomata);
 		
 		JMenu menuEdgeDetection = new JMenu("Edge Detection");
 		this.menuSobel = new JMenuItem("Sobel");

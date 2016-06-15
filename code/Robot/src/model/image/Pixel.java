@@ -1,7 +1,8 @@
 package model.image;
 
 public class Pixel {
-	
+	// http://stackoverflow.com/questions/25761438/understanding-bufferedimage-getrgb-output-values/25761567
+		
 	private int r;
 	private int g;
 	private int b;

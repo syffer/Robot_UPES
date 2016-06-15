@@ -16,6 +16,7 @@ import javax.swing.event.InternalFrameListener;
 import transform.Transformation;
 import transform.filter.Canny;
 import transform.filter.Laplacian;
+import transform.filter.MedianFilter;
 import transform.filter.WeightedAverageFilter;
 import transform.filter.Sobel;
 import transform.morphology.Dilation;
@@ -51,11 +52,12 @@ public class GeneralController {
 	protected ActionStatisticAnalysis actionStatisticAnalysis;
 	protected ActionHistogram actionHistogram;
 	
-	protected ActionTransformation actionSobel;
-	protected ActionTransformation actionLaplacian;
+	protected ActionTransformation actionSobelFilter;
+	protected ActionTransformation actionLaplacianFilter;
 	protected ActionTransformation actionCanny;
 	protected ActionClap actionClap;
-	protected ActionTransformation actionWeightedAverage;
+	protected ActionTransformation actionWeightedAverageFilter;
+	protected ActionTransformation actionMedianFilter;
 	
 	protected ActionTransformation actionErosion;
 	protected ActionTransformation actionDilation;
@@ -75,12 +77,13 @@ public class GeneralController {
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis();
 		this.actionHistogram = new ActionHistogram();
 		
-		this.actionSobel = new ActionTransformation("Sobel", new Sobel());
-		this.actionLaplacian = new ActionTransformation("Laplacian", new Laplacian());
+		this.actionSobelFilter = new ActionTransformation("Sobel", new Sobel());
+		this.actionLaplacianFilter = new ActionTransformation("Laplacian", new Laplacian());
 		this.actionCanny = new ActionTransformation("Canny", new Canny());
 		this.actionClap = new ActionClap();
 		
-		this.actionWeightedAverage = new ActionTransformation("Weighted Average", new WeightedAverageFilter());
+		this.actionWeightedAverageFilter = new ActionTransformation("Weighted Average", new WeightedAverageFilter());
+		this.actionMedianFilter = new ActionTransformation("Median", new MedianFilter());
 		
 		this.actionErosion = new ActionTransformation("Erosion", new Erosion());
 		this.actionDilation = new ActionTransformation("Dilatation", new Dilation());
@@ -95,12 +98,13 @@ public class GeneralController {
 		this.view.buttonStatisticAnalysis.setAction(this.actionStatisticAnalysis);
 		this.view.buttonHistogram.setAction(this.actionHistogram);
 		
-		this.view.menuSobel.setAction(this.actionSobel);
-		this.view.menuLaplacian.setAction(this.actionLaplacian);
+		this.view.menuSobel.setAction(this.actionSobelFilter);
+		this.view.menuLaplacian.setAction(this.actionLaplacianFilter);
 		this.view.menuCanny.setAction(this.actionCanny);
 		this.view.menuClap.setAction(this.actionClap);
 		
-		this.view.menuWeightedAverage.setAction(this.actionWeightedAverage);
+		this.view.menuWeightedAverage.setAction(this.actionWeightedAverageFilter);
+		this.view.menuMedianFilter.setAction(this.actionMedianFilter);
 		
 		this.view.menuMorphologyErosion.setAction(this.actionErosion);
 		this.view.menuMorphologyDilation.setAction(this.actionDilation);
