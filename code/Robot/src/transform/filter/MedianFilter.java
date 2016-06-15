@@ -1,5 +1,6 @@
 package transform.filter;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +16,43 @@ public class MedianFilter extends AbstractFilter {
 	@Override
 	public void apply(RGBImage image) {
 		// TODO Auto-generated method stub
+		
+		int[][] newData = new int[image.getWidth()][image.getHeight()];
+		
+		int edgex = 3 / 2;
+		int edgey = 3 / 2;
+		
+		for(int x = edgex; x < image.getWidth() - edgex; x++) {
+			for(int y = edgey; y < image.getHeight() - edgey; y++) {
+				
+				List<Integer> windowRed = new ArrayList<Integer>();
+				List<Integer> windowGreen = new ArrayList<Integer>();
+				List<Integer> windowBlue = new ArrayList<Integer>();
+				
+				for(int fx = 0; fx < 3; fx++) {
+					for(int fy = 0; fy < 3; fy++) {
+						int rgb = image.get(x + fx - edgex, y + fy - edgey);
+						
+						int red = new Color(rgb).getRed();
+						int green = new Color(rgb).getGreen();
+						int blue = new Color(rgb).getBlue();
+						
+						windowRed.add(red);
+						windowGreen.add(green);
+						windowBlue.add(blue);
+					}
+				}
+				
+				Collections.sort(windowRed);
+				Collections.sort(windowGreen);
+				Collections.sort(windowBlue);
+				
+				newData[x][y] = (new Color(windowRed.get(3*3/2), windowGreen.get(3*3/2), windowBlue.get(3*3/2))).getRGB();
+			}
+		}
+		
+		this.imageTransformed = new RGBImage(newData);	
+		
 		
 	}
 
