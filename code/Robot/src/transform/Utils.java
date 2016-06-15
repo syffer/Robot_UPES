@@ -40,6 +40,11 @@ public class Utils {
 	}
 	
 	
+	public static int random(double min, double max) {
+		return (int) (min + Math.random() * (max - min));
+	}
+	
+	
 	public static <E> Set<E> union(Set<E> a, Set<E> b) {
 		Set<E> result = new HashSet<E>(a);
 		result.addAll(b);

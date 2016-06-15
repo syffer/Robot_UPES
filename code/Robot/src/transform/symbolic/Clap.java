@@ -2,12 +2,12 @@ package transform.symbolic;
 
 import java.util.Set;
 
-import transform.Pair;
 import transform.Transformation;
 
 import model.image.GreyImage;
 import model.image.Image;
 import model.image.MonoImage;
+import model.image.Pair;
 import model.image.RGBImage;
 
 public class Clap extends Transformation {

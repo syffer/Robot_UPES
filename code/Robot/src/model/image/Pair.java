@@ -1,4 +1,4 @@
-package transform;
+package model.image;
 
 public class Pair<E, F> {
 

@@ -105,13 +105,29 @@ public class GeneralController {
 		this.model.initialise();
 	}
 	
-		
+	/*
 	private void addInternalModel(Image image, String operation, double executionTime) {
 		ImageModel imageModel = new ImageModel(image, operation, executionTime);
-		InternalController imageController = new InternalController(imageModel);
+		InternalController imageController = new ImageController(imageModel);
 		this.addInternalModel(imageController , operation.equals("Loading"));
 	}
+	*/
 	
+	private void addInternalModel(ImageModel imageModel) {
+		InternalController imageController = new ImageController(imageModel);
+		this.addInternalModel(imageController , imageModel.getOperationName().equals("Loading"));
+	}
+	
+	private void addInternalModel(StatisticAnalysisInfo statisticAnalysisInfo) {
+		InternalController imageController = new StatisticAnalysisController(statisticAnalysisInfo);
+		this.addInternalModel(imageController);
+	}
+	
+	
+	private void addInternalModel(InternalController internalController) {
+		this.addInternalModel(internalController, false);
+	}
+			
 	private void addInternalModel(InternalController internalController, boolean newInternalFrame) {		
 		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
 		internalController.internalView.addInternalFrameListener(new ActionInternalFrame());
@@ -138,8 +154,8 @@ public class GeneralController {
 				BufferedImage bufferedImage = ImageIO.read(choosenFile);
 				long endTime = System.currentTimeMillis();
 				
-				Image imageModel = new RGBImage(bufferedImage);
-				GeneralController.this.addInternalModel(imageModel, "Loading", endTime - startTime);
+				Image image = new RGBImage(bufferedImage);
+				GeneralController.this.addInternalModel(new ImageModel(image, "Loading", endTime - startTime));
 				
 			} catch (ChoiceCanceledException e) {
 				
@@ -183,7 +199,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 		
 	}
@@ -262,15 +278,15 @@ public class GeneralController {
 			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			
 			long startTime = System.currentTimeMillis();
-			Image greyImageModel = new GreyImage(imageModel.getBufferedImage());
+			Image greyImage = new GreyImage(imageModel.getImage());
 			long endTime = System.currentTimeMillis();
 			
-			GeneralController.this.addInternalModel(greyImageModel, "Grey Scale", endTime - startTime);
+			GeneralController.this.addInternalModel(new ImageModel(greyImage, imageModel.getOriginalImage(), "Grey Scale", endTime - startTime));
 		}
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 	}
 	
@@ -292,10 +308,10 @@ public class GeneralController {
 				Image image = imageModel.getImage();
 				
 				long startTime = System.currentTimeMillis();
-				MonoImage monoImageModel = new MonoImage(image, threshold);
+				MonoImage monoImage = new MonoImage(image, threshold);
 				long endTime = System.currentTimeMillis();
 				
-				GeneralController.this.addInternalModel(monoImageModel, "Monochromatic", endTime - startTime);
+				GeneralController.this.addInternalModel(new ImageModel(monoImage, image, "Monochromatic", endTime - startTime));
 				
 			} catch (ChoiceCanceledException e) {
 				// don't do anything
@@ -304,7 +320,7 @@ public class GeneralController {
 
 		@Override
 		public void update(Observable observable, Object params) {
-			this.setEnabled(model.hasModelSelected());
+			this.setEnabled(model.hasImageModelSelected());
 		} 
 	}
 	
@@ -333,7 +349,7 @@ public class GeneralController {
 			long endTime = System.currentTimeMillis();
 			
 			Image transformedImage = this.transformation.getTransformedImage();
-			GeneralController.this.addInternalModel(transformedImage, this.name, endTime - startTime);
+			GeneralController.this.addInternalModel(new ImageModel(transformedImage, image, this.name, endTime - startTime));
 		}
 
 		@Override
@@ -367,7 +383,7 @@ public class GeneralController {
 				long endTime = System.currentTimeMillis();
 				
 				Image imageFiltered = clap.getTransformedImage();
-				GeneralController.this.addInternalModel(imageFiltered, "CLAP", endTime - startTime);	
+				GeneralController.this.addInternalModel(new ImageModel(imageFiltered, image, "CLAP", endTime - startTime));	
 				
 			} catch (ChoiceCanceledException e) {
 				
@@ -396,9 +412,12 @@ public class GeneralController {
 			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			Image image = imageModel.getImage();
 			
-			StatisticAnalysisInfo statisticAnalysisInfo = new StatisticAnalysisInfo(image);
+			StatisticAnalysisInfo statisticAnalysisInfo;
 			
-			System.out.println(statisticAnalysisInfo.getMean());
+			if(imageModel.hasOriginalImage()) statisticAnalysisInfo = new StatisticAnalysisInfo(image, imageModel.getOriginalImage());
+			else statisticAnalysisInfo = new StatisticAnalysisInfo(image);
+			
+			GeneralController.this.addInternalModel(statisticAnalysisInfo); 
 		}
 
 		@Override

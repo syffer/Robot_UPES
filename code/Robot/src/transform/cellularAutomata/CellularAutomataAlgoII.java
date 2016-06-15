@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import transform.Pair;
 import model.image.GreyImage;
 import model.image.Image;
 import model.image.MonoImage;
+import model.image.Pair;
 import model.image.RGBImage;
 
 public class CellularAutomataAlgoII extends AbstractCellularAutomata {

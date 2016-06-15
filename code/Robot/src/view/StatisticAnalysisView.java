@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
 import javax.swing.JLabel;
 
 import model.StatisticAnalysisInfo;
@@ -16,17 +19,27 @@ public class StatisticAnalysisView extends InternalView {
 	public StatisticAnalysisView(StatisticAnalysisInfo statisticAnalysisInfo) {
 		super(statisticAnalysisInfo);
 		
-		this.labelMSE = new JLabel("MSE : ");
-		this.labelPSNR = new JLabel("PSNR : ");
-		this.labelMean = new JLabel("Mean : ");
-		this.labelVariance = new JLabel("Variance : ");
-		this.labelStandardDeviation = new JLabel("Standard Deviation : ");
+		// setting layout 
+		this.setLayout(new GridBagLayout());
 		
-		this.add(this.labelMSE);
-		this.add(this.labelPSNR);
-		this.add(this.labelMean);
-		this.add(this.labelVariance);
-		this.add(this.labelStandardDeviation);
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = GridBagConstraints.RELATIVE;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		
+		// creating components 
+		this.labelMSE = new JLabel("MSE : " + String.format("%.2f", statisticAnalysisInfo.getMSE()));
+		this.labelPSNR = new JLabel("PSNR : " + String.format("%.2f", statisticAnalysisInfo.getPSNR()) + " db");
+		this.labelMean = new JLabel("Mean : " + String.format("%.2f", statisticAnalysisInfo.getMean()));
+		this.labelVariance = new JLabel("Variance : " + String.format("%.2f", statisticAnalysisInfo.getVariance()));
+		this.labelStandardDeviation = new JLabel("Standard Deviation : " + String.format("%.2f", statisticAnalysisInfo.getStandardDeviation()));
+		
+		// adding compponents 
+		this.add(this.labelMSE, gbc);
+		this.add(this.labelPSNR, gbc);
+		this.add(this.labelMean, gbc);
+		this.add(this.labelVariance, gbc);
+		this.add(this.labelStandardDeviation, gbc);
 		
 		this.setClosable(true);
 		this.setResizable(false);
