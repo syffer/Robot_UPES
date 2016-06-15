@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -21,10 +22,8 @@ public class JHistogram extends JPanel {
 	// http://sebastien-estienne.developpez.com/tutoriels/java/exercices-graphisme-java2d/?page=exo1 
 	// http://stackoverflow.com/questions/2228735/how-do-i-fade-an-image-in-swing/2234020#2234020 
 	
-	private static final int xGapHistogram = 35; 	// décalage histogramme en X par rapport à la gauche 
 	private static final int yGapHistogram = 30;	// décalage histogramme en Y par rapport au bas de la fenetre 
 	
-	private static final int xGapAxis = 30;			// décalage axes en X par rapport à la gauche de la fenetre
 	private static final int yGapAxis = 25;			// décalage axes en Y par rapport au bas de la fenetre
 	
 	private static final int heigthArrowGap = 4;	// décalage flèche axe en hauteur 
@@ -34,7 +33,10 @@ public class JHistogram extends JPanel {
 	private List<Map<Integer, Integer>> frequenciesMap;
 	private List<Color> colors;
 	private int maximalFrequency;
-			
+	
+	private int widthMaximumFrequency;	// décalage label axe y par rapport à la gauche 
+	private int xGapHistogram;			// décalage histogramme en X par rapport à la gauche 
+	
 	public JHistogram(List<Map<Integer, Integer>> frequenciesMap) {
 		this(frequenciesMap, new ArrayList<Color>(frequenciesMap.size()));
 	}
@@ -57,8 +59,13 @@ public class JHistogram extends JPanel {
 			colors.add(Color.GRAY); 
 		}
 		
-		this.setPreferredSize(new Dimension(256*2 + 60, 256 + 60));
-		//this.setMinimumSize(new Dimension(256*2 + 60, 256 + 60));
+		// get width of maximum frequency 
+		FontMetrics fontMetrics = this.getFontMetrics(this.getFont());
+		this.widthMaximumFrequency = fontMetrics.stringWidth("" + this.maximalFrequency) + 5;
+		
+		this.xGapHistogram = this.widthMaximumFrequency + 10;
+		
+		this.setPreferredSize(new Dimension(256*2 + 40 + this.widthMaximumFrequency, 256 + 60)); 
 	}
 	
 	
@@ -89,8 +96,8 @@ public class JHistogram extends JPanel {
 				// draw a box 
 				int barHeight = frequency * histogramHeigth / this.maximalFrequency;
 								
-				int xBarPosition = pixelValue * barWidth + JHistogram.xGapHistogram;
-				int yBarPosition = histogramHeigth - barHeight - JHistogram.yGapHistogram + 50;
+				int xBarPosition = pixelValue * barWidth + this.xGapHistogram;
+				int yBarPosition = histogramHeigth - barHeight - JHistogram.yGapHistogram + 50; 	// +50 to lower the histogram 
 								
 				Rectangle2D bar = new Rectangle2D.Double(xBarPosition, yBarPosition, barWidth, barHeight);
 				
@@ -104,7 +111,7 @@ public class JHistogram extends JPanel {
 				
 		// draw x axis
 		g2d.setColor(Color.BLACK);
-		int x1AxisX = JHistogram.xGapAxis;
+		int x1AxisX = this.widthMaximumFrequency;
 		int y1AxisX = frameHeight - JHistogram.yGapAxis;
 		int x2AxisX = x1AxisX + (barWidth * 256) + 25;
 		int y2AxisX = y1AxisX;
@@ -118,7 +125,7 @@ public class JHistogram extends JPanel {
 		for(int i = 0; i < 255; i += 15) {
 			
 			// line 
-			int xLabel = i * barWidth + JHistogram.xGapHistogram + (barWidth / 2);
+			int xLabel = i * barWidth + this.xGapHistogram + (barWidth / 2);
 			int yLabelUp = frameHeight - JHistogram.yGapAxis - 3;
 			int yLabelDown = frameHeight - JHistogram.yGapAxis + 3;
 			
@@ -137,28 +144,33 @@ public class JHistogram extends JPanel {
 		
 		// draw y axis 
 		g2d.setColor(Color.BLACK);
-		int x1AxisY = JHistogram.xGapAxis;
+		int x1AxisY = this.widthMaximumFrequency; //JHistogram.xGapAxis;
 		int y1AxisY = frameHeight - JHistogram.yGapAxis;
-		int x2AxisY = x1AxisX;
-		int y2AxisY = y1AxisX - histogramHeigth - 25;
+		int x2AxisY = x1AxisY;
+		int y2AxisY = y1AxisY - histogramHeigth - 25;
 		g2d.drawLine(x1AxisY, y1AxisY, x2AxisY, y2AxisY);
 		
 		// draw y axis arrow 
 		g2d.drawLine(x2AxisY, y2AxisY, x2AxisY - JHistogram.heigthArrowGap, y2AxisY + JHistogram.widthArrowGap); 
 		g2d.drawLine(x2AxisY, y2AxisY, x2AxisY + JHistogram.heigthArrowGap, y2AxisY + JHistogram.widthArrowGap); 
 		
-		// draw y axis labels
-		for(int i = 0; i < this.maximalFrequency; i += 30) {
-			
+		// draw y axis labels		
+		//for(int i = 0; i < this.maximalFrequency; i += 30) {
+		for(int i = 0; i < histogramHeigth; i += 20) {
+				
 			// line 
-			int yLabel = (i * histogramHeigth / this.maximalFrequency) - JHistogram.yGapHistogram + 50;
-			int xLabelUp = JHistogram.xGapAxis - 3;
-			int xLabelDown = JHistogram.xGapAxis + 3;
+			//int yLabel = (i * histogramHeigth / this.maximalFrequency) - JHistogram.yGapHistogram + 50;
+			//int xLabelUp = JHistogram.xGapAxis - 3;
+			//int xLabelDown = JHistogram.xGapAxis + 3;
+			int yLabel = i - JHistogram.yGapHistogram + 50;
+			int xLabelUp = this.widthMaximumFrequency - 3;
+			int xLabelDown = this.widthMaximumFrequency + 3;
 			
 			g2d.drawLine(xLabelUp, yLabel, xLabelDown, yLabel); 
 			
 			// text 
-			String text = "" + (this.maximalFrequency - i);
+			int frequency = this.maximalFrequency - (i * this.maximalFrequency / histogramHeigth);
+			String text = "" + frequency; //(this.maximalFrequency - i);
 			
 			int widthText = g.getFontMetrics().stringWidth(text);	// for centering the text 
 			int heigthText2 = g.getFontMetrics().getDescent();
