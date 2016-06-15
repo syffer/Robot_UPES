@@ -52,6 +52,7 @@ public class View extends JFrame {
 	public JButton buttonISTRT;
 	public JButton buttonMonochrome;
 	public JButton buttonStatisticAnalysis;
+	public JButton buttonHistogram;
 	
 	// internals windows 
 	public JDesktopPane desktop;
@@ -150,12 +151,14 @@ public class View extends JFrame {
 		this.buttonISTRT = new JButton("ISTRT");
 		this.buttonMonochrome = new JButton("Monochrome");
 		this.buttonStatisticAnalysis = new JButton("Statistic Analysis");
+		this.buttonHistogram = new JButton("Histogram");
 		
 		this.toolBar.add(this.buttonGreyScale);
 		//this.toolBar.add(this.buttonSTRT);
 		//this.toolBar.add(this.buttonISTRT);
 		this.toolBar.add(this.buttonMonochrome);
 		this.toolBar.add(this.buttonStatisticAnalysis);
+		this.toolBar.add(this.buttonHistogram);
 		
 		this.add(this.toolBar, BorderLayout.PAGE_START);
 	}

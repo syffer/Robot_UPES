@@ -3,7 +3,7 @@ package model.image;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import transform.Transformation;
+import transform.VisitorImage;
 
 public class MonoImage extends Image {
 	
@@ -58,8 +58,8 @@ public class MonoImage extends Image {
 	
 	
 	@Override
-	public void accept(Transformation transformation) {
-		transformation.apply(this);
+	public void accept(VisitorImage visitorImage) {
+		visitorImage.apply(this);
 	}
 	
 }

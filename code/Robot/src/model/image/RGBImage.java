@@ -2,7 +2,7 @@ package model.image;
 
 import java.awt.image.BufferedImage;
 
-import transform.Transformation;
+import transform.VisitorImage;
 
 public class RGBImage extends Image {
 
@@ -39,8 +39,8 @@ public class RGBImage extends Image {
 
 	
 	@Override
-	public void accept(Transformation transformation) {
-		transformation.apply(this);
+	public void accept(VisitorImage visitorImage) {
+		visitorImage.apply(this);
 	}
 	
 }

@@ -5,7 +5,7 @@ import model.image.Image;
 import model.image.MonoImage;
 import model.image.RGBImage;
 
-public abstract class Transformation {
+public abstract class Transformation implements VisitorImage {
 
 	protected Image imageTransformed;
 	

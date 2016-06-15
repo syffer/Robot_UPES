@@ -23,6 +23,7 @@ import transform.morphology.Erosion;
 import transform.symbolic.Clap;
 
 import model.GeneralModel;
+import model.Histogram;
 import model.ImageModel;
 import model.InternalModel;
 import model.StatisticAnalysisInfo;
@@ -48,6 +49,7 @@ public class GeneralController {
 	protected ActionGreyScale actionGreyScale;
 	protected ActionMonochromatic actionMonochromatic;
 	protected ActionStatisticAnalysis actionStatisticAnalysis;
+	protected ActionHistogram actionHistogram;
 	
 	protected ActionTransformation actionSobel;
 	protected ActionTransformation actionLaplacian;
@@ -71,6 +73,7 @@ public class GeneralController {
 		this.actionGreyScale = new ActionGreyScale();
 		this.actionMonochromatic = new ActionMonochromatic();
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis();
+		this.actionHistogram = new ActionHistogram();
 		
 		this.actionSobel = new ActionTransformation("Sobel", new Sobel());
 		this.actionLaplacian = new ActionTransformation("Laplacian", new Laplacian());
@@ -90,6 +93,7 @@ public class GeneralController {
 		this.view.buttonGreyScale.setAction(this.actionGreyScale);
 		this.view.buttonMonochrome.setAction(this.actionMonochromatic);
 		this.view.buttonStatisticAnalysis.setAction(this.actionStatisticAnalysis);
+		this.view.buttonHistogram.setAction(this.actionHistogram);
 		
 		this.view.menuSobel.setAction(this.actionSobel);
 		this.view.menuLaplacian.setAction(this.actionLaplacian);
@@ -123,6 +127,10 @@ public class GeneralController {
 		this.addInternalModel(imageController);
 	}
 	
+	private void addInternalModel(Histogram histogram) {
+		InternalController imageController = new HistogramController(histogram);
+		this.addInternalModel(imageController);
+	}
 	
 	private void addInternalModel(InternalController internalController) {
 		this.addInternalModel(internalController, false);
@@ -407,8 +415,7 @@ public class GeneralController {
 		}
 		
 		@Override
-		public void actionPerformed(ActionEvent event) {
-			// TODO Auto-generated method stub
+		public void actionPerformed(ActionEvent event) { 
 			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			Image image = imageModel.getImage();
 			
@@ -425,6 +432,35 @@ public class GeneralController {
 			this.setEnabled(model.hasImageModelSelected());
 		} 
 	}
+	
+	
+	
+	public class ActionHistogram extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionHistogram() {
+			super("Histogram");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			ImageModel imageModel = (ImageModel) model.getSelectedModel();
+			Image image = imageModel.getImage();
+			
+			Histogram histogram = new Histogram();
+			
+			image.accept(histogram);
+			
+			GeneralController.this.addInternalModel(histogram); 
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+	}
+	
 	
 	
 	

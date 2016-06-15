@@ -8,7 +8,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import transform.Transformation;
+import transform.VisitorImage;
 
 
 public abstract class Image {
@@ -31,7 +31,7 @@ public abstract class Image {
 		this(width, height, new int[width][height]);
 	}
 	
-	public abstract void accept(Transformation transformation);
+	public abstract void accept(VisitorImage visitorImage);
 	
 	public abstract BufferedImage getBufferedImage();
 			
