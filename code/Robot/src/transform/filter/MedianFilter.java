@@ -1,12 +1,12 @@
 package transform.filter;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import model.image.GreyImage;
 import model.image.MonoImage;
+import model.image.Pixel;
 import model.image.RGBImage;
 
 public class MedianFilter extends AbstractFilter {
@@ -32,10 +32,11 @@ public class MedianFilter extends AbstractFilter {
 				for(int fx = 0; fx < 3; fx++) {
 					for(int fy = 0; fy < 3; fy++) {
 						int rgb = image.get(x + fx - edgex, y + fy - edgey);
+						Pixel pixel = new Pixel(rgb);
 						
-						int red = new Color(rgb).getRed();
-						int green = new Color(rgb).getGreen();
-						int blue = new Color(rgb).getBlue();
+						int red = pixel.getRed();
+						int green = pixel.getGreen();
+						int blue = pixel.getBlue();
 						
 						windowRed.add(red);
 						windowGreen.add(green);
@@ -47,7 +48,7 @@ public class MedianFilter extends AbstractFilter {
 				Collections.sort(windowGreen);
 				Collections.sort(windowBlue);
 				
-				newData[x][y] = (new Color(windowRed.get(3*3/2), windowGreen.get(3*3/2), windowBlue.get(3*3/2))).getRGB();
+				newData[x][y] = (new Pixel(windowRed.get(3*3/2), windowGreen.get(3*3/2), windowBlue.get(3*3/2))).getRGB();
 			}
 		}
 		

@@ -8,6 +8,7 @@ import model.image.GreyImage;
 import model.image.Image;
 import model.image.MonoImage;
 import model.image.Pair;
+import model.image.Pixel;
 import model.image.RGBImage;
 
 public class Clap extends Transformation {
@@ -20,7 +21,64 @@ public class Clap extends Transformation {
 	
 	@Override
 	public void apply(RGBImage image) {
-		this.imageTransformed = new RGBImage(this.process(image));
+		
+		int[][] newData = new int[image.getWidth()][image.getHeight()];
+		
+		for(int i = 0; i < image.getWidth(); i++) {
+			for(int j = 0; j < image.getHeight(); j++) {
+				
+				Pixel pixel = new Pixel(newData[i][j]);
+								
+				int maxRed = pixel.getRed();
+				int maxGreen = pixel.getGreen();
+				int maxBlue = pixel.getBlue();
+				
+				int minRed = pixel.getRed();
+				int minGreen = pixel.getGreen();
+				int minBlue = pixel.getBlue();
+				
+				// bornes 
+				Set<Pair<Integer, Integer>> neighborsIndex = image.getVonNeumannNeighborhoods(1,  i,  j);
+				//image.getIndexNeighbor4Connexity(i, j);
+				
+				
+				for(Pair<Integer, Integer> p : neighborsIndex) {
+					Pixel neighbor = new Pixel(image.get(p.first, p.second));
+					
+					maxRed = Math.max(maxRed, neighbor.getRed());
+					maxGreen = Math.max(maxGreen, neighbor.getGreen());
+					maxBlue = Math.max(maxBlue, neighbor.getBlue());
+					
+					minRed = Math.min(minRed, neighbor.getRed());
+					minGreen = Math.min(minGreen, neighbor.getGreen());
+					minBlue = Math.min(minBlue, neighbor.getBlue());
+				}
+				
+				int redD = maxRed - minRed;
+				int greenD = maxGreen - minGreen;
+				int blueD = maxBlue - minBlue;
+				
+				if(redD > this.treashold && greenD > this.treashold && blueD > this.treashold) {
+					newData[i][j] = image.get(i, j);
+				}
+				else {
+					for(Pair<Integer, Integer> p : neighborsIndex) {
+						
+						Pixel neighbor = new Pixel(image.get(p.first, p.second));
+						
+						if(redD <= this.treashold) neighbor.setRed(0);
+						if(greenD <= this.treashold) neighbor.setGreen(0);
+						if(blueD <= this.treashold) neighbor.setBlue(0);
+						
+						newData[p.first][p.second] = neighbor.getRGB();
+					}
+				}
+			}
+			
+		}
+		
+		
+		this.imageTransformed = new RGBImage(newData);
 	}
 
 	@Override
@@ -35,6 +93,7 @@ public class Clap extends Transformation {
 
 	
 	private int[][] process(Image image) {
+		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
 		for(int i = 0; i < image.getWidth(); i++) {
