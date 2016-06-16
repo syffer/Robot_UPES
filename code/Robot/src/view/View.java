@@ -33,8 +33,7 @@ public class View extends JFrame {
 	public JMenuItem menuSobel;
 	public JMenuItem menuLaplacian;
 	public JMenuItem menuCanny;
-	public JMenuItem menuClap;
-	
+		
 	public JMenuItem menuWeightedAverage;
 	public JMenuItem menuMeanFilter;
 	public JMenuItem menuMedianFilter;
@@ -44,6 +43,7 @@ public class View extends JFrame {
 	
 	public JMenuItem menuMorphologyErosion;
 	public JMenuItem menuMorphologyDilation;
+	public JMenuItem menuClap;
 	
 	// toolbar 
 	public JToolBar toolBar;
@@ -111,17 +111,17 @@ public class View extends JFrame {
 		this.menuSobel = new JMenuItem("Sobel");
 		this.menuLaplacian = new JMenuItem("Laplacian");
 		this.menuCanny = new JMenuItem("Canny");
-		this.menuClap = new JMenuItem("CLAP");
 		menuEdgeDetection.add(this.menuSobel);
 		menuEdgeDetection.add(this.menuLaplacian);
 		menuEdgeDetection.add(this.menuCanny);
-		menuEdgeDetection.add(this.menuClap);
 		
 		JMenu menuMorphology = new JMenu("Morphology");
 		this.menuMorphologyErosion = new JMenuItem("Erosion");
 		this.menuMorphologyDilation = new JMenuItem("Dilation");
+		this.menuClap = new JMenuItem("CLAP");
 		menuMorphology.add(this.menuMorphologyErosion);
 		menuMorphology.add(this.menuMorphologyDilation);
+		menuMorphology.add(this.menuClap);
 		
 		menuBar.add(menuFile);
 		menuBar.add(menuNoiseRemoval);
