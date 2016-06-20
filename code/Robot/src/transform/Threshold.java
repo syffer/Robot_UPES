@@ -1,9 +1,8 @@
 package transform;
 
-import java.awt.Color;
-
 import model.image.GreyImage;
 import model.image.MonoImage;
+import model.image.Pixel;
 import model.image.RGBImage;
 
 public class Threshold extends Transformation {
@@ -14,6 +13,10 @@ public class Threshold extends Transformation {
 		this.threshold = threshold;
 	}
 	
+	public void setThreshold(int threshold) {
+		this.threshold = threshold;
+	}
+	
 	@Override
 	public void apply(RGBImage image) {
 		
@@ -21,13 +24,13 @@ public class Threshold extends Transformation {
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				Color color = new Color(image.get(i, j));
-				int grey = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
+				Pixel pixel = new Pixel(image.get(i, j));
+				int grey = pixel.getGrey();
 				matrix[i][j] = (grey >= this.threshold) ? 255 : 0;
 			}
 		}
 		
-		this.imageTransformed = new MonoImage(matrix);
+		this.imageTransformed = new GreyImage(matrix);
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImage(matrix);
+		this.imageTransformed = new GreyImage(matrix);
 	}
 
 	@Override
@@ -50,4 +53,9 @@ public class Threshold extends Transformation {
 		
 	}
 
+	
+	public GreyImage getTransformedImage() {
+		return (GreyImage) this.imageTransformed;
+	}
+	
 }

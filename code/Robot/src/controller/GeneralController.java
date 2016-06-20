@@ -13,6 +13,7 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 
+import transform.Threshold;
 import transform.Transformation;
 import transform.filter.Canny;
 import transform.filter.Laplacian;
@@ -30,7 +31,6 @@ import model.InternalModel;
 import model.StatisticAnalysisInfo;
 import model.image.GreyImage;
 import model.image.Image;
-import model.image.MonoImage;
 import model.image.RGBImage;
 
 import view.ChoiceCanceledException; 
@@ -48,7 +48,7 @@ public class GeneralController {
 	protected ActionCloseAll actionCloseAll;
 	
 	protected ActionGreyScale actionGreyScale;
-	protected ActionMonochromatic actionMonochromatic;
+	protected ActionThreshold actionThreshold;
 	protected ActionStatisticAnalysis actionStatisticAnalysis;
 	protected ActionHistogram actionHistogram;
 	
@@ -73,7 +73,7 @@ public class GeneralController {
 		this.actionCloseAll = new ActionCloseAll();
 		
 		this.actionGreyScale = new ActionGreyScale();
-		this.actionMonochromatic = new ActionMonochromatic();
+		this.actionThreshold = new ActionThreshold();
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis();
 		this.actionHistogram = new ActionHistogram();
 		
@@ -94,7 +94,7 @@ public class GeneralController {
 		this.view.menuCloseAll.setAction(this.actionCloseAll);
 		
 		this.view.buttonGreyScale.setAction(this.actionGreyScale);
-		this.view.buttonMonochrome.setAction(this.actionMonochromatic);
+		this.view.buttonMonochrome.setAction(this.actionThreshold);
 		this.view.buttonStatisticAnalysis.setAction(this.actionStatisticAnalysis);
 		this.view.buttonHistogram.setAction(this.actionHistogram);
 		
@@ -303,26 +303,29 @@ public class GeneralController {
 	}
 	
 	
-	public class ActionMonochromatic extends AbstractAction implements Observer {
+	public class ActionThreshold extends AbstractAction implements Observer {
 		private static final long serialVersionUID = 1L;
 
-		public ActionMonochromatic() {
-			super("Mono image");
+		public ActionThreshold() {
+			super("Threshold");
 			model.addObserver(this);
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent event) { 
 			try {
-				int threshold = JOptionPaneSlider.showConfirmDialog(view, "Monochromatic", 0, 255);
-				
+				int value = JOptionPaneSlider.showConfirmDialog(view, "Monochromatic", 0, 255);
+				Threshold threashold = new Threshold(value);
+					
 				ImageModel imageModel = (ImageModel) model.getSelectedModel();
 				Image image = imageModel.getImage();
 				
 				long startTime = System.currentTimeMillis();
-				MonoImage monoImage = new MonoImage(image, threshold);
+				//MonoImage monoImage = new MonoImage(image, threshold);
+				image.accept(threashold);
 				long endTime = System.currentTimeMillis();
 				
+				GreyImage monoImage = threashold.getTransformedImage();
 				GeneralController.this.addInternalModel(new ImageModel(monoImage, image, "Monochromatic", endTime - startTime));
 				
 			} catch (ChoiceCanceledException e) {
