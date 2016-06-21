@@ -10,6 +10,7 @@ import transform.VisitorImage;
 
 import model.image.GreyImage;
 import model.image.MonoImage;
+import model.image.Pixel;
 import model.image.RGBImage;
 
 public class Histogram extends InternalModel implements VisitorImage {
@@ -34,18 +35,18 @@ public class Histogram extends InternalModel implements VisitorImage {
 	
 	@Override
 	public void apply(RGBImage image) {
-		// TODO Auto-generated method stub
+		
 		Map<Integer, Integer> redFrequencies = new TreeMap<Integer, Integer>();
 		Map<Integer, Integer> greenFrequencies = new TreeMap<Integer, Integer>();
 		Map<Integer, Integer> blueFrequencies = new TreeMap<Integer, Integer>();
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				int rgb = image.get(i, j);
+				Pixel pixel = new Pixel(image.get(i, j));
 				
-				int red = new Color(rgb).getRed();
-				int green = new Color(rgb).getGreen();
-				int blue = new Color(rgb).getBlue();
+				int red = pixel.getRed();
+				int green = pixel.getGreen();
+				int blue = pixel.getBlue();
 				
 				if(!redFrequencies.containsKey(red)) redFrequencies.put(red, 0);
 				redFrequencies.put(red, redFrequencies.get(red) + 1);
