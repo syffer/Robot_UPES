@@ -16,6 +16,7 @@ import javax.swing.event.InternalFrameListener;
 import transform.Threshold;
 import transform.Transformation;
 import transform.filter.Canny;
+import transform.filter.GaussianBlur;
 import transform.filter.Laplacian;
 import transform.filter.MedianFilter;
 import transform.filter.WeightedAverageFilter;
@@ -58,6 +59,7 @@ public class GeneralController {
 	protected ActionClap actionClap;
 	protected ActionTransformation actionWeightedAverageFilter;
 	protected ActionTransformation actionMedianFilter;
+	protected ActionTransformation actionGaussianFilter;
 	
 	protected ActionTransformation actionErosion;
 	protected ActionTransformation actionDilation;
@@ -84,6 +86,7 @@ public class GeneralController {
 		
 		this.actionWeightedAverageFilter = new ActionTransformation("Weighted Average", new WeightedAverageFilter());
 		this.actionMedianFilter = new ActionTransformation("Median", new MedianFilter());
+		this.actionGaussianFilter = new ActionTransformation("Gaussian Blur", new GaussianBlur());
 		
 		this.actionErosion = new ActionTransformation("Erosion", new Erosion());
 		this.actionDilation = new ActionTransformation("Dilatation", new Dilation());
@@ -105,6 +108,7 @@ public class GeneralController {
 		
 		this.view.menuWeightedAverage.setAction(this.actionWeightedAverageFilter);
 		this.view.menuMedianFilter.setAction(this.actionMedianFilter);
+		this.view.menuGaussianFilter.setAction(this.actionGaussianFilter);
 		
 		this.view.menuMorphologyErosion.setAction(this.actionErosion);
 		this.view.menuMorphologyDilation.setAction(this.actionDilation);

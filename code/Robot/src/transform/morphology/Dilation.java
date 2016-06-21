@@ -35,7 +35,7 @@ public class Dilation extends Morphology {
 		
 		for(int j = 0; j < image.getHeight(); j++) {
 			newData[0][j] = image.get(0, j);
-			newData[image.getHeight() - 1][j] = image.get(image.getHeight() - 1, j);
+			newData[image.getWidth() - 1][j] = image.get(image.getWidth() - 1, j);
 		}
 		
 		for(int i = 1; i < image.getWidth() - 1; i++) {

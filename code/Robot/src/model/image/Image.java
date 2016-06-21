@@ -49,6 +49,15 @@ public abstract class Image {
 		return this.width * this.height;
 	}
 	
+	public int[][] getCloneMatrix() {
+		int[][] clone = new int[this.width][this.height];
+		
+		for(int i = 0; i < this.width; i++) {
+			clone[i] = this.matrix[i].clone();
+		}
+		
+		return clone;
+	}
 	
 	public boolean isInBound(int i, int j) {
 		return i >= 0 && i < this.width && j >= 0 && j < this.height;
