@@ -119,8 +119,8 @@ public class View extends JFrame {
 		menuEdgeDetection.add(this.menuCanny);
 		
 		JMenu menuMorphology = new JMenu("Morphology");
-		this.menuGreyScale = new JMenu("Grey Scale");
-		this.menuThreshold = new JMenu("Threshold");
+		this.menuGreyScale = new JMenuItem("Grey Scale");
+		this.menuThreshold = new JMenuItem("Threshold");
 		this.menuErosion = new JMenuItem("Erosion");
 		this.menuDilation = new JMenuItem("Dilation");
 		this.menuClap = new JMenuItem("CLAP");
