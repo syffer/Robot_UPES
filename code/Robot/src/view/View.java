@@ -41,8 +41,10 @@ public class View extends JFrame {
 	public JMenuItem menuCellularAutomataI;
 	public JMenuItem menuCellularAutomataII;
 	
-	public JMenuItem menuMorphologyErosion;
-	public JMenuItem menuMorphologyDilation;
+	public JMenuItem menuGreyScale;
+	public JMenuItem menuThreshold;
+	public JMenuItem menuErosion;
+	public JMenuItem menuDilation;
 	public JMenuItem menuClap;
 	
 	// toolbar 
@@ -117,11 +119,15 @@ public class View extends JFrame {
 		menuEdgeDetection.add(this.menuCanny);
 		
 		JMenu menuMorphology = new JMenu("Morphology");
-		this.menuMorphologyErosion = new JMenuItem("Erosion");
-		this.menuMorphologyDilation = new JMenuItem("Dilation");
+		this.menuGreyScale = new JMenu("Grey Scale");
+		this.menuThreshold = new JMenu("Threshold");
+		this.menuErosion = new JMenuItem("Erosion");
+		this.menuDilation = new JMenuItem("Dilation");
 		this.menuClap = new JMenuItem("CLAP");
-		menuMorphology.add(this.menuMorphologyErosion);
-		menuMorphology.add(this.menuMorphologyDilation);
+		menuMorphology.add(this.menuGreyScale);
+		menuMorphology.add(this.menuThreshold);
+		menuMorphology.add(this.menuErosion);
+		menuMorphology.add(this.menuDilation);
 		menuMorphology.add(this.menuClap);
 		
 		menuBar.add(menuFile);

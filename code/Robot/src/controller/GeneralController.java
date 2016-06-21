@@ -110,8 +110,10 @@ public class GeneralController {
 		this.view.menuMedianFilter.setAction(this.actionMedianFilter);
 		this.view.menuGaussianFilter.setAction(this.actionGaussianFilter);
 		
-		this.view.menuMorphologyErosion.setAction(this.actionErosion);
-		this.view.menuMorphologyDilation.setAction(this.actionDilation);
+		this.view.menuGreyScale.setAction(this.actionGreyScale);
+		this.view.menuThreshold.setAction(this.actionThreshold);
+		this.view.menuErosion.setAction(this.actionErosion);
+		this.view.menuDilation.setAction(this.actionDilation);
 		
 		// initialise observers (setting default values)
 		this.model.initialise();
