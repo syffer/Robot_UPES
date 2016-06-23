@@ -30,7 +30,7 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new GreyImage(matrix);
+		this.imageTransformed = new MonoImage(matrix);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new GreyImage(matrix);
+		this.imageTransformed = new MonoImage(matrix);
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class Threshold extends Transformation {
 	}
 
 	
-	public GreyImage getTransformedImage() {
-		return (GreyImage) this.imageTransformed;
+	public MonoImage getTransformedImage() {
+		return (MonoImage) this.imageTransformed;
 	}
 	
 }

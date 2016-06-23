@@ -5,6 +5,10 @@ import java.util.Set;
 
 public class Utils {
 	
+	public static int mod(int p, int n) {
+		return ((p % n) + n) % n;
+	}
+	
 	public static double logN(int base, double value) {
 		// TODO : verifier base > 0 
 		if(base == 10) return Math.log(value);

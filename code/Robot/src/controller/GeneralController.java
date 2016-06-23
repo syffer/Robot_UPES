@@ -12,6 +12,8 @@ import javax.swing.AbstractAction;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import features.FeatureExtractor;
+
 
 import transform.Threshold;
 import transform.Transformation;
@@ -32,6 +34,7 @@ import model.InternalModel;
 import model.StatisticAnalysisInfo;
 import model.image.GreyImage;
 import model.image.Image;
+import model.image.MonoImage;
 import model.image.RGBImage;
 
 import view.ChoiceCanceledException; 
@@ -52,6 +55,7 @@ public class GeneralController {
 	protected ActionThreshold actionThreshold;
 	protected ActionStatisticAnalysis actionStatisticAnalysis;
 	protected ActionHistogram actionHistogram;
+	protected ActionTest actionTest;
 	
 	protected ActionTransformation actionSobelFilter;
 	protected ActionTransformation actionLaplacianFilter;
@@ -78,6 +82,7 @@ public class GeneralController {
 		this.actionThreshold = new ActionThreshold();
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis();
 		this.actionHistogram = new ActionHistogram();
+		this.actionTest = new ActionTest();
 		
 		this.actionSobelFilter = new ActionTransformation("Sobel", new Sobel());
 		this.actionLaplacianFilter = new ActionTransformation("Laplacian", new Laplacian());
@@ -100,6 +105,7 @@ public class GeneralController {
 		this.view.buttonMonochrome.setAction(this.actionThreshold);
 		this.view.buttonStatisticAnalysis.setAction(this.actionStatisticAnalysis);
 		this.view.buttonHistogram.setAction(this.actionHistogram);
+		this.view.buttonTest.setAction(this.actionTest);
 		
 		this.view.menuSobel.setAction(this.actionSobelFilter);
 		this.view.menuLaplacian.setAction(this.actionLaplacianFilter);
@@ -118,15 +124,7 @@ public class GeneralController {
 		// initialise observers (setting default values)
 		this.model.initialise();
 	}
-	
-	/*
-	private void addInternalModel(Image image, String operation, double executionTime) {
-		ImageModel imageModel = new ImageModel(image, operation, executionTime);
-		InternalController imageController = new ImageController(imageModel);
-		this.addInternalModel(imageController , operation.equals("Loading"));
-	}
-	*/
-	
+		
 	private void addInternalModel(ImageModel imageModel) {
 		InternalController imageController = new ImageController(imageModel);
 		this.addInternalModel(imageController , imageModel.getOperationName().equals("Loading"));
@@ -331,7 +329,7 @@ public class GeneralController {
 				image.accept(threashold);
 				long endTime = System.currentTimeMillis();
 				
-				GreyImage monoImage = threashold.getTransformedImage();
+				Image monoImage = threashold.getTransformedImage();
 				GeneralController.this.addInternalModel(new ImageModel(monoImage, image, "Monochromatic", endTime - startTime));
 				
 			} catch (ChoiceCanceledException e) {
@@ -474,6 +472,33 @@ public class GeneralController {
 		} 
 	}
 	
+	
+	
+	public class ActionTest extends AbstractAction implements Observer {
+		private static final long serialVersionUID = 1L;
+
+		public ActionTest() {
+			super("Test");
+			model.addObserver(this);
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			// TODO Auto-generated method stub
+			ImageModel imageModel = (ImageModel) model.getSelectedModel();
+			MonoImage image = (MonoImage) imageModel.getImage();
+		
+			//System.out.println(ChainCodeExtractor.extract(image));
+		
+			System.out.println(FeatureExtractor.extract(image));
+			
+		}
+
+		@Override
+		public void update(Observable observable, Object params) {
+			this.setEnabled(model.hasImageModelSelected());
+		} 
+	}
 	
 	
 	
