@@ -1,0 +1,51 @@
+% pour ajouter le glossaire dans la table des matières
+\cleardoublepage	% évite les erreurs de numérotation
+\phantomsection		% évite les erreurs de placement de lien
+
+
+
+%\glstoctrue		
+
+
+%\addcontentsline{toc}{part}{Glossaire}
+%\printglossary[title=Glossaire, toctitle=Glossaire]
+\printglossary
+% title : le nom de la page qui apparait à gauche en début de page
+% toctitle : apparait en haut à droite dans le header
+
+
+% pour les explications :
+% https://en.wikibooks.org/wiki/LaTeX/Glossary
+
+
+
+
+% \newglossaryentry{<label>}{
+%	 name=<nom>,
+%	 description={<description>},
+%	 fisrt={<premier appel>},
+%	 plural={<si on ajoute pas de 's' à la fin>},
+%	 symbol={<symbole pi>},
+% 	 see={<label_a_voir}
+% }
+
+% \newacronym{<label>}{<abbreviation>}{<full>}
+% \newacronym{<label>}[longplural={pluriel}]{<abbreviation>}{<full>}
+
+
+% utilisation (pour tout):
+% - \gls(<label>)
+% - \Gls(<label>)  		=> avec majuscule
+% - \glspl(<label>)  	=> pluriel
+% - \Glspl(<label>)		=> pluriel avec majuscule
+% - \glsdesc{<label>}  	=> affiche la description
+% - \glssymbol{<label>}	=> affiche le symbole
+
+% utilisation en plus pour les accronymes : 
+% - \acrshort{<label>}	=> donne l'abbréviation
+% - \acrlong{<label>}	=> donne la description "full"
+% - \acrfull{<label>}	=> donne "full (abbreviation)"
+
+
+
+

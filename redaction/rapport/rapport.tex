@@ -1,0 +1,49 @@
+\RequirePackage[l2tabu, orthodox]{nag}
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[colorLinks, debug, langue=american]{pages/preambules/preambule} 
+\input{pages/glossaire/termes_glossaire}	
+\addbibresource{pages/bibliographie/bibliographie.bib}
+% https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management#biblatex
+
+
+\begin{document}
+
+\pagestyle{empty}		% pas de header / footer
+\pagenumbering{roman} 	% numérotation .i, .ii, .iii
+
+\input{pages/couverture/couverture_etude} 
+\input{pages/remerciements}	
+\input{pages/resume} 
+\input{pages/table_des_matieres}
+
+\pagestyle{fancy}		% on remet le header et footer
+\pagenumbering{arabic} 	% numérotation 1, 2, 3
+
+%\input{pages/introduction}
+%
+%
+%
+%\input{pages/conclusion} 
+
+\printbibliography 
+\listoffigures 
+\listoftables 
+\listoflistings 
+\printglossary 
+
+
+\newpage
+\pagenumbering{Roman}	% numérotation .I, .II, .III
+\pagestyle{appendix}
+\appendix	% début des appendices, chapitre numéroté alphabétiquement
+
+%\addcontentsline{toc}{part}{Annexes}
+%\chaptermark{Annexes}
+%\part*{Annexes}
+%\input{pages/annexes/annexes}
+
+%\input{pages/exemples/code}
+
+
+\end{document}

@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8}]
+\PYGdefault{c+cp}{\PYGdefaultZlt{}?php}
+\PYGdefault{x}{header(}\PYGdefault{l+s+s2}{\PYGdefaultZdq{}}\PYGdefault{l+s+s2}{Content\PYGdefaultZhy{}type: text/html; charset=utf\PYGdefaultZhy{}8}\PYGdefault{l+s+s2}{\PYGdefaultZdq{}}\PYGdefault{x}{);}
+\PYGdefault{x}{require\PYGdefaultZus{}once(}\PYGdefault{l+s+s2}{\PYGdefaultZdq{}}\PYGdefault{l+s+s2}{menu.php}\PYGdefault{l+s+s2}{\PYGdefaultZdq{}}\PYGdefault{x}{);}
+
+\PYGdefault{x}{   \PYGdefaultZdl{}menu = affiche\PYGdefaultZus{}menu\PYGdefaultZus{}apres\PYGdefaultZus{}connexion();}
+\PYGdefault{c+cp}{?\PYGdefaultZgt{}}
+\PYGdefault{x}{ }\PYGdefault{x}{\PYGdefaultZlt{}}\PYGdefault{x}{html\PYGdefaultZgt{}}
+\PYGdefault{x}{\PYGdefaultZlt{}}\PYGdefault{x}{head\PYGdefaultZgt{}}
+\PYGdefault{x}{    }\PYGdefault{x}{\PYGdefaultZlt{}}\PYGdefault{x}{link href=\PYGdefaultZdq{}menu.css\PYGdefaultZdq{} type=\PYGdefaultZdq{}text/css\PYGdefaultZdq{} rel=\PYGdefaultZdq{}stylesheet\PYGdefaultZdq{} /\PYGdefaultZgt{}}
+\PYGdefault{x}{\PYGdefaultZlt{}}\PYGdefault{x}{/head\PYGdefaultZgt{}}
+\PYGdefault{x}{\PYGdefaultZlt{}}\PYGdefault{x}{body\PYGdefaultZgt{}}
+
+\PYGdefault{c+cp}{\PYGdefaultZlt{}?php}
+\PYGdefault{x}{echo \PYGdefaultZdl{}menu;}
+\PYGdefault{c+cp}{?\PYGdefaultZgt{}}
+\end{Verbatim}
