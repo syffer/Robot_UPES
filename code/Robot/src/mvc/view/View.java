@@ -76,7 +76,7 @@ public class View extends JFrame {
 		this.initialiseToolBar();
 		this.initialiseDesktop();
 		
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // close the window when you clic en "x" 
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // close the window when you clic on "x" 
 		this.pack();
 		this.setSize(600, 600);
 		this.setVisible(true);
