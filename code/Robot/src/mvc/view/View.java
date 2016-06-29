@@ -47,11 +47,12 @@ public class View extends JFrame {
 	public JMenuItem menuDilation;
 	public JMenuItem menuClap;
 	
+	public JMenuItem menuChainCode;
+	public JMenuItem menuKMeans;
+	
 	// toolbar 
 	public JToolBar toolBar;
 	public JButton buttonGreyScale;
-	public JButton buttonSTRT;
-	public JButton buttonISTRT;
 	public JButton buttonMonochrome;
 	public JButton buttonStatisticAnalysis;
 	public JButton buttonHistogram;
@@ -131,10 +132,20 @@ public class View extends JFrame {
 		menuMorphology.add(this.menuDilation);
 		menuMorphology.add(this.menuClap);
 		
+		JMenu menuFeatureExtraction = new JMenu("Feature Extraction");
+		this.menuChainCode = new JMenuItem("Chain Code");
+		menuFeatureExtraction.add(this.menuChainCode);
+		
+		JMenu menuClassification = new JMenu("Classification");
+		this.menuKMeans = new JMenuItem("KMeans");
+		menuClassification.add(this.menuKMeans);
+		
 		menuBar.add(menuFile);
 		menuBar.add(menuNoiseRemoval);
 		menuBar.add(menuEdgeDetection);
 		menuBar.add(menuMorphology);
+		menuBar.add(menuFeatureExtraction);
+		menuBar.add(menuClassification);
 		
 		this.setJMenuBar(menuBar);
 	}
@@ -155,16 +166,12 @@ public class View extends JFrame {
 		this.toolBar.setFloatable(false);
 		
 		this.buttonGreyScale = new JButton("Grey Scale");
-		this.buttonSTRT = new JButton("STRT");
-		this.buttonISTRT = new JButton("ISTRT");
 		this.buttonMonochrome = new JButton("Monochrome");
 		this.buttonStatisticAnalysis = new JButton("Statistic Analysis");
 		this.buttonHistogram = new JButton("Histogram");
 		this.buttonTest = new JButton("Test");
 		
 		this.toolBar.add(this.buttonGreyScale);
-		//this.toolBar.add(this.buttonSTRT);
-		//this.toolBar.add(this.buttonISTRT);
 		this.toolBar.add(this.buttonMonochrome);
 		this.toolBar.add(this.buttonStatisticAnalysis);
 		this.toolBar.add(this.buttonHistogram);
