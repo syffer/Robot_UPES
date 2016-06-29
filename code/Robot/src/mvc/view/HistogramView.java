@@ -1,6 +1,6 @@
-package view;
+package mvc.view;
 
-import model.Histogram;
+import mvc.model.Histogram;
 
 public class HistogramView extends InternalView {
 	private static final long serialVersionUID = 1L;

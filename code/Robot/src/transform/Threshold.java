@@ -1,9 +1,9 @@
 package transform;
 
-import model.image.GreyImage;
-import model.image.MonoImage;
-import model.image.Pixel;
-import model.image.RGBImage;
+import image.GreyImage;
+import image.MonoImage;
+import image.Pixel;
+import image.RGBImage;
 
 public class Threshold extends Transformation {
 

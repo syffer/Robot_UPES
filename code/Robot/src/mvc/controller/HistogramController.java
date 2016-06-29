@@ -1,7 +1,7 @@
-package controller;
+package mvc.controller;
 
-import model.Histogram;
-import view.HistogramView;
+import mvc.model.Histogram;
+import mvc.view.HistogramView;
 
 public class HistogramController extends InternalController {
 

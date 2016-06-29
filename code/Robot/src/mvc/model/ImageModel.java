@@ -1,10 +1,11 @@
-package model;
+package mvc.model;
+
+import image.Image;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import model.image.Image;
 
 public class ImageModel extends InternalModel {
 	

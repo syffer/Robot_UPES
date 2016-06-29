@@ -1,15 +1,16 @@
 package transform.cellularAutomata;
 
+import image.GreyImage;
+import image.Image;
+import image.MonoImage;
+import image.Pair;
+import image.RGBImage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import model.image.GreyImage;
-import model.image.Image;
-import model.image.MonoImage;
-import model.image.Pair;
-import model.image.RGBImage;
 
 public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 

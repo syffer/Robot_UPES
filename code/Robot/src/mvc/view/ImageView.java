@@ -1,4 +1,4 @@
-package view;
+package mvc.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import model.ImageModel;
+import mvc.model.ImageModel;
 
 public class ImageView extends InternalView  {
 	private static final long serialVersionUID = 1383374106891634092L;

@@ -1,15 +1,16 @@
 package transform.symbolic;
 
+import image.GreyImage;
+import image.Image;
+import image.MonoImage;
+import image.Pair;
+import image.Pixel;
+import image.RGBImage;
+
 import java.util.Set;
 
 import transform.Transformation;
 
-import model.image.GreyImage;
-import model.image.Image;
-import model.image.MonoImage;
-import model.image.Pair;
-import model.image.Pixel;
-import model.image.RGBImage;
 
 public class Clap extends Transformation {
 

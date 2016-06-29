@@ -1,8 +1,8 @@
-package view;
+package mvc.view;
 
 import javax.swing.JInternalFrame;
 
-import model.InternalModel;
+import mvc.model.InternalModel;
 
 public abstract class InternalView extends JInternalFrame {
 	private static final long serialVersionUID = 1L;

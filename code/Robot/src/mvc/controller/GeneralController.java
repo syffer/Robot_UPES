@@ -1,4 +1,9 @@
-package controller;
+package mvc.controller;
+
+import image.GreyImage;
+import image.Image;
+import image.MonoImage;
+import image.RGBImage;
 
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -35,20 +40,16 @@ import transform.morphology.Dilation;
 import transform.morphology.Erosion;
 import transform.symbolic.Clap;
 
-import model.GeneralModel;
-import model.Histogram;
-import model.ImageModel;
-import model.InternalModel;
-import model.StatisticAnalysisInfo;
-import model.image.GreyImage;
-import model.image.Image;
-import model.image.MonoImage;
-import model.image.RGBImage;
+import mvc.model.GeneralModel;
+import mvc.model.Histogram;
+import mvc.model.ImageModel;
+import mvc.model.InternalModel;
+import mvc.model.StatisticAnalysisInfo;
+import mvc.view.ChoiceCanceledException;
+import mvc.view.InternalView;
+import mvc.view.JOptionPaneSlider;
+import mvc.view.View;
 
-import view.ChoiceCanceledException; 
-import view.InternalView;
-import view.JOptionPaneSlider;
-import view.View;
 
 public class GeneralController {
 

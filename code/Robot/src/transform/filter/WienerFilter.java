@@ -1,8 +1,8 @@
 package transform.filter;
 
-import model.image.GreyImage;
-import model.image.MonoImage;
-import model.image.RGBImage;
+import image.GreyImage;
+import image.MonoImage;
+import image.RGBImage;
 
 public class WienerFilter extends AbstractFilter {
 	// https://github.com/tilo/cmusphinx-1/blob/master/sphinx4/src/sphinx4/edu/cmu/sphinx/frontend/endpoint/WienerFilter.java 

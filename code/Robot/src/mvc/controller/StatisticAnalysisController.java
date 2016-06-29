@@ -1,7 +1,7 @@
-package controller;
+package mvc.controller;
 
-import model.StatisticAnalysisInfo;
-import view.StatisticAnalysisView;
+import mvc.model.StatisticAnalysisInfo;
+import mvc.view.StatisticAnalysisView;
 
 public class StatisticAnalysisController extends InternalController {
 	

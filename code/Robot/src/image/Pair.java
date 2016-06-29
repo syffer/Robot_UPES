@@ -1,4 +1,4 @@
-package model.image;
+package image;
 
 public class Pair<E, F> {
 

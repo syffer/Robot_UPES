@@ -1,13 +1,14 @@
 package transform.filter;
 
+import image.GreyImage;
+import image.MonoImage;
+import image.Pixel;
+import image.RGBImage;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import model.image.GreyImage;
-import model.image.MonoImage;
-import model.image.Pixel;
-import model.image.RGBImage;
 
 public class MedianFilter extends AbstractFilter {
 

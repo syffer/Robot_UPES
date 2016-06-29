@@ -1,8 +1,8 @@
 package transform;
 
-import model.image.GreyImage;
-import model.image.MonoImage;
-import model.image.RGBImage;
+import image.GreyImage;
+import image.MonoImage;
+import image.RGBImage;
 
 public interface VisitorImage {
 	public void apply(RGBImage image);

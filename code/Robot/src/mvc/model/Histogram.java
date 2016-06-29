@@ -1,4 +1,9 @@
-package model;
+package mvc.model;
+
+import image.GreyImage;
+import image.MonoImage;
+import image.Pixel;
+import image.RGBImage;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -8,10 +13,6 @@ import java.util.TreeMap;
 
 import transform.VisitorImage;
 
-import model.image.GreyImage;
-import model.image.MonoImage;
-import model.image.Pixel;
-import model.image.RGBImage;
 
 public class Histogram extends InternalModel implements VisitorImage {
 

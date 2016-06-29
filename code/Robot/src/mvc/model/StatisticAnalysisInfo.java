@@ -1,6 +1,6 @@
-package model;
+package mvc.model;
 
-import model.image.Image;
+import image.Image;
 
 public class StatisticAnalysisInfo extends InternalModel {
 

@@ -1,5 +1,7 @@
 package features;
 
+import image.MonoImage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -8,7 +10,6 @@ import java.util.Map;
 
 import transform.Utils;
 
-import model.image.MonoImage;
 
 public class ChainCodeExtractor {
 

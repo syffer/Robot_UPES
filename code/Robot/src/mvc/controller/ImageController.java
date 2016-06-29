@@ -1,7 +1,7 @@
-package controller;
+package mvc.controller;
 
-import model.ImageModel;
-import view.ImageView;
+import mvc.model.ImageModel;
+import mvc.view.ImageView;
 
 public class ImageController extends InternalController {
 	

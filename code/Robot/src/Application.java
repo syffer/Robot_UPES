@@ -1,5 +1,5 @@
-import model.GeneralModel;
-import controller.GeneralController;
+import mvc.controller.GeneralController;
+import mvc.model.GeneralModel;
 
 
 public class Application {

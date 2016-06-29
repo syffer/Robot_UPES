@@ -1,9 +1,9 @@
 package transform.morphology;
 
-import model.image.GreyImage;
-import model.image.Image;
-import model.image.MonoImage;
-import model.image.RGBImage;
+import image.GreyImage;
+import image.Image;
+import image.MonoImage;
+import image.RGBImage;
 
 public class Dilation extends Morphology {
 

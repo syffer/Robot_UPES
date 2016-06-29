@@ -1,8 +1,8 @@
 package transform.filter;
 
-import model.image.GreyImage;
-import model.image.MonoImage;
-import model.image.RGBImage;
+import image.GreyImage;
+import image.MonoImage;
+import image.RGBImage;
 
 public class GaussianBlur extends AbstractFilter {
 

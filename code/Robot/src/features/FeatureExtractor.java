@@ -1,10 +1,11 @@
 package features;
 
+import image.MonoImage;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import model.image.MonoImage;
 
 public class FeatureExtractor {
 

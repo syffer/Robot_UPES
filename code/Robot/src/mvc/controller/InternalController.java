@@ -1,7 +1,7 @@
-package controller;
+package mvc.controller;
 
-import view.InternalView;
-import model.InternalModel;
+import mvc.model.InternalModel;
+import mvc.view.InternalView;
 
 public abstract class InternalController {
 	

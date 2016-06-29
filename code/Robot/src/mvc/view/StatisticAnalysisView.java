@@ -1,11 +1,11 @@
-package view;
+package mvc.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 
-import model.StatisticAnalysisInfo;
+import mvc.model.StatisticAnalysisInfo;
 
 public class StatisticAnalysisView extends InternalView {
 	private static final long serialVersionUID = 1L;
