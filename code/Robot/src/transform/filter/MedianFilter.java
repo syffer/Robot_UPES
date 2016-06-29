@@ -1,6 +1,7 @@
 package transform.filter;
 
 import image.GreyImage;
+import image.Image;
 import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
@@ -60,8 +61,15 @@ public class MedianFilter extends AbstractFilter {
 
 	@Override
 	public void apply(GreyImage image) {
-		// TODO Auto-generated method stub
-		
+		this.imageTransformed = new GreyImage(this.filterWithOneDimension(image));		
+	}
+
+	@Override
+	public void apply(MonoImage image) {
+		this.imageTransformed = new MonoImage(this.filterWithOneDimension(image));
+	}
+
+	private int[][] filterWithOneDimension(Image image) {
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
 		int edgex = 3 / 2;
@@ -84,13 +92,7 @@ public class MedianFilter extends AbstractFilter {
 			}
 		}
 		
-		this.imageTransformed = new GreyImage(newData);		
+		return newData;
 	}
-
-	@Override
-	public void apply(MonoImage image) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }
