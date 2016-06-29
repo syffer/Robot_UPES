@@ -36,8 +36,11 @@ public class GaussianBlur extends AbstractFilter {
 
 	@Override
 	public void apply(MonoImage image) {
-		// TODO Auto-generated method stub
+		int[][] source = image.getCloneMatrix(); 	 
+		int[][] target = new int[image.getWidth()][image.getHeight()];
 		
+		this.gaussBlur_4(source, target, image.getWidth(), image.getHeight(), this.radius);		
+		this.imageTransformed = new GreyImage(target); 
 	}
 
 	
