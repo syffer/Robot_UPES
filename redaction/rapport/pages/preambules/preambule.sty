@@ -1,7 +1,10 @@
 %
 % auteur : Maxime PINEAU
-% version : 2.1 
+% version : 2.1.1 
 % 
+% mise à jour 2.1.1 :
+% - correction listoflisting (problème d'indentation)
+%
 % mise à jour 2.0 :
 % - passage en .sty + paramètres (couleurs, debug)
 % - minted + listings avec le même compteur 
@@ -32,7 +35,7 @@
 % - changer color en xcolor
 %
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{preambule}[27/05/2016 v2.1 preambule perso]
+\ProvidesPackage{preambule}[27/05/2016 v2.1.1 preambule perso]
 
 \RequirePackage{etoolbox}	% \newtoggle, \toggletrue, \ifbool, \iftoggle 
 \RequirePackage{ifthen}		% \ifthenelse 
@@ -299,7 +302,7 @@
 % ********************************************************************
 % Indexe
 % ********************************************************************
-\usepackage[xindy]{imakeidx} 	% (plusieurs indexes possibles)
+%\usepackage[xindy]{imakeidx} 	% (plusieurs indexes possibles)
 %\makeindex						% générer les indexes
 %% \printindex <= a mettre quelque par pour afficher les indexes
 %% utiliser "mot \index{mot}"
@@ -309,7 +312,7 @@
 % ********************************************************************
 % Nomenclature
 % ********************************************************************
-\usepackage[french, intoc]{nomencl}
+%\usepackage[french, intoc]{nomencl}
 %\makenomenclature
 %% \printnomenclature
 %% \nomenclature{$h$}{Planck constant}
@@ -532,7 +535,8 @@
 % - http://distrib-coffee.ipsl.jussieu.fr/pub/mirrors/ctan/macros/latex/contrib/minted/minted.pdf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[
-	%\ifundef{\chapter}{}{chapter}	% pour afficher numéro listing sous la forme Chapter.number 
+	\ifundef{\chapter}{}{chapter},	% pour afficher numéro listing sous la forme Chapter.number 
+	outputdir = {./build}, 
 ]{minted}
 
 % utilisation : 
@@ -551,11 +555,17 @@
 % ajout d'une entrée de la lol dans la toc 
 % - http://ctan.imsc.res.in/macros/latex/contrib/tocbibind/tocbibind.pdf 
 \renewcommand{\listoflistings}{
-	\begingroup
+	\begingroup 
 	\tocfile{\listoflistingscaption}{lol}
 	\endgroup
 }
 
+%\renewcommand{\listoflistings}{%
+%	\ifundef{\chapter}{}{\cleardoublepage}
+%	\phantomsection
+%	\addcontentsline{toc}{\ifundef{\chapter}{section}{chapter}}{\listoflistingscaption}%
+%	\listof{listing}{\listoflistingscaption}%
+%}
 
 
 %%%
@@ -659,12 +669,25 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Compatibilité Minted - Lstlistings (avoir le même compteur)
+% Compatibilité Minted - Listings 
+% Minted casse Listings (sa liste ne marche plus) 
 % - utiliser \listoflistings (\lstlistoflistings devenu obsolète)
 % - http://tex.stackexchange.com/questions/269491/mixing-minted-with-lstlisting 
+% - http://tex.stackexchange.com/questions/270690/how-to-properly-number-between-lstlisting-and-listing-the-same-latex-file 
+%
+% - http://tex.stackexchange.com/questions/287947/figure-as-name-of-listings-in-listoflistings-with-minted-and-newfloat 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\AtBeginEnvironment{listing}{\setcounter{listing}{\value{lstlisting}}}
-\AtEndEnvironment{listing}{\stepcounter{lstlisting}}
+%\AtBeginEnvironment{listing}{\setcounter{listing}{\value{lstlisting}}}
+%\AtEndEnvironment{listing}{\stepcounter{lstlisting}}
+
+\makeatletter
+	\AtBeginDocument{\let\c@listing\c@lstlisting} % avoir le même compteur
+
+	\let\l@listing\l@lstlisting % résoudre problème avec tocbibind (listing devient la même chose que lstlisting)
+\makeatother
+
+%\usepackage{chngcntr}
+%\counterwithin{listing}{chapter}
 
 
 
@@ -739,10 +762,10 @@
 \pagestyle{fancy}		% utiliser style "fancy" (header/footer)
 
 
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Style fancy
 % - style des pages normales
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fancyhead[L]{} 	% \lhead{\nouppercase{\rightmark}}
 
 \renewcommand{\headrulewidth}{0.4pt}	% trait horizontal en-tête
@@ -758,10 +781,10 @@
 }
 
 
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Style plain
 % - utilisé lors d'un début de chapitre
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fancypagestyle{plain}{	 % reprends les champs précédents si non défini ici
 	\fancyhead[L]{}
 	\fancyhead[R]{}	
@@ -773,9 +796,9 @@
 }
 
 
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Style annexes
-%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fancypagestyle{appendix}{
 	% affiche le compteur en 1, 2, 3
 	\renewcommand*{\thepage}{.\arabic{page}}	
