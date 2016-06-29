@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,6 +13,13 @@ import javax.swing.AbstractAction;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import clustering.Cluster;
+import clustering.Individual;
+import clustering.KMeans;
+import clustering.KMeansException;
+import clustering.NumberOfVariablesException;
+
+import features.Feature;
 import features.FeatureExtractor;
 
 
@@ -488,10 +496,29 @@ public class GeneralController {
 			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			MonoImage image = (MonoImage) imageModel.getImage();
 		
-			//System.out.println(ChainCodeExtractor.extract(image));
-		
-			System.out.println(FeatureExtractor.extract(image));
+			List<Feature> features = FeatureExtractor.extract(image);
 			
+			try {
+			
+				Cluster cluster = new Cluster(5);
+				for(Feature feature : features) {
+					Individual individual = new Individual(feature.getWidth(), feature.getHeight(), feature.getArea(), feature.getBendingenergy(), feature.getCircularity());
+					cluster.add(individual);
+				}
+				
+				KMeans kmean = new KMeans();
+				List<Cluster> clusters = kmean.clustering(false, cluster, 4);
+				for(Cluster c : clusters) {
+					System.out.println(c);
+				}
+			
+			} catch (NumberOfVariablesException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (KMeansException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		@Override

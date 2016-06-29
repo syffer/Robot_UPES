@@ -14,6 +14,7 @@ public class Feature {
 	
 	private double area; // number of pixels in the region
 	private double perimeter;
+	
 	private double compactness;
 	private double circularity;
 	private int curvature; // represent the successive changes in direction 

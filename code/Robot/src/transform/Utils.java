@@ -43,9 +43,9 @@ public class Utils {
 		return value;
 	}
 	
-	
+	// value between [min ; max] included
 	public static int random(double min, double max) {
-		return (int) (min + Math.random() * (max - min));
+		return (int) (min + Math.random() * (max - min + 1));
 	}
 	
 	
