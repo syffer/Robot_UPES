@@ -5,14 +5,28 @@ import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
 
+/**
+ * Applies a threshold to an image 
+ * @author Maxime
+ * @see Transformation 
+ */
 public class Threshold extends Transformation {
 
 	private int threshold;
 	
+	/**
+	 * Creates a visitor allowing to apply a threshold to an image. 
+	 * A pixel will be represented in black if its value is strictly under the threshold, and in white otherwise. 
+	 * @param threshold the threshold values 
+	 */
 	public Threshold(int threshold) {
 		this.threshold = threshold;
 	}
 	
+	/**
+	 * Sets the threshold value 
+	 * @param threshold the new threshold value 
+	 */
 	public void setThreshold(int threshold) {
 		this.threshold = threshold;
 	}

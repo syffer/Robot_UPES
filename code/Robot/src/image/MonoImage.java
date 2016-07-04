@@ -7,7 +7,9 @@ import transform.VisitorImage;
 
 /**
  * Represents a monochromatic image (i.e. an image which contains only 2 values, back and white)
- * Tere is no verifications of any sort for the moment. 
+ * There is no verifications of any sort for the moment. 
+ * 
+ * The white must be represented by 255, and the black by 0. 
  * 
  * @author Maxime
  * @see Image 
@@ -19,7 +21,7 @@ public class MonoImage extends GreyImage {
 	 * The data must have only 2 possible values : 
 	 * - black : 0 
 	 * - white : 255
-	 * @param data
+	 * @param data the matrix used to create the monochromatic image. The only posible values have to be 0 and 255 (no verification). 
 	 */
 	public MonoImage(int[][] data) {
 		super(data);
@@ -50,8 +52,8 @@ public class MonoImage extends GreyImage {
 	
 	/**
 	 * Creates a monochromatic image from a buffered image and given a threshold
-	 * @param bufferedImage
-	 * @param threshold 
+	 * @param bufferedImage the buffered image used to create the monochromatic image 
+	 * @param threshold the threshold value, a pixel will be represented in black if its value is strictly under the threshold, and in white otherwise.   
 	 * @see MonoImage#MonoImage(GreyImage, int)
 	 */
 	public MonoImage(BufferedImage bufferedImage, int threshold) {

@@ -40,7 +40,7 @@ public abstract class Image {
 	/**
 	 * Creates an image using the data provided.
 	 * The data will contain the pixel values as integer.
-	 * @param data
+	 * @param data the matrix containing the pixel values
 	 */
 	public Image(int[][] data) {
 		this(data.length, data[0].length, data);
@@ -189,8 +189,8 @@ public abstract class Image {
 	
 	/**
 	 * Saves the image into a jpg file given by his path in a string.
-	 * @param pathToFile 
-	 * @throws IOException
+	 * @param pathToFile the path to the file 
+	 * @throws IOException If an I/O error occurs (e.g. the file is already in use)
 	 */
 	public void saveAs(String pathToFile) throws IOException {	
 		this.saveAs(new File(pathToFile));
@@ -198,8 +198,8 @@ public abstract class Image {
 	
 	/**
 	 * Saves the image into a jpg file 
-	 * @param file
-	 * @throws IOException
+	 * @param file the file 
+	 * @throws IOException If an I/O error occurs
 	 */
 	public void saveAs(File file) throws IOException {
 		BufferedImage bufferedImage = this.getBufferedImage();

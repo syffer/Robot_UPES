@@ -23,9 +23,9 @@ public class RGBImage extends Image {
 
 	/**
 	 * Creates a RGB image using a matrix containing the pixel values. 
-	 * @param data
+	 * @param data the matrix containing the pixel values. Each value is an interger which contain the alpha, red, green and blue value
 	 */
-	public RGBImage(int[][] data) {
+	public RGBImage(int[][] data) { 
 		super(data);
 	}
 	
@@ -48,7 +48,7 @@ public class RGBImage extends Image {
 	
 	/**
 	 * Creates a RGB image using a buffered image. 
-	 * @param bufferedImage
+	 * @param bufferedImage the buffered image used to create the RGB image 
 	 */
 	public RGBImage(BufferedImage bufferedImage) {
 		this(bufferedImage.getWidth(), bufferedImage.getHeight());

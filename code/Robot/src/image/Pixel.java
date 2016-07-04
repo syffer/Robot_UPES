@@ -9,6 +9,8 @@ import java.awt.Color;
  * - blue 
  * - (alpha) 
  * 
+ * Mostly use the Color class. 
+ * 
  * @author Maxime
  * @see Image 
  */
@@ -37,7 +39,7 @@ public class Pixel {
 	
 	/**
 	 * Creates a pixel using a given color 
-	 * @param color
+	 * @param color the color used to create the pixel 
 	 */
 	public Pixel(Color color) {
 		this(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
@@ -46,9 +48,9 @@ public class Pixel {
 	/**
 	 * Creates a pixel using the red, green and blue values. 
 	 * The alpha value will be 0.
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * @param red the red channel 
+	 * @param green the green channel 
+	 * @param blue the blue channel 
 	 */
 	public Pixel(int red, int green, int blue) {
 		this(red, green, blue, 0);
@@ -56,10 +58,10 @@ public class Pixel {
 	
 	/**
 	 * Creates a pixel using the red, green , blue and alpha values 
-	 * @param red
-	 * @param green
-	 * @param blue
-	 * @param alpha
+	 * @param red the red channel 
+	 * @param green the green channel 
+	 * @param blue the blue channel 
+	 * @param alpha the alpha (transparency) channel 
 	 */
 	public Pixel(int red, int green, int blue, int alpha) {
 		this.red = Math.min(255, Math.max(0, red));
@@ -162,9 +164,9 @@ public class Pixel {
 	
 	/**
 	 * Returns the red, green and blue values in a single integer. 
-	 * @param red 
-	 * @param green
-	 * @param blue
+	 * @param red the red channel 
+	 * @param green the green channel 
+	 * @param blue the blue channel 
 	 * @return the red, green and blue value in a single integer 
 	 */
 	public static int getRGB(int red, int green, int blue) {
@@ -173,10 +175,10 @@ public class Pixel {
 	
 	/** 
 	 * Returns the alpha, red, green and blue values in a single integer. 
-	 * @param red
-	 * @param green
-	 * @param blue
-	 * @param alpha
+	 * @param red the red channel 
+	 * @param green the green channel 
+	 * @param blue the blue channel 
+	 * @param alpha the alpha (transparency) channel 
 	 * @return the alpha, red, green and blue value in a single integer 
 	 */
 	public static int getRGB(int red, int green, int blue, int alpha) {

@@ -6,7 +6,8 @@ import java.awt.image.BufferedImage;
 import transform.VisitorImage;
 
 /**
- * Represents a grey image 
+ * Represents a grey image. 
+ * Pixels have values contained between 0 and 255 included. 
  * 
  * @author Maxime
  * @see image.Image 
@@ -19,8 +20,8 @@ public class GreyImage extends Image {
 	
 	/**
 	 * Creates an empty grey image (i.e all black) 
-	 * @param width
-	 * @param height
+	 * @param width the width of the image 
+	 * @param height the height of the image 
 	 */
 	public GreyImage(int width, int height) {
 		super(width, height);
@@ -30,6 +31,10 @@ public class GreyImage extends Image {
 		this(image.getBufferedImage());
 	}
 	
+	/**
+	 * Creates a grey image using a buffered image 
+	 * @param bufferedImage the buffered image used to create the grey image 
+	 */
 	public GreyImage(BufferedImage bufferedImage) {
 		super(bufferedImage.getWidth(), bufferedImage.getHeight()); 	
 		
