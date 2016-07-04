@@ -5,28 +5,55 @@ import java.awt.image.BufferedImage;
 
 import transform.VisitorImage;
 
+/**
+ * Represents a monochromatic image (i.e. an image which contains only 2 values, back and white)
+ * Tere is no verifications of any sort for the moment. 
+ * 
+ * @author Maxime
+ * @see Image 
+ */
 public class MonoImage extends GreyImage {
 	
+	/**
+	 * Creates a monochromatic image based on the given data.
+	 * The data must have only 2 possible values : 
+	 * - black : 0 
+	 * - white : 255
+	 * @param data
+	 */
 	public MonoImage(int[][] data) {
 		super(data);
 	}
 	
 	
-	public MonoImage(GreyImage greyImageModel, int threshold) {
-		super(greyImageModel.getWidth(), greyImageModel.getHeight());
+	/**
+	 * Creates a monochromatic image from a grey image by using the threshold value.
+	 * Pixels which have a value strictly under the given threshold will be represented in black, 
+	 * the others will be represented in white. 
+	 * @param greyImage the grey image. 
+	 * @param threshold the threshold value, a pixel will be represented in black if its value is strictly under the threshold, and in white otherwise. 
+	 */
+	public MonoImage(GreyImage greyImage, int threshold) {
+		super(greyImage.getWidth(), greyImage.getHeight());
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
-				int grey = greyImageModel.get(i, j);				
+				int grey = greyImage.get(i, j);				
 				this.matrix[i][j] = (grey >= threshold) ? 255 : 0;
 			}
 		}
 	}
 	
-	public MonoImage(Image imageModel, int threshold) {
-		this(imageModel.getBufferedImage(), threshold);
+	public MonoImage(Image image, int threshold) {
+		this(image.getBufferedImage(), threshold);
 	}
 	
+	/**
+	 * Creates a monochromatic image from a buffered image and given a threshold
+	 * @param bufferedImage
+	 * @param threshold 
+	 * @see MonoImage#MonoImage(GreyImage, int)
+	 */
 	public MonoImage(BufferedImage bufferedImage, int threshold) {
 		super(bufferedImage.getWidth(), bufferedImage.getHeight());
 		

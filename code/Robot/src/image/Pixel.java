@@ -2,6 +2,16 @@ package image;
 
 import java.awt.Color;
 
+/**
+ * Represents a pixel by 3 values : 
+ * - red 
+ * - green 
+ * - blue 
+ * - (alpha) 
+ * 
+ * @author Maxime
+ * @see Image 
+ */
 public class Pixel {
 	// http://stackoverflow.com/questions/25761438/understanding-bufferedimage-getrgb-output-values/25761567
 		
@@ -10,22 +20,47 @@ public class Pixel {
 	private int blue;
 	private int alpha;
 	
+	/**
+	 * Creates a black pixel 
+	 */
 	public Pixel() {
 		this(0, 0, 0);
 	}
 	
+	/**
+	 * Creates a pixel using the alpha red blue and green values given in a single integer 
+	 * @param argb the alpha, red, green, blue values in a single integer 
+	 */
 	public Pixel(int argb) {
 		this(new Color(argb));
 	}
 	
+	/**
+	 * Creates a pixel using a given color 
+	 * @param color
+	 */
 	public Pixel(Color color) {
 		this(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 	
+	/**
+	 * Creates a pixel using the red, green and blue values. 
+	 * The alpha value will be 0.
+	 * @param red
+	 * @param green
+	 * @param blue
+	 */
 	public Pixel(int red, int green, int blue) {
 		this(red, green, blue, 0);
 	}
 	
+	/**
+	 * Creates a pixel using the red, green , blue and alpha values 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @param alpha
+	 */
 	public Pixel(int red, int green, int blue, int alpha) {
 		this.red = Math.min(255, Math.max(0, red));
 		this.green = Math.min(255, Math.max(0, green));
@@ -81,31 +116,69 @@ public class Pixel {
 	
 	
 	
+	/**
+	 * Returns the color given the alpha, red, green and blue values. 
+	 * Thoses values are gived in a single integer 
+	 * @param argb the alpha, red, green and blue values in a single integer 
+	 * @return the corresponding color 
+	 */
 	public static Color getColor(int argb) {
 		return new Color(argb);
 	}
 	
+	/**
+	 * Returns the red value of the argb (alpha, reg, green and blue in a single integer) 
+	 * @param argb the alpha, red, green and blue values in a single integer 
+	 * @return the red value 
+	 */
 	public static int getRed(int argb) {
 		return Pixel.getColor(argb).getRed();
 	}
 	
+	/**
+	 * @param argb the alpha, red, green and blue values in a single integer 
+	 * @return the green value 
+	 */
 	public static int getGreen(int argb) {
 		return Pixel.getColor(argb).getGreen();
 	}
 	
+	/**
+	 * @param argb the alpha, red, green and blue values in a single integer 
+	 * @return the blue value 
+	 */
 	public static int getBlue(int argb) {
 		return Pixel.getColor(argb).getBlue();
 	}
 	
+	/**
+	 * @param argb the alpha, red, green and blue values in a single integer 
+	 * @return the corresponding grey value 
+	 */
 	public static int getGrey(int argb) {
 		Color color = Pixel.getColor(argb);
 		return (color.getRed() + color.getGreen() + color.getBlue()) / 3;
 	}
 	
+	/**
+	 * Returns the red, green and blue values in a single integer. 
+	 * @param red 
+	 * @param green
+	 * @param blue
+	 * @return the red, green and blue value in a single integer 
+	 */
 	public static int getRGB(int red, int green, int blue) {
 		return (new Color(red, green, blue)).getRGB();
 	}
 	
+	/** 
+	 * Returns the alpha, red, green and blue values in a single integer. 
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * @param alpha
+	 * @return the alpha, red, green and blue value in a single integer 
+	 */
 	public static int getRGB(int red, int green, int blue, int alpha) {
 		return (new Color(red, green, blue, alpha)).getRGB();
 	}

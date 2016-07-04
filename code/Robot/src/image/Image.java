@@ -11,13 +11,18 @@ import javax.imageio.ImageIO;
 import transform.VisitorImage;
 
 
-/**
- * @author Maxime PINEAU
+/** 
+ * Base class of an image, allowing to stock the pixel values.
+ * Images can be represented as : 
+ * - Red Green Blue (RGB) 
+ * - gray 
+ * - monochromatic  
  * 
- */
-/**
- * @author Maxime
- *
+ * A visitor pattern is used in order to perform different process 
+ * according to the instance of the image (RGB, grey, ...).
+ * 
+ * @author Maxime 
+ * @see transform.VisitorImage 
  */
 public abstract class Image {
 	
@@ -25,22 +30,39 @@ public abstract class Image {
 	protected int width;
 	protected int[][] matrix;
 	
-	public Image(int width, int heigth, int[][] data) {
+	protected Image(int width, int heigth, int[][] data) {
 		this.height = heigth;
 		this.width = width;
 		this.matrix = data;
 	}
 	
+	
+	/**
+	 * Creates an image using the data provided.
+	 * The data will contain the pixel values as integer.
+	 * @param data
+	 */
 	public Image(int[][] data) {
 		this(data.length, data[0].length, data);
 	}
 	
+	/**
+	 * Creates an empty image (i.e all black).
+	 * @param width the width of the image
+	 * @param height the height of the image 
+	 */
 	public Image(int width, int height) {
 		this(width, height, new int[width][height]);
 	}
 	
+	/**
+	 * @param visitorImage the visitor containing the operation to perform 
+	 */
 	public abstract void accept(VisitorImage visitorImage);
 	
+	/**
+	 * @return the corresponding buffered image  
+	 */
 	public abstract BufferedImage getBufferedImage();
 			
 	
@@ -66,6 +88,10 @@ public abstract class Image {
 		return this.width * this.height;
 	}
 	
+	
+	/**
+	 * @return a clone of the matrix containing the pixel values of the image. 
+	 */
 	public int[][] getCloneMatrix() {
 		int[][] clone = new int[this.width][this.height];
 		
@@ -77,33 +103,46 @@ public abstract class Image {
 	}
 	
 	/** 
-	 * Return true if the coordinates i and j are in the image. 
-	 * @param i the horizontal coordinate i  
-	 * @param j the vertical coordinate j 
-	 * @return 
+	 * Returns true if the coordinates i and j are in the image, false otherwise. 
+	 * @param i the horizontal coordinate i (width)
+	 * @param j the vertical coordinate j (height) 
+	 * @return true if the coordinates are in the image, false otherwise
 	 */
 	public boolean isInBound(int i, int j) {
 		return i >= 0 && i < this.width && j >= 0 && j < this.height;
 	}
 	
+	
+	/**
+	 * Returns the pixel value of the image at a certain position (i, j).
+	 * @param i the i coordinate (width)
+	 * @param j the j coordinate (height)
+	 * @return the pixel value at the position (i, j) 
+	 */
 	public int get(int i, int j) {
 		return this.matrix[i][j];
 	}
 	
+	/**
+	 * Sets the pixel value at the position (i, j) of the image. 
+	 * @param i the i coordinate (width)
+	 * @param j the j coordinate (height) 
+	 * @param pixelValue the new pixel value of the position (i, j) 
+	 */
 	public void set(int i, int j, int pixelValue) {
 		this.matrix[i][j] = pixelValue;
 	}
 	
 	
 	/**
-	 * Return the Moore Neiborhoods of a pixel given is position (i, j).
+	 * Returns the Moore Neiborhoods of a pixel given is position (i, j).
 	 * The original pixel is also included in the result. 
 	 * The Moore Neiborhoods correspond to the 8-connexes neibors.
 	 * @param range the range of the neiborhoods
-	 * @param i the coordinate i of the origin pixel 
-	 * @param j the coordinate j of the origin pixel 
+	 * @param i the coordinate i of the origin pixel (width)
+	 * @param j the coordinate j of the origin pixel (height) 
 	 * @return a set of the 8-connexes neibors. 
-	 * @see image.Image.getVonNeumannNeighborhoods 
+	 * @see Image#getVonNeumannNeighborhoods 
 	 */
 	public Set<Position> getMooreNeighborhoods(int range, int i, int j) {
 		// 8 connexe 
@@ -120,14 +159,14 @@ public abstract class Image {
 	}
 	
 	/**
-	 * Return the Von Neumann Neiborhoods of a pixel at the position (i, j). 
+	 * Returns the Von Neumann Neiborhoods of a pixel at the position (i, j). 
 	 * The origin pixel is also included into the result. 
 	 * The Von Neumann Neiborhoods correspond to the 4-connexes neibords.
 	 * @param range the range of the neiborhoods
-	 * @param i the coordinate i of the origin pixel
-	 * @param j the coordinate j of the origin pixel
+	 * @param i the coordinate i of the origin pixel (width) 
+	 * @param j the coordinate j of the origin pixel (height) 
 	 * @return a set of the 4-connexe neibors 
-	 * @see image.Image.getMooreNeighborhoods
+	 * @see Image#getMooreNeighborhoods
 	 */
 	public Set<Position> getVonNeumannNeighborhoods(int range, int i, int j) {
 		// 4 connexe 
@@ -149,7 +188,7 @@ public abstract class Image {
 	
 	
 	/**
-	 * Save the image into a jpg file given by his path in a string.
+	 * Saves the image into a jpg file given by his path in a string.
 	 * @param pathToFile 
 	 * @throws IOException
 	 */
@@ -158,7 +197,7 @@ public abstract class Image {
 	}
 	
 	/**
-	 * Save the image into a jpg file 
+	 * Saves the image into a jpg file 
 	 * @param file
 	 * @throws IOException
 	 */

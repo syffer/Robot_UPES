@@ -5,12 +5,23 @@ import java.awt.image.BufferedImage;
 
 import transform.VisitorImage;
 
+/**
+ * Represents a grey image 
+ * 
+ * @author Maxime
+ * @see image.Image 
+ */
 public class GreyImage extends Image {
 	
 	public GreyImage(int[][] data) {
 		super(data);
 	}
 	
+	/**
+	 * Creates an empty grey image (i.e all black) 
+	 * @param width
+	 * @param height
+	 */
 	public GreyImage(int width, int height) {
 		super(width, height);
 	}

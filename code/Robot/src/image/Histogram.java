@@ -9,25 +9,57 @@ import java.util.TreeMap;
 import transform.VisitorImage;
 
 
+/**  
+ * Represents the histogram of an image (i.e. count the frequency / number of appearance of each pixel values).
+ * 
+ * Pixel frequencies will be stock in a map.
+ * 
+ * As an image can have multiple channels (e.g. RGB image which have 3 channels), 
+ * the pixel frequencies of each channels will be stock separately, in a list (names "frequenciesMap").
+ * 
+ * Each channel can be represented with a different color. Those colors are stocked in the list "colors".
+ * 
+ * Grey and monochromatic images have only one channel, and are represented in grey. 
+ * RGB images have 3 channels, which are respectively represented in red, green and blue.
+ * 
+ * @author Maxime
+ * @see image.Image
+ * @see transform.VisitorImage 
+ */
 public class Histogram implements VisitorImage {
 
+	/**
+	 * Contains the pixel frequencies of each channel
+	 */
 	private List<Map<Integer, Integer>> frequenciesMap;
+	
+	
+	/**
+	 * Contains the colors associated to the channels
+	 */
 	private List<Color> colors;
+	
 	
 	public Histogram() {
 		this.frequenciesMap = new ArrayList<Map<Integer,Integer>>();
 		this.colors = new ArrayList<Color>();
 	}
 	
+	/**
+	 * Return a list containing the pixel frequencies of each channels. 
+	 * The pixel frequencies of one channel are stocked in a map. 
+	 * @return a list containing the pixel frequencies of each channel 
+	 */
 	public List<Map<Integer, Integer>> getFrequenciesMap() {
 		return this.frequenciesMap;
 	}
 	
+	/**
+	 * @return the colors associated to the channels
+	 */
 	public List<Color> getColors() {
 		return this.colors;
 	}
-
-	
 	
 	@Override
 	public void apply(RGBImage image) {

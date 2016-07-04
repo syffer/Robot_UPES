@@ -4,16 +4,35 @@ import java.awt.image.BufferedImage;
 
 import transform.VisitorImage;
 
+/**
+ * Represents a RGB image (Red Green Blue) 
+ * 
+ * @author Maxime
+ * @see image.Image 
+ */
 public class RGBImage extends Image {
 
+	/**
+	 * Creates an empty RGB image (i.e all black)
+	 * @param width the width of the image 
+	 * @param heigth the height of the image 
+	 */
 	protected RGBImage(int width, int heigth) {
 		super(width, heigth);
 	}
 
+	/**
+	 * Creates a RGB image using a matrix containing the pixel values. 
+	 * @param data
+	 */
 	public RGBImage(int[][] data) {
 		super(data);
 	}
 	
+	/**
+	 * Creates a RGB image from a monochromatic image 
+	 * @param image the monochromatic image 
+	 */
 	public RGBImage(MonoImage image) {
 		super(image.getWidth(), image.getHeight());
 		
@@ -27,6 +46,10 @@ public class RGBImage extends Image {
 		
 	}
 	
+	/**
+	 * Creates a RGB image using a buffered image. 
+	 * @param bufferedImage
+	 */
 	public RGBImage(BufferedImage bufferedImage) {
 		this(bufferedImage.getWidth(), bufferedImage.getHeight());
 		
