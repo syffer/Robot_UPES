@@ -14,6 +14,19 @@ public class RGBImage extends Image {
 		super(data);
 	}
 	
+	public RGBImage(MonoImage image) {
+		super(image.getWidth(), image.getHeight());
+		
+		for(int i = 0; i < image.getWidth(); i++) {
+			for(int j = 0; j < image.getHeight(); j++) {
+				int grey = image.get(i, j);
+				Pixel pixel = new Pixel(grey, grey, grey);
+				this.matrix[i][j] = pixel.getRGB();
+			}
+		}
+		
+	}
+	
 	public RGBImage(BufferedImage bufferedImage) {
 		this(bufferedImage.getWidth(), bufferedImage.getHeight());
 		

@@ -11,6 +11,10 @@ public class GreyImage extends Image {
 		super(data);
 	}
 	
+	public GreyImage(int width, int height) {
+		super(width, height);
+	}
+	
 	public GreyImage(Image image) {
 		this(image.getBufferedImage());
 	}

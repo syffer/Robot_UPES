@@ -66,7 +66,10 @@ public abstract class Image {
 	public int get(int i, int j) {
 		return this.matrix[i][j];
 	}
-		
+	
+	public void set(int i, int j, int pixelValue) {
+		this.matrix[i][j] = pixelValue;
+	}
 	
 	public Set<Pair<Integer, Integer>> getMooreNeighborhoods(int range, int i, int j) {
 		// 8 connexe 

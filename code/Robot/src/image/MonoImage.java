@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import transform.VisitorImage;
 
-public class MonoImage extends Image {
+public class MonoImage extends GreyImage {
 	
 	public MonoImage(int[][] data) {
 		super(data);
