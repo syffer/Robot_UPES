@@ -6,6 +6,14 @@ import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
 
+/**
+ * Applies a Sobel filer to an image. 
+ * A sobel filter is an edge detection operator. 
+ * 
+ * @see <a href="https://blog.saush.com/2011/04/20/edge-detection-with-the-sobel-operator-in-ruby/">https://blog.saush.com/2011/04/20/edge-detection-with-the-sobel-operator-in-ruby/ </a>
+ * @see <a href="http://stackoverflow.com/questions/19331515/implenting-a-sobel-filter-in-imagej">http://stackoverflow.com/questions/19331515/implenting-a-sobel-filter-in-imagej</a>
+ * @author Maxime PINEAU
+ */
 public class Sobel extends AbstractFilter {
 	
 	private static final int[][] maskX = {{-1, 0, 1}, 
@@ -26,6 +34,7 @@ public class Sobel extends AbstractFilter {
 		for(int i = 1; i < image.getWidth() - 1; i++) {
 			for(int j = 1; j < image.getHeight() - 1; j++) {
 				
+				// get the surrounding pixel values 
 				Pixel pixelTopLeft = new Pixel(image.get(i-1,  j-1));
 				Pixel pixelTop = new Pixel(image.get(i,  j-1));
 				Pixel pixelTopRight = new Pixel(image.get(i+1,  j-1));
@@ -71,7 +80,7 @@ public class Sobel extends AbstractFilter {
 				
 				int blue = (int) Math.ceil(Math.sqrt((newX * newX) + (newY * newY)));
 				
-				// gradiant
+				// calculate the gradiant
 				Pixel newPixel = new Pixel(red, green, blue); 
 				newData[i][j] = newPixel.getRGB();
 			}
@@ -90,9 +99,6 @@ public class Sobel extends AbstractFilter {
 		this.imageTransformed = new GreyImage(this.filter(image));
 	}
 	
-	
-	// https://blog.saush.com/2011/04/20/edge-detection-with-the-sobel-operator-in-ruby/ 
-	// http://stackoverflow.com/questions/19331515/implenting-a-sobel-filter-in-imagej 
 	
 	private int[][] filter(Image image) {
 		

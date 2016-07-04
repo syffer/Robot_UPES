@@ -5,12 +5,16 @@ import image.Image;
 import image.MonoImage;
 import image.RGBImage;
 
+/**
+ * Applies a dilatation to an image. 
+ * 
+ * @author Maxime PINEAU
+ */
 public class Dilation extends Morphology {
-
-
+	
 	@Override
 	public void apply(RGBImage image) {
-		this.imageTransformed = new GreyImage(this.dilate(image));		
+		
 	}
 
 	@Override

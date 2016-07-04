@@ -6,9 +6,23 @@ import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
 
+/**
+ * Applies a weighted average filter to an image. 
+ * 
+ * Applies a convolution to each pixels given a certain filter, and then divide it 
+ * by the number of surrounding pixels. 
+ * 
+ * @author Maxime PINEAU
+ */
 public class WeightedAverageFilter extends AbstractFilter {
 
-	private static final int[][] originalMask = {{1, 1, 1}, 
+	/**
+	 * default mask : 
+	 * 1 1 1 
+	 * 1 8 1
+	 * 1 1 1 
+	 */
+	public static final int[][] originalMask = {{1, 1, 1}, 
 										 		 {1, 8, 1}, 
 										 		 {1, 1, 1}};
 	
@@ -18,6 +32,9 @@ public class WeightedAverageFilter extends AbstractFilter {
 		this.mask = mask;
 	}
 	
+	/**
+	 * Creates a weighted average filter with the default mask 
+	 */
 	public WeightedAverageFilter() {
 		this(WeightedAverageFilter.originalMask);
 	}
@@ -38,7 +55,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 				else if((i == 1 || i == image.getWidth() - 2) || (j == 1 || j == image.getHeight() - 2)) nbPixels = 13;
 				else nbPixels = 16;
 				
-
+				// get the surrounding pixel values 
 				Pixel pixelTopLeft = new Pixel(image.get(i-1,  j-1));
 				Pixel pixelTop = new Pixel(image.get(i,  j-1));
 				Pixel pixelTopRight = new Pixel(image.get(i+1,  j-1));
@@ -51,6 +68,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 				Pixel pixelBottom = new Pixel(image.get(i,  j+1));
 				Pixel pixelBottomRight = new Pixel(image.get(i+1,  j+1));
 				
+				// convolution 
 				int red = mask[0][0] * pixelTopLeft.getRed() + mask[0][1] * pixelTop.getRed() + mask[0][2] * pixelTopRight.getRed() + 
 						  mask[1][0] * pixelLeft.getRed()   + mask[1][1] * pixelMiddle.getRed()   + mask[1][2] * pixelRight.getRed() +
 						  mask[2][0] * pixelBottomLeft.getRed() + mask[2][1] * pixelBottom.getRed() + mask[2][2] * pixelBottomRight.getRed();
@@ -63,6 +81,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 						   mask[1][0] * pixelLeft.getBlue()   + mask[1][1] * pixelMiddle.getBlue()   + mask[1][2] * pixelRight.getBlue() +
 						   mask[2][0] * pixelBottomLeft.getBlue() + mask[2][1] * pixelBottom.getBlue() + mask[2][2] * pixelBottomRight.getBlue();
 				
+				// applie the average 
 				red = red / nbPixels;
 				green = green / nbPixels;
 				blue = blue / nbPixels;
@@ -93,6 +112,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 		for(int i = 1; i < image.getWidth() - 2; i++) {
 			for(int j = 1; j < image.getHeight() - 2; j++) {
 				
+				// convolution 
 				int value = mask[0][0] * image.get(i-1, j-1) + mask[0][1] * image.get(i, j-1) + mask[0][2] * image.get(i+1, j-1) + 
 							mask[1][0] * image.get(i-1, j)   + mask[1][1] * image.get(i, j)   + mask[1][2] * image.get(i+1, j) +
 							mask[2][0] * image.get(i-1, j+1) + mask[2][1] * image.get(i, j+1) + mask[2][2] * image.get(i+1, j+1);
@@ -103,6 +123,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 				else if((i == 1 || i == image.getWidth() - 2) || (j == 1 || j == image.getHeight() - 2)) nbPixels = 13;
 				else nbPixels = 16;
 				
+				// average 
 				value = value / nbPixels;
 				newData[i][j] = Math.max(0, Math.min(255,  value));
 			}

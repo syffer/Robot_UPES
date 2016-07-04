@@ -8,6 +8,9 @@ import image.RGBImage;
 
 /**
  * Applies a Laplacian filter on an image. 
+ * Laplacian is an edge detector operation. 
+ * 
+ * @see <a href="http://www.tutorialspoint.com/dip/laplacian_operator.htm">http://www.tutorialspoint.com/dip/laplacian_operator.htm</a>
  * @author Maxime PINEAU
  */
 public class Laplacian extends AbstractFilter {

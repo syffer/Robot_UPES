@@ -11,13 +11,16 @@ import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * Applies a Median filter to an image. 
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Median_filter">https://en.wikipedia.org/wiki/Median_filter</a>
+ * @author Maxime PINEAU
+ */
 public class MedianFilter extends AbstractFilter {
-
-	
 	
 	@Override
 	public void apply(RGBImage image) {
-		// TODO Auto-generated method stub
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -50,6 +53,7 @@ public class MedianFilter extends AbstractFilter {
 				Collections.sort(windowGreen);
 				Collections.sort(windowBlue);
 				
+				// get the median value 
 				newData[x][y] = (new Pixel(windowRed.get(3*3/2), windowGreen.get(3*3/2), windowBlue.get(3*3/2))).getRGB();
 			}
 		}
@@ -88,6 +92,8 @@ public class MedianFilter extends AbstractFilter {
 				}
 				
 				Collections.sort(window);
+				
+				// get the median value 
 				newData[x][y] = window.get(3 * 3 / 2);
 			}
 		}

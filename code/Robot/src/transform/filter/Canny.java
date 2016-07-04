@@ -19,13 +19,13 @@ public class Canny extends AbstractFilter {
 	/**
 	 * horizontal mask 
 	 */
-	private static final int[] maskX = {-1,  0,  1};
+	public static final int[] maskX = {-1,  0,  1};
 	
 	
 	/**
 	 * vertical mask 
 	 */
-	private static final int[] maskY = { 1,  0, -1};
+	public static final int[] maskY = { 1,  0, -1};
 	
 	
 	@Override

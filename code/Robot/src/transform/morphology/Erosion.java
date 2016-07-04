@@ -5,11 +5,16 @@ import image.Image;
 import image.MonoImage;
 import image.RGBImage;
 
+/**
+ * Applies an erosion to an image
+ * 
+ * @author Maxime PINEAU
+ */
 public class Erosion extends Morphology {
 		
 	@Override
 	public void apply(RGBImage image) {
-		this.imageTransformed = new GreyImage(this.erode(image));		
+				
 	}
 
 	@Override

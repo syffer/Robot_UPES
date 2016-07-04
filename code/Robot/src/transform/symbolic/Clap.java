@@ -12,10 +12,18 @@ import java.util.Set;
 import transform.Transformation;
 
 
+/**
+ * Applies the CLAP algorithm to an image
+ * @author Maxime PINEAU
+ */
 public class Clap extends Transformation {
 
 	private int treashold;
 	
+	/**
+	 * 
+	 * @param treashold the given threshold 
+	 */
 	public Clap(int treashold) {
 		this.treashold = treashold;
 	}
