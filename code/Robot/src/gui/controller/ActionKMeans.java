@@ -18,6 +18,8 @@ import clustering.NumberOfVariablesException;
 import features.Feature;
 import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
+import gui.view.ChoiceCanceledException;
+import gui.view.JOptionPaneSlider;
 
 public class ActionKMeans extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
@@ -37,8 +39,6 @@ public class ActionKMeans extends AbstractAction implements Observer {
 		List<Feature> features = featureExtractionModel.getFeatures();
 		MonoImage image = featureExtractionModel.getOriginalImage();
 		
-		int nbClasses = 4;
-		
 		try {
 			
 			Cluster cluster = new Cluster(10);
@@ -56,18 +56,23 @@ public class ActionKMeans extends AbstractAction implements Observer {
 				cluster.add(individual);
 			}
 			
+			int nbClasses = JOptionPaneSlider.showConfirmDialog(this.controller.view, "Classification - Number of Classes", 1, features.size());
+			
+			
 			KMeans kmeans = new KMeans();
 			
 			long startTime = System.currentTimeMillis();
 			kmeans.clustering(true, cluster, nbClasses);
 			long endTime = System.currentTimeMillis();
 			
-			ClassificationModel classificationModel = new ClassificationModel(image, features, kmeans.getClasses(), endTime - startTime);
+			ClassificationModel classificationModel = new ClassificationModel(image, features, nbClasses, kmeans.getClasses(), endTime - startTime);
 			this.controller.addInternalModel(classificationModel); 
 			
 			
 		} catch (NumberOfVariablesException | KMeansException e) {
 			e.printStackTrace();
+		} catch (ChoiceCanceledException e) {
+			// do nothing 
 		}
 		
 		

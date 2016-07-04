@@ -28,19 +28,19 @@ public class ActionThreshold extends AbstractAction implements Observer {
 	@Override
 	public void actionPerformed(ActionEvent event) { 
 		try {
-			int value = JOptionPaneSlider.showConfirmDialog(this.controller.view, "Monochromatic", 0, 255);
-			Threshold threashold = new Threshold(value);
+			int value = JOptionPaneSlider.showConfirmDialog(this.controller.view, "Threshold", 0, 255);
+			Threshold threshold = new Threshold(value);
 				
 			ImageModel imageModel = (ImageModel) this.controller.getSelectedInternalModel();
 			Image image = imageModel.getImage();
 			
 			long startTime = System.currentTimeMillis();
 			//MonoImage monoImage = new MonoImage(image, threshold);
-			image.accept(threashold);
+			image.accept(threshold);
 			long endTime = System.currentTimeMillis();
 			
-			Image monoImage = threashold.getTransformedImage();
-			this.controller.addInternalModel(new ImageModel(monoImage, image, "Monochromatic", endTime - startTime));
+			Image monoImage = threshold.getTransformedImage();
+			this.controller.addInternalModel(new ImageModel(monoImage, image, "Monochromatic (" + value + ")", endTime - startTime));
 			
 		} catch (ChoiceCanceledException e) {
 			// don't do anything

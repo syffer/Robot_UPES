@@ -14,14 +14,16 @@ public class ClassificationModel extends ImageModel {
 	private static final Color[] colors = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.DARK_GRAY};
 	
 	protected MonoImage original;
-	private List<Feature> features;
+	private List<Feature> features; 
+	private int nbClasses;
 	private int[] classes;
 	
-	public ClassificationModel(MonoImage image, List<Feature> features, int[] classes, double executionTime) { 
-		super(new RGBImage(image), image, "Classification", executionTime);
+	public ClassificationModel(MonoImage image, List<Feature> features, int nbClasses, int[] classes, double executionTime) { 
+		super(new RGBImage(image), image, "Classification (" + nbClasses + ")", executionTime);
 		
 		this.original = image;
 		this.features = features;
+		this.nbClasses = nbClasses;
 		this.classes = classes;
 		
 		for(int i = 0; i < this.features.size(); i++) {
