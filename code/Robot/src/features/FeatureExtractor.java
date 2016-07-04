@@ -7,15 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class FeatureExtractor {
 
 	
+	/**
+	 * Extracts the features presents in a monochromatic image. 
+	 * A feature is created from a starting position and an extracted chain code.
+	 * @param image the monochromatic image 
+	 * @return a list of the present features in the image 
+	 */
 	public static List<Feature> extract(MonoImage image) {
 		
 		List<Feature> features = new ArrayList<Feature>();
+		ChainCodeExtractor chainCodeExtractor = new ChainCodeExtractor();
 		
-		Map<Position, ChainCode> chainCodes = ChainCodeExtractor.extract(image);
+		Map<Position, ChainCode> chainCodes = chainCodeExtractor.extract(image);
 		for(Position position : chainCodes.keySet()) {
 			ChainCode chainCode = chainCodes.get(position);
 			Feature feature = new Feature(position, chainCode);

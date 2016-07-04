@@ -112,6 +112,14 @@ public abstract class Image {
 		return i >= 0 && i < this.width && j >= 0 && j < this.height;
 	}
 	
+	/**
+	 * Returns true if the coordinates i and j stocked in the position are in the image, false otherwise. 
+	 * @param position the position containing the coordinate (i, j) 
+	 * @return true if the position is in the image, false otherwise 
+	 */
+	public boolean isInBound(Position position) {
+		return this.isInBound(position.i, position.j);
+	}
 	
 	/**
 	 * Returns the pixel value of the image at a certain position (i, j).
