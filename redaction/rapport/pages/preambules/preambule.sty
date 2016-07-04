@@ -5,6 +5,7 @@
 % mise à jour 2.1.1 :
 % - correction listoflisting (problème d'indentation)
 % - booktabs + saving footnotes table 
+% - compteur listing comme figures et tableaux 
 %
 % mise à jour 2.0 :
 % - passage en .sty + paramètres (couleurs, debug)
@@ -537,7 +538,6 @@
 % - a besoin de : Python 2.6 (ou plus) et Pygments ("pip install Pygments")
 % - exécuter avec : 
 % latex --shell-escape <file>
-% pdflatex --shell-escape  <file>
 % - https://fr.sharelatex.com/learn/Code_Highlighting_with_minted 
 % - http://distrib-coffee.ipsl.jussieu.fr/pub/mirrors/ctan/macros/latex/contrib/minted/minted.pdf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -558,6 +558,10 @@
 	\renewcommand{\listoflistingscaption}{Liste des listings} 
 }
 
+% compteur comme ceux des tableaux / figures 
+\ifundef{\chapter}{}{
+	\renewcommand{\thelisting}{\ifnum\value{chapter}>0\relax\thechapter.\fi\arabic{listing}}
+}
 
 % ajout d'une entrée de la lol dans la toc 
 % - http://ctan.imsc.res.in/macros/latex/contrib/tocbibind/tocbibind.pdf 
@@ -573,6 +577,7 @@
 %	\addcontentsline{toc}{\ifundef{\chapter}{section}{chapter}}{\listoflistingscaption}%
 %	\listof{listing}{\listoflistingscaption}%
 %}
+
 
 
 %%%
@@ -693,8 +698,6 @@
 	\let\l@listing\l@lstlisting % résoudre problème avec tocbibind (listing devient la même chose que lstlisting)
 \makeatother
 
-%\usepackage{chngcntr}
-%\counterwithin{listing}{chapter}
 
 
 
