@@ -9,10 +9,10 @@ import java.io.IOException;
 
 public class ImageModel extends InternalModel {
 	
-	private Image image;
-	private Image original;
-	private String operationName;
-	private double executionTime;
+	protected Image image;
+	protected Image original;
+	protected String operationName;
+	protected double executionTime;
 	
 	public ImageModel(Image image, String operationName, double executionTime) {
 		this(image, null, operationName, executionTime);
@@ -34,7 +34,7 @@ public class ImageModel extends InternalModel {
 	}
 	
 	public double getExecutionTime() {
-		return executionTime / 1000;
+		return this.executionTime / 1000;
 	}
 	
 	public Image getImage() {

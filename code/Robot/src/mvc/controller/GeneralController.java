@@ -27,6 +27,7 @@ import transform.filter.Sobel;
 import transform.morphology.Dilation;
 import transform.morphology.Erosion;
 
+import mvc.model.FeatureExtractionModel;
 import mvc.model.GeneralModel;
 import mvc.model.Histogram;
 import mvc.model.ImageModel;
@@ -62,6 +63,8 @@ public class GeneralController {
 	protected ActionTransformation actionErosion;
 	protected ActionTransformation actionDilation;
 	
+	protected ActionFeatureExtraction actionFeatureExtraction;
+	
 	public GeneralController(GeneralModel generalModel) {
 		
 		this.model = generalModel;
@@ -90,6 +93,8 @@ public class GeneralController {
 		this.actionErosion = new ActionTransformation(this, "Erosion", new Erosion());
 		this.actionDilation = new ActionTransformation(this, "Dilatation", new Dilation());
 		
+		this.actionFeatureExtraction = new ActionFeatureExtraction(this);
+		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
 		this.view.menuSaveAs.setAction(this.actionSaveAs);
@@ -115,6 +120,8 @@ public class GeneralController {
 		this.view.menuErosion.setAction(this.actionErosion);
 		this.view.menuDilation.setAction(this.actionDilation);
 		
+		this.view.menuChainCode.setAction(this.actionFeatureExtraction);
+		
 		// initialise observers (setting default values)
 		this.model.initialise();
 	}
@@ -122,6 +129,10 @@ public class GeneralController {
 	
 	public boolean hasImageModelSelected() {
 		return this.model.hasImageModelSelected();
+	}
+	
+	public boolean hasInternalModelSelected() {
+		return this.model.hasModelSelected(); 
 	}
 	
 	public InternalModel getSelectedInternalModel() {
@@ -155,10 +166,15 @@ public class GeneralController {
 		this.addInternalModel(imageController);
 	}
 	
+	public void addInternalModel(FeatureExtractionModel featureExtractionModel) {
+		FeatureExtractionController featureExtractionController = new FeatureExtractionController(featureExtractionModel);
+		this.addInternalModel(featureExtractionController);
+	}
+	
 	public void addInternalModel(InternalController internalController) {
 		this.addInternalModel(internalController, false);
 	}
-			
+	
 	public void addInternalModel(InternalController internalController, boolean newInternalFrame) {		
 		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
 		internalController.internalView.addInternalFrameListener(new ActionInternalFrame(this));
