@@ -15,6 +15,10 @@ import transform.VisitorImage;
  * @author Maxime PINEAU
  * 
  */
+/**
+ * @author Maxime
+ *
+ */
 public abstract class Image {
 	
 	protected int height;
@@ -90,29 +94,51 @@ public abstract class Image {
 		this.matrix[i][j] = pixelValue;
 	}
 	
-	public Set<Pair<Integer, Integer>> getMooreNeighborhoods(int range, int i, int j) {
+	
+	/**
+	 * Return the Moore Neiborhoods of a pixel given is position (i, j).
+	 * The original pixel is also included in the result. 
+	 * The Moore Neiborhoods correspond to the 8-connexes neibors.
+	 * @param range the range of the neiborhoods
+	 * @param i the coordinate i of the origin pixel 
+	 * @param j the coordinate j of the origin pixel 
+	 * @return a set of the 8-connexes neibors. 
+	 * @see image.Image.getVonNeumannNeighborhoods 
+	 */
+	public Set<Position> getMooreNeighborhoods(int range, int i, int j) {
 		// 8 connexe 
 		
-		Set<Pair<Integer, Integer>> neighborsIndex = new HashSet<Pair<Integer, Integer>>();
+		Set<Position> neighborsIndex = new HashSet<Position>();
 		
 		for(int k = i - range; k <= i + range; k++) {
 			for(int l = j - range; l <= j + range; l++) {
-				if(this.isInBound(k, l)) neighborsIndex.add(new Pair<Integer, Integer>(k, l));
+				if(this.isInBound(k, l)) neighborsIndex.add(new Position(k, l));
 			}
 		}
 		
 		return neighborsIndex;
 	}
 	
-	public Set<Pair<Integer, Integer>> getVonNeumannNeighborhoods(int range, int i, int j) {
+	/**
+	 * Return the Von Neumann Neiborhoods of a pixel at the position (i, j). 
+	 * The origin pixel is also included into the result. 
+	 * The Von Neumann Neiborhoods correspond to the 4-connexes neibords.
+	 * @param range the range of the neiborhoods
+	 * @param i the coordinate i of the origin pixel
+	 * @param j the coordinate j of the origin pixel
+	 * @return a set of the 4-connexe neibors 
+	 * @see image.Image.getMooreNeighborhoods
+	 */
+	public Set<Position> getVonNeumannNeighborhoods(int range, int i, int j) {
 		// 4 connexe 
 		
-		Set<Pair<Integer, Integer>> neighborsIndex = new HashSet<Pair<Integer, Integer>>();
+		Set<Position> neighborsIndex = new HashSet<Position>();
 		
 		for(int k = i - range; k <= i + range; k++) {
 			for(int l = j - range; l <= j + range; l++) {
+				// select only the top, left, bottom and right neibors 
 				if(this.isInBound(k, l) && Math.abs(k - i) + Math.abs(l - j) <= range) {
-					neighborsIndex.add(new Pair<Integer, Integer>(k, l));
+					neighborsIndex.add(new Position(k, l));
 				}
 			}
 		}
@@ -123,7 +149,7 @@ public abstract class Image {
 	
 	
 	/**
-	 * Save the image into a file given by his path in a string.
+	 * Save the image into a jpg file given by his path in a string.
 	 * @param pathToFile 
 	 * @throws IOException
 	 */
@@ -132,7 +158,7 @@ public abstract class Image {
 	}
 	
 	/**
-	 * Save the image into a file 
+	 * Save the image into a jpg file 
 	 * @param file
 	 * @throws IOException
 	 */

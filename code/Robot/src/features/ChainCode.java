@@ -1,5 +1,7 @@
 package features;
 
+import image.Position;
+
 import java.util.ArrayList;
 import java.util.List; 
 

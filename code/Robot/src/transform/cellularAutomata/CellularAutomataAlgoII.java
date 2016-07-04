@@ -3,7 +3,7 @@ package transform.cellularAutomata;
 import image.GreyImage;
 import image.Image;
 import image.MonoImage;
-import image.Pair;
+import image.Position;
 import image.RGBImage;
 
 import java.util.ArrayList;
@@ -50,11 +50,11 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 		for(int i = 1; i < image.getWidth() - 1; i++) {
 			for(int j = 1; j < image.getHeight() - 1; j++) {
 				
-				Set<Pair<Integer, Integer>> neighbors = image.getMooreNeighborhoods(1, i, j);
+				Set<Position> neighbors = image.getMooreNeighborhoods(1, i, j);
 				List<Integer> values = new ArrayList<Integer>();
 				
-				for(Pair<Integer, Integer> pair : neighbors) {
-					values.add(image.get(pair.first, pair.second));
+				for(Position pair : neighbors) {
+					values.add(image.get(pair.i, pair.j));
 				}
 				
 				Collections.sort(values);

@@ -1,5 +1,7 @@
 package features;
 
+import image.Position;
+
 public class Feature {
 	
 	// https://books.google.co.in/books?id=M_Lr8NTfAHcC&pg=PA226&lpg=PA226&dq=curvature+with+chain+code&source=bl&ots=hNHF5hTbuM&sig=S4scMfCxCVUUHFms09hFjCMt7RU&hl=fr&sa=X&redir_esc=y#v=onepage&q=curvature%20with%20chain%20code&f=false 

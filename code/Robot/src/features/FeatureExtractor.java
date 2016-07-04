@@ -1,6 +1,7 @@
 package features;
 
 import image.MonoImage;
+import image.Position;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,9 +6,9 @@ import java.util.List;
 
 import features.ChainCode;
 import features.Feature;
-import features.Position;
 
 import image.MonoImage;
+import image.Position;
 import image.RGBImage;
 
 public class FeatureExtractionModel extends ImageModel {

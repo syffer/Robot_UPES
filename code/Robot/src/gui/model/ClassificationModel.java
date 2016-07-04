@@ -2,8 +2,8 @@ package gui.model;
 
 import features.ChainCode;
 import features.Feature;
-import features.Position;
 import image.MonoImage;
+import image.Position;
 import image.RGBImage;
 
 import java.awt.Color;

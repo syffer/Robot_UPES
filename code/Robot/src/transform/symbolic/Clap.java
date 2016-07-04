@@ -3,8 +3,8 @@ package transform.symbolic;
 import image.GreyImage;
 import image.Image;
 import image.MonoImage;
-import image.Pair;
 import image.Pixel;
+import image.Position;
 import image.RGBImage;
 
 import java.util.Set;
@@ -39,12 +39,12 @@ public class Clap extends Transformation {
 				int minBlue = pixel.getBlue();
 				
 				// bornes 
-				Set<Pair<Integer, Integer>> neighborsIndex = image.getVonNeumannNeighborhoods(1,  i,  j);
+				Set<Position> neighborsIndex = image.getVonNeumannNeighborhoods(1,  i,  j);
 				//image.getIndexNeighbor4Connexity(i, j);
 				
 				
-				for(Pair<Integer, Integer> p : neighborsIndex) {
-					Pixel neighbor = new Pixel(image.get(p.first, p.second));
+				for(Position p : neighborsIndex) {
+					Pixel neighbor = new Pixel(image.get(p.i, p.j));
 					
 					maxRed = Math.max(maxRed, neighbor.getRed());
 					maxGreen = Math.max(maxGreen, neighbor.getGreen());
@@ -63,15 +63,15 @@ public class Clap extends Transformation {
 					newData[i][j] = image.get(i, j);
 				}
 				else {
-					for(Pair<Integer, Integer> p : neighborsIndex) {
+					for(Position p : neighborsIndex) {
 						
-						Pixel neighbor = new Pixel(image.get(p.first, p.second));
+						Pixel neighbor = new Pixel(image.get(p.i, p.j));
 						
 						if(redD <= this.treashold) neighbor.setRed(0);
 						if(greenD <= this.treashold) neighbor.setGreen(0);
 						if(blueD <= this.treashold) neighbor.setBlue(0);
 						
-						newData[p.first][p.second] = neighbor.getRGB();
+						newData[p.i][p.j] = neighbor.getRGB();
 					}
 				}
 			}
@@ -104,20 +104,20 @@ public class Clap extends Transformation {
 				int minimum = newData[i][j];
 				
 				// bornes 
-				Set<Pair<Integer, Integer>> neighborsIndex = image.getVonNeumannNeighborhoods(1,  i,  j);
+				Set<Position> neighborsIndex = image.getVonNeumannNeighborhoods(1,  i,  j);
 				//image.getIndexNeighbor4Connexity(i, j);
 				
 				
-				for(Pair<Integer, Integer> p : neighborsIndex) {
-					maximum = Math.max(maximum, image.get(p.first, p.second));
-					minimum = Math.min(minimum, image.get(p.first, p.second));
+				for(Position p : neighborsIndex) {
+					maximum = Math.max(maximum, image.get(p.i, p.j));
+					minimum = Math.min(minimum, image.get(p.i, p.j));
 				}
 				
 				int d = maximum - minimum;
 								
 				if(d <= this.treashold) {
-					for(Pair<Integer, Integer> p : neighborsIndex) {
-						newData[p.first][p.second] = 0;
+					for(Position p : neighborsIndex) {
+						newData[p.i][p.j] = 0;
 					}
 				}
 				else {
