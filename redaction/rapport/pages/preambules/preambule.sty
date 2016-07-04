@@ -4,6 +4,7 @@
 % 
 % mise à jour 2.1.1 :
 % - correction listoflisting (problème d'indentation)
+% - booktabs + saving footnotes table 
 %
 % mise à jour 2.0 :
 % - passage en .sty + paramètres (couleurs, debug)
@@ -128,7 +129,7 @@
 % - /!\ incompatibilité avec tobbibind
 % - http://tex.stackexchange.com/questions/74506/problems-with-titlesec-hyperref-biblatex-and-tocbibind
 %\usepackage[pagestyles]{titlesec}	% pagestyles = \usepackage{titleps} 
-\usepackage{titletoc}
+%\usepackage{titletoc}
 
 
 
@@ -269,15 +270,18 @@
 
 
 % ********************************************************************
-% Tableaux
+% Tableaux 
+% - https://www.tug.org/pracjourn/2007-1/mori/mori.pdf 
+% - http://www.howtotex.com/packages/improve-your-tables-with-booktabs/  
 % ********************************************************************
 \usepackage{array} 		% texte en gras, modifier taille du tableau
-\usepackage{tabularx}	% x : taille de colonne se calcule toute seule
-\usepackage{dcolumn} 	% D{sep.tex}{sep.pdf}{maxDecimal} : aligner décimale
+\usepackage{booktabs} 	% \toprule \midrule \bottomrule \cmidrule(lr){2-3} 
+\usepackage{tabularx}	% X : taille de colonne se calcule toute seule
+\usepackage{dcolumn} 	% D{sep.in}{sep.out}{nbDigitBefore.nbDigitAfter} : aligner décimale
 \usepackage{longtable}	% tableau de plus d'une page
-\usepackage{multirow,makecell}	% fusionner cellules + autres (\thead ...)
+\usepackage{multirow}	% \multicolumn{nbCell}{alignement}{texte} + \multirow{nbLignes}*{texte}
+\usepackage{makecell}	% \thead 
 \usepackage{hhline}		% nouvelle gestion des lignes horizontales 
-% \usepackage{booktabs} % http://www.howtotex.com/packages/improve-your-tables-with-booktabs/ 
 
 % prochaines lignes pour palier à certains défauts des tableaux standards 
 \setcellgapes{1pt}  	
@@ -286,13 +290,16 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash }b{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash }b{#1}}
 \newcolumntype{M}[1]{>{\raggedright}m{#1}}
+\newcolumntype{d}[1]{D{,}{.}{#1}} 	% d{nbDigitBefore.nbDigitAfter}
+\newcommand{\otoprule}{\midrule[\heavyrulewidth]} % after \toprule (delimite header)
 
 
 
 % ********************************************************************
 % Notes de bas de pages
 % ********************************************************************
-\usepackage{footnote} 					% \begin{savenotes} pour dans tableaux
+\usepackage{footnote} 					% \begin{savenotes} pour dans tableaux 
+\makesavenoteenv{tabular} 				% sauvegarder les footnotes des tableaux automatiquement 
 \usepackage[bottom, multiple]{footmisc}	% footnote toujours collé en bas de page
 \usepackage{fnpct}						% multiple footnotes 1, 2, 3, et autre : \multfootnote{;;} (broken...!)
 %\setfnpct{dont-mess-around} % uncomment if don't want the kerning and punctuation switching
