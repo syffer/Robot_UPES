@@ -7,7 +7,7 @@ import transform.VisitorImage;
 /**
  * Represents a RGB image (Red Green Blue) 
  * 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see image.Image 
  */
 public class RGBImage extends Image {

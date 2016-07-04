@@ -6,7 +6,7 @@ import image.RGBImage;
 
 /**
  * The visitor pattern is used to separate the data structure from the operations. 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see image.Image 
  */
 public interface VisitorImage {

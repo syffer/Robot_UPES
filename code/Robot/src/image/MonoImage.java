@@ -11,7 +11,7 @@ import transform.VisitorImage;
  * 
  * The white must be represented by 255, and the black by 0. 
  * 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see Image 
  */
 public class MonoImage extends GreyImage {

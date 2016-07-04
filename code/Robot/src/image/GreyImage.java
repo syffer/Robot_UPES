@@ -9,7 +9,7 @@ import transform.VisitorImage;
  * Represents a grey image. 
  * Pixels have values contained between 0 and 255 included. 
  * 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see image.Image 
  */
 public class GreyImage extends Image {

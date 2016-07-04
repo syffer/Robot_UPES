@@ -7,7 +7,7 @@ import image.RGBImage;
 
 /**
  * Applies a transformation to an image (filter, threshold, ...). 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see VisitorImage 
  */
 public abstract class Transformation implements VisitorImage {

@@ -7,7 +7,7 @@ import image.RGBImage;
 
 /**
  * Applies a threshold to an image 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see Transformation 
  */
 public class Threshold extends Transformation {

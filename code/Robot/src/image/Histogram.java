@@ -22,7 +22,7 @@ import transform.VisitorImage;
  * Grey and monochromatic images have only one channel, and are represented in grey. 
  * RGB images have 3 channels, which are respectively represented in red, green and blue.
  * 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see image.Image
  * @see transform.VisitorImage 
  */

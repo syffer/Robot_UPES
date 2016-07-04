@@ -21,7 +21,7 @@ import transform.VisitorImage;
  * A visitor pattern is used in order to perform different process 
  * according to the instance of the image (RGB, grey, ...).
  * 
- * @author Maxime 
+ * @author Maxime PINEAU
  * @see transform.VisitorImage 
  */
 public abstract class Image {

@@ -4,16 +4,27 @@ import image.GreyImage;
 import image.MonoImage;
 import image.RGBImage;
 
+/**
+ * Applies a gaussian blur on an image (Blur an image with a gaussian function). 
+ * 
+ * @see <a href="http://blog.ivank.net/fastest-gaussian-blur.html">http://blog.ivank.net/fastest-gaussian-blur.html</a>
+ * @author Maxime PINEAU
+ */
 public class GaussianBlur extends AbstractFilter {
-
-	// http://blog.ivank.net/fastest-gaussian-blur.html
 	
 	private int radius;
 	
+	/**
+	 * Creates a Gaussian blur with a radius of 1
+	 */
 	public GaussianBlur() {
 		this(1);
 	}
 	
+	/**
+	 * Creates a Gaussian blur of a certain radius 
+	 * @param radius the given radius 
+	 */
 	public GaussianBlur(int radius) {
 		this.radius = radius;
 	}

@@ -11,7 +11,7 @@ import java.awt.Color;
  * 
  * Mostly use the Color class. 
  * 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see Image 
  */
 public class Pixel {

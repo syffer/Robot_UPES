@@ -6,9 +6,25 @@ import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
 
+/**
+ * Applies a canny filter to an image. 
+ * 
+ * Canny is an edge detection operator. 
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Canny_edge_detector">https://en.wikipedia.org/wiki/Canny_edge_detector</a>
+ * @author Maxime PINEAU
+ */
 public class Canny extends AbstractFilter {
 
+	/**
+	 * horizontal mask 
+	 */
 	private static final int[] maskX = {-1,  0,  1};
+	
+	
+	/**
+	 * vertical mask 
+	 */
 	private static final int[] maskY = { 1,  0, -1};
 	
 	
@@ -28,18 +44,22 @@ public class Canny extends AbstractFilter {
 				Pixel pixelLeft = new Pixel(image.get(i-1,  j));
 				Pixel pixelRigth = new Pixel(image.get(i+1,  j));
 				
+				// applies masks for the red channel 
 				int gradiantX = maskX[0] * pixelTop.getRed() + maskX[1] * pixelMiddle.getRed() + maskX[2] * pixelBottom.getRed();
 				int gradiantY = maskY[0] * pixelLeft.getRed() + maskY[1] * pixelMiddle.getRed() + maskY[2] * pixelRigth.getRed();
 				int red = Math.abs(gradiantX) + Math.abs(gradiantY);
 				
+				// applies masks for the green channel 
 				gradiantX = maskX[0] * pixelTop.getGreen() + maskX[1] * pixelMiddle.getGreen() + maskX[2] * pixelBottom.getGreen();
 				gradiantY = maskY[0] * pixelLeft.getGreen() + maskY[1] * pixelMiddle.getGreen() + maskY[2] * pixelRigth.getGreen();
 				int green = Math.abs(gradiantX) + Math.abs(gradiantY);
 				
+				// applies the masks for the blue channel  
 				gradiantX = maskX[0] * pixelTop.getBlue() + maskX[1] * pixelMiddle.getBlue() + maskX[2] * pixelBottom.getBlue();
 				gradiantY = maskY[0] * pixelLeft.getBlue() + maskY[1] * pixelMiddle.getBlue() + maskY[2] * pixelRigth.getBlue();
 				int blue = Math.abs(gradiantX) + Math.abs(gradiantY);
 				
+				// set the filtered value 
 				Pixel pixel = new Pixel(red, green, blue);
 				newData[i][j] = pixel.getRGB();
 			}

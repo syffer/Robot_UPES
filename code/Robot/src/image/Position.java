@@ -2,7 +2,7 @@ package image;
 
 /**
  * Represents a position in an image. 
- * @author Maxime
+ * @author Maxime PINEAU
  * @see Image
  */
 public class Position {

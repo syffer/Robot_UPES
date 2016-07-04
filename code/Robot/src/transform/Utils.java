@@ -5,7 +5,7 @@ import java.util.Set;
 
 /** 
  * Contains usefull math methods 
- * @author Maxime
+ * @author Maxime PINEAU
  */
 public class Utils {
 	
