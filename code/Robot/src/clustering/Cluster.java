@@ -113,6 +113,9 @@ public class Cluster implements Iterable<Individual> {
 			for(Individual individual : this.individuals) {
 				double variable = individual.getVariable(v);
 				variable = biais * (variable - mean) / standardDeviation;
+				
+				if(Double.isNaN(variable)) variable = 0.0;
+				
 				individual.setVariable(v, variable);
 			}
 			

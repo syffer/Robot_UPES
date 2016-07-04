@@ -9,6 +9,8 @@ import transform.Utils;
 
 public class KMeans {
 	
+	private int[] classes;
+	
 	public KMeans() {
 		
 	}
@@ -19,7 +21,8 @@ public class KMeans {
 		
 		if(centerReduce) data.centerAndReduce();
 		
-		int[] classes = new int[data.getNbIndividuals()];
+		this.classes = new int[data.getNbIndividuals()];
+		
 		List<Cluster> clusters = this.initializeClasses(data, nbClasses, classes);
 		List<Individual> gravityCenters = this.getGravityCenters(clusters);
 				
@@ -37,34 +40,29 @@ public class KMeans {
 				
 				int numeroClasse = this.getClosestClass(individual, gravityCenters);
 				
-				Cluster oldCluster = clusters.get(classes[i]);
+				Cluster oldCluster = clusters.get(this.classes[i]);
 				Cluster newCluster = clusters.get(numeroClasse); 
 				
-				change = change || (numeroClasse != classes[i]);
+				change = change || (numeroClasse != this.classes[i]);
 				
-				classes[i] = numeroClasse;
+				this.classes[i] = numeroClasse;
 				oldCluster.remove(individual);
 				newCluster.add(individual);
 				
 				gravityCenters.set(numeroClasse, newCluster.getGravityCenter().clone());
 				
-				//System.out.println(gravityCenters);
-				
-				//this.updateGravityCenters(classes[i], gravityCenters);______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 			}
 			
 			//inertieInterPrec = inertieInter;
 			//inertieInter = this.calculateInertirInter(data.getGravityCenter(), gravityCenters);
 			
 			
-		} while (change); 	// 1e-6
-		
+		} while (change); 
 		
 		return clusters;
 	}
-
-
-
+	
+	
 	private List<Cluster> initializeClasses(Cluster data, int nbClasses, int[] classes) throws NumberOfVariablesException {
 		int nbVariables = data.getNbVariables();
 		
@@ -137,6 +135,12 @@ public class KMeans {
 		return sum / gravityCenters.size();
 	}
 	*/
+	
+	
+	public int[] getClasses() {
+		return this.classes;
+	}
+	
 	
 	public static class test {
 		public static void main(String[] args) {
