@@ -12,20 +12,15 @@ import transform.Utils;
 
 
 public class ChainCodeExtractor {
-
-	public static final int[] horizontalMove = {1, 1, 0, -1, -1, -1, 0, 1};
-	public static final int[] verticalMove = {0, -1, -1, -1, 0, 1, 1, 1};
-		
+	
 	public static Map<Position, ChainCode> extract(MonoImage image) {
 		
 		final int WALL = 255;
 		final int SEEN = 0;
 		
 		int[][] matrix = image.getCloneMatrix();
-				
-		///List<Integer> chain = new ArrayList<Integer>();
+		
 		ChainCode chain = new ChainCode();
-		//List<List<Integer>> chaines = new ArrayList<List<Integer>>();
 		Map<Position, ChainCode> chains = new HashMap<Position, ChainCode>();
 		
 		for(int i = 0; i < image.getWidth(); i++) {
@@ -38,23 +33,30 @@ public class ChainCodeExtractor {
 				Position position = new Position(i, j);
 				Position previous = null;
 				
+				int lPrec = 6;	// on considère que l'on vient d'en haut 
+				
 				do {
 					
 					boolean hasMoved = false;
 					
-					// recherche du voisin dans l'ordre
-					for(int k = 0; k < 8; k++) {
+					// recherche du voisin dans l'ordre 
+					int depart = Utils.mod(lPrec - 4, 8);
+					for(int k = depart; k < depart + 8; k++) { 
+						int l = k % 8;
+						
 						// next pixel position 
-						Position nextPosition = new Position(position.getI() + ChainCode.horizontalMove[k], position.getJ() + ChainCode.verticalMove[k]); 					
+						Position nextPosition = new Position(position.getI() + ChainCode.horizontalMove[l], position.getJ() + ChainCode.verticalMove[l]); 					
 						if(!image.isInBound(nextPosition.getI(), nextPosition.getJ())) continue;
 						if(matrix[nextPosition.getI()][nextPosition.getJ()] != WALL) continue;
 						if(nextPosition.equals(previous)) continue; 
 						
-						chain.add(k);
+						chain.add(l);
 						previous = position;
 						position = nextPosition;
 						matrix[position.getI()][position.getJ()] = SEEN; // on vient de le parcourir, ce n'est plus un mur  
 						hasMoved = true;
+						
+						lPrec = l;
 						break;
 					}
 					
@@ -62,12 +64,17 @@ public class ChainCodeExtractor {
 					if(!hasMoved && !chain.isEmpty()) {
 						// rollback 
 						int lastK = chain.remove(chain.size() - 1);
-						position = new Position(position.getI() - ChainCodeExtractor.horizontalMove[lastK], position.getJ() - ChainCodeExtractor.verticalMove[lastK]); 	
+						position = new Position(position.getI() - ChainCode.horizontalMove[lastK], position.getJ() - ChainCode.verticalMove[lastK]); 	
 						
-						if(chain.isEmpty()) previous = null;
+						if(chain.isEmpty()) {
+							previous = null;
+							lPrec = 6;
+						}
 						else {
 							int previousK = chain.get(chain.size() - 1);
-							previous = new Position(position.getI() - ChainCodeExtractor.horizontalMove[previousK], position.getJ() - ChainCodeExtractor.verticalMove[previousK]);
+							previous = new Position(position.getI() - ChainCode.horizontalMove[previousK], position.getJ() - ChainCode.verticalMove[previousK]);
+						
+							lPrec = chain.get(chain.size() - 1);
 						}
 						
 					} else if(!hasMoved) {
@@ -86,18 +93,6 @@ public class ChainCodeExtractor {
 			
 		
 		return chains;
-		
-		/*
-		for(Position position : chaines.keySet()) {
-			System.out.print(position + ": ");
-			for(int i : chaines.get(position)) {
-				System.out.print(i);
-			}
-			System.out.println();
-		}
-		
-		System.out.println("end");
-		*/
 	}
 	
 	
@@ -107,7 +102,7 @@ public class ChainCodeExtractor {
 		Position actualPosition = start;
 		for(int code : chainCode) {
 			positions.add(actualPosition);
-			actualPosition = new Position(actualPosition.getI() + ChainCodeExtractor.horizontalMove[code], actualPosition.getJ() + ChainCodeExtractor.verticalMove[code]); 
+			actualPosition = new Position(actualPosition.getI() + ChainCode.horizontalMove[code], actualPosition.getJ() + ChainCode.verticalMove[code]); 
 		}
 		
 		return positions;
