@@ -1,7 +1,8 @@
 package gui.controller;
 
-import gui.model.Histogram;
+import gui.model.HistogramModel;
 import gui.model.ImageModel;
+import image.Histogram;
 import image.Image;
 
 import java.awt.event.ActionEvent;
@@ -32,7 +33,8 @@ public class ActionHistogram extends AbstractAction implements Observer {
 		
 		image.accept(histogram);
 		
-		this.controller.addInternalModel(histogram); 
+		HistogramModel histogramModel = new HistogramModel(histogram);
+		this.controller.addInternalModel(histogramModel); 
 	}
 
 	@Override

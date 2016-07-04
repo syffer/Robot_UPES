@@ -20,7 +20,7 @@ import features.FeatureExtractor;
 import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
 import gui.model.GeneralModel;
-import gui.model.Histogram;
+import gui.model.HistogramModel;
 import gui.model.ImageModel;
 import gui.model.InternalModel;
 import gui.model.StatisticAnalysisInfo;
@@ -165,8 +165,8 @@ public class GeneralController {
 		this.addInternalModel(imageController);
 	}
 	
-	public void addInternalModel(Histogram histogram) {
-		InternalController imageController = new HistogramController(histogram);
+	public void addInternalModel(HistogramModel histogramModel) {
+		InternalController imageController = new HistogramController(histogramModel);
 		this.addInternalModel(imageController);
 	}
 	

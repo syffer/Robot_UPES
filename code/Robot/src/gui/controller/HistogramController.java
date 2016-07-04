@@ -1,12 +1,12 @@
 package gui.controller;
 
-import gui.model.Histogram;
+import gui.model.HistogramModel;
 import gui.view.HistogramView;
 
 public class HistogramController extends InternalController {
 
-	protected HistogramController(Histogram histogram) {
-		super(histogram, new HistogramView(histogram));
+	protected HistogramController(HistogramModel histogramModel) {
+		super(histogramModel, new HistogramView(histogramModel));
 	}
 
 }

@@ -1,16 +1,16 @@
 package gui.view;
 
-import gui.model.Histogram;
+import gui.model.HistogramModel;
 
 public class HistogramView extends InternalView {
 	private static final long serialVersionUID = 1L;
 
 	private JHistogram jhistogram;
 	
-	public HistogramView(Histogram histogram) {
-		super(histogram);
+	public HistogramView(HistogramModel histogramModel) {
+		super(histogramModel);
 
-		this.jhistogram = new JHistogram(histogram.getFrequenciesMap(), histogram.getColors());
+		this.jhistogram = new JHistogram(histogramModel.getFrequenciesMap(), histogramModel.getColors());
 		
 		this.add(this.jhistogram);
 		
