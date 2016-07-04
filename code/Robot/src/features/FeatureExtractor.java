@@ -14,9 +14,9 @@ public class FeatureExtractor {
 		
 		List<Feature> features = new ArrayList<Feature>();
 		
-		Map<Position, List<Integer>> chainCodes = ChainCodeExtractor.extract(image);
+		Map<Position, ChainCode> chainCodes = ChainCodeExtractor.extract(image);
 		for(Position position : chainCodes.keySet()) {
-			List<Integer> chainCode = chainCodes.get(position);
+			ChainCode chainCode = chainCodes.get(position);
 			Feature feature = new Feature(position, chainCode);
 			features.add(feature);
 		}

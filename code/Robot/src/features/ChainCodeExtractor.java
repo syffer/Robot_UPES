@@ -16,16 +16,17 @@ public class ChainCodeExtractor {
 	public static final int[] horizontalMove = {1, 1, 0, -1, -1, -1, 0, 1};
 	public static final int[] verticalMove = {0, -1, -1, -1, 0, 1, 1, 1};
 		
-	public static Map<Position, List<Integer>> extract(MonoImage image) {
+	public static Map<Position, ChainCode> extract(MonoImage image) {
 		
 		final int WALL = 255;
 		final int SEEN = 0;
 		
 		int[][] matrix = image.getCloneMatrix();
 				
-		List<Integer> chain = new ArrayList<Integer>();
+		///List<Integer> chain = new ArrayList<Integer>();
+		ChainCode chain = new ChainCode();
 		//List<List<Integer>> chaines = new ArrayList<List<Integer>>();
-		Map<Position, List<Integer>> chains = new HashMap<Position, List<Integer>>();
+		Map<Position, ChainCode> chains = new HashMap<Position, ChainCode>();
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
@@ -44,7 +45,7 @@ public class ChainCodeExtractor {
 					// recherche du voisin dans l'ordre
 					for(int k = 0; k < 8; k++) {
 						// next pixel position 
-						Position nextPosition = new Position(position.getI() + ChainCodeExtractor.horizontalMove[k], position.getJ() + ChainCodeExtractor.verticalMove[k]); 					
+						Position nextPosition = new Position(position.getI() + ChainCode.horizontalMove[k], position.getJ() + ChainCode.verticalMove[k]); 					
 						if(!image.isInBound(nextPosition.getI(), nextPosition.getJ())) continue;
 						if(matrix[nextPosition.getI()][nextPosition.getJ()] != WALL) continue;
 						if(nextPosition.equals(previous)) continue; 
@@ -77,7 +78,7 @@ public class ChainCodeExtractor {
 				
 				if(!chain.isEmpty()) {					
 					chains.put(origin, chain);
-					chain = new ArrayList<Integer>(); 					
+					chain = new ChainCode(); 					
 				}
 								
 			}

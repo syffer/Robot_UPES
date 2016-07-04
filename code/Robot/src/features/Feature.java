@@ -1,6 +1,5 @@
 package features;
 
-import java.util.List;
 
 public class Feature {
 	
@@ -9,8 +8,8 @@ public class Feature {
 	// https://books.google.co.in/books?id=_SPyCAAAQBAJ&pg=PA507&lpg=PA507&dq=area+chain+code&source=bl&ots=N26V9BAEdW&sig=p3kAcg1ag0vbPX7v4IPl-_fz6Rc&hl=fr&sa=X&redir_esc=y#v=onepage&q=area%20chain%20code&f=false 
 	
 	private Position origin; // upper left pixel 
-	private List<Integer> chainCode;
-	private List<Integer> differentialChainCode;
+	private ChainCode chainCode;
+	private ChainCode differentialChainCode;
 	
 	private double area; // number of pixels in the region
 	private double perimeter;
@@ -26,10 +25,10 @@ public class Feature {
 	private double depth;
 	
 	
-	public Feature(Position origin, List<Integer> chainCode) {
+	public Feature(Position origin, ChainCode chainCode) {
 		this.origin = origin;
 		this.chainCode = chainCode;
-		this.differentialChainCode = ChainCodeExtractor.getDifferenceCodeChain(chainCode);
+		this.differentialChainCode = chainCode.getDifferenceCodeChain();
 		
 		this.perimeter = 0;
 		this.area = 0;
@@ -102,12 +101,12 @@ public class Feature {
 	}
 
 
-	public List<Integer> getChainCode() {
+	public ChainCode getChainCode() {
 		return chainCode;
 	}
 
 
-	public List<Integer> getDifferentialChainCode() {
+	public ChainCode getDifferentialChainCode() {
 		return differentialChainCode;
 	}
 
