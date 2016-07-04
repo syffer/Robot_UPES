@@ -2,10 +2,7 @@ package features;
 
 import image.MonoImage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import transform.Utils;
@@ -95,41 +92,10 @@ public class ChainCodeExtractor {
 		return chains;
 	}
 	
-	
-	public static List<Position> getPositions(Position start, List<Integer> chainCode) { 
-		List<Position> positions = new ArrayList<Position>();
 		
-		Position actualPosition = start;
-		for(int code : chainCode) {
-			positions.add(actualPosition);
-			actualPosition = new Position(actualPosition.getI() + ChainCode.horizontalMove[code], actualPosition.getJ() + ChainCode.verticalMove[code]); 
-		}
-		
-		return positions;
-	}
-	
-	public static List<Integer> getDifferenceCodeChain(List<Integer> chainCode) {
-		
-		List<Integer> differenceChainCode = new ArrayList<Integer>();
-		if(chainCode.size() < 2) return differenceChainCode;
-		
-		
-		for(int i = 1; i < chainCode.size() + 1; i++) {
-			int previous = chainCode.get((i-1) % chainCode.size());
-			int actual = chainCode.get(i % chainCode.size());
-			
-			int difference = Utils.mod(actual - previous, 8); 
-			differenceChainCode.add(difference);
-		}
-		
-		return differenceChainCode;
-	}
-	
-	
 	public static class Test {
 		public static void main(String[] args) {
-			System.out.println(ChainCodeExtractor.getDifferenceCodeChain(Arrays.asList(6, 6, 0, 0, 2, 2, 4, 4))); 
-			
+			//System.out.println(ChainCodeExtractor.getDifferenceCodeChain(Arrays.asList(6, 6, 0, 0, 2, 2, 4, 4))); 
 		}
 	}
 		

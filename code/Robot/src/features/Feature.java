@@ -1,6 +1,5 @@
 package features;
 
-
 public class Feature {
 	
 	// https://books.google.co.in/books?id=M_Lr8NTfAHcC&pg=PA226&lpg=PA226&dq=curvature+with+chain+code&source=bl&ots=hNHF5hTbuM&sig=S4scMfCxCVUUHFms09hFjCMt7RU&hl=fr&sa=X&redir_esc=y#v=onepage&q=curvature%20with%20chain%20code&f=false 
@@ -136,7 +135,7 @@ public class Feature {
 	}
 
 
-	public double getBendingenergy() {
+	public double getBendingEnergy() {
 		return bendingEnergy;
 	}
 
@@ -174,31 +173,5 @@ public class Feature {
 				+ "\n\t ratioWidthHeight=" + ratioWidthHeight + ", depth=" + depth
 				+ "]";
 	}
-	
-	
-	/*
-	int actualHeight = 0;
-	int actualWidth = 0;
-	int afterWidth = 0;
-	int beforeWidth = 0;
-	*/
-	
-	/*
-	if(code == 5 || code == 6 || code == 7) actualHeight--;
-	else if(code == 1 || code == 2 || code == 3) {
-		actualHeight++; 
-		this.height = Math.max(this.height, actualHeight);
-	}
-	*/
-	/*
-	if(code == 0 || code == 1 || code == 7) {
-		actualWidth++;
-		if(actualWidth > 0) afterWidth = Math.max(afterWidth, actualWidth);
-	} else if(code == 3 || code == 4 || code == 5) {
-		actualWidth--;
-		if(actualWidth < 0) beforeWidth = Math.max(beforeWidth, -actualWidth);
-	}
-	*/
-	
-	
+		
 }
