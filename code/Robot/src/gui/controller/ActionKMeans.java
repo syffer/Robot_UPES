@@ -9,11 +9,14 @@ import java.util.Observer;
 
 import javax.swing.AbstractAction;
 
+import clustering.Cluster;
+import clustering.Individual;
 import clustering.KMeans;
 import clustering.KMeansException;
 import clustering.NumberOfVariablesException;
 
 import features.Feature;
+import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
 
 public class ActionKMeans extends AbstractAction implements Observer {
@@ -33,19 +36,42 @@ public class ActionKMeans extends AbstractAction implements Observer {
 		FeatureExtractionModel featureExtractionModel = (FeatureExtractionModel) this.controller.getSelectedInternalModel();
 		List<Feature> features = featureExtractionModel.getFeatures();
 		MonoImage image = featureExtractionModel.getOriginalImage();
-
-		KMeans kmeans = new KMeans();
 		
-		long startTime = System.currentTimeMillis();
+		int nbClasses = 4;
+		
 		try {
-			kmeans.clustering(true, null, 4);
+			
+			Cluster cluster = new Cluster(10);
+			for(Feature feature : features) {
+				Individual individual = new Individual(feature.getArea(), 
+														feature.getPerimeter(), 
+														feature.getCompactness(), 
+														feature.getCircularity(), 
+														feature.getCurvature(), 
+														feature.getBendingEnergy(), 
+														feature.getWidth(), 
+														feature.getHeight(), 
+														feature.getRatioWidthHeight(), 
+														feature.getDepth());
+				cluster.add(individual);
+			}
+			
+			KMeans kmeans = new KMeans();
+			
+			long startTime = System.currentTimeMillis();
+			kmeans.clustering(true, cluster, nbClasses);
+			long endTime = System.currentTimeMillis();
+			
+			ClassificationModel classificationModel = new ClassificationModel(image, features, kmeans.getClasses(), endTime - startTime);
+			this.controller.addInternalModel(classificationModel); 
+			
+			
 		} catch (NumberOfVariablesException | KMeansException e) {
 			e.printStackTrace();
 		}
-		long endTime = System.currentTimeMillis();
 		
-		//FeatureExtractionModel featureExtractionModel = new FeatureExtractionModel(image, features, endTime - startTime);		
-		//this.controller.addInternalModel(featureExtractionModel); 
+		
+		
 	}
 
 	@Override

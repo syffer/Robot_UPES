@@ -21,6 +21,7 @@ public class FeatureExtractionModel extends ImageModel {
 	public FeatureExtractionModel(MonoImage image, List<Feature> features, double executionTime) { 
 		super(new RGBImage(image), image, "Feature Extraction", executionTime);
 		
+		this.original = image;
 		this.features = features;
 		
 		int i = 0;

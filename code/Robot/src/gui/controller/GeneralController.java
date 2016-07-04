@@ -17,6 +17,7 @@ import clustering.NumberOfVariablesException;
 
 import features.Feature;
 import features.FeatureExtractor;
+import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
 import gui.model.GeneralModel;
 import gui.model.Histogram;
@@ -64,6 +65,7 @@ public class GeneralController {
 	protected ActionTransformation actionDilation;
 	
 	protected ActionFeatureExtraction actionFeatureExtraction;
+	protected ActionKMeans actionKMeans;
 	
 	public GeneralController(GeneralModel generalModel) {
 		
@@ -94,6 +96,7 @@ public class GeneralController {
 		this.actionDilation = new ActionTransformation(this, "Dilatation", new Dilation());
 		
 		this.actionFeatureExtraction = new ActionFeatureExtraction(this);
+		this.actionKMeans = new ActionKMeans(this);
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
@@ -121,6 +124,7 @@ public class GeneralController {
 		this.view.menuDilation.setAction(this.actionDilation);
 		
 		this.view.menuChainCode.setAction(this.actionFeatureExtraction);
+		this.view.menuKMeans.setAction(this.actionKMeans);
 		
 		// initialise observers (setting default values)
 		this.model.initialise();
@@ -171,6 +175,11 @@ public class GeneralController {
 		this.addInternalModel(featureExtractionController);
 	}
 	
+	public void addInternalModel(ClassificationModel classificationModel) {
+		ClassificationController classificationController = new ClassificationController(classificationModel);
+		this.addInternalModel(classificationController);
+	}
+	
 	public void addInternalModel(InternalController internalController) {
 		this.addInternalModel(internalController, false);
 	}
@@ -205,7 +214,7 @@ public class GeneralController {
 			
 				Cluster cluster = new Cluster(5);
 				for(Feature feature : features) {
-					Individual individual = new Individual(feature.getWidth(), feature.getHeight(), feature.getArea(), feature.getBendingenergy(), feature.getCircularity());
+					Individual individual = new Individual(feature.getWidth(), feature.getHeight(), feature.getArea(), feature.getBendingEnergy(), feature.getCircularity());
 					cluster.add(individual);
 				}
 				
