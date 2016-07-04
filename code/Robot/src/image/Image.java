@@ -11,6 +11,10 @@ import javax.imageio.ImageIO;
 import transform.VisitorImage;
 
 
+/**
+ * @author Maxime PINEAU
+ * 
+ */
 public abstract class Image {
 	
 	protected int height;
@@ -37,14 +41,23 @@ public abstract class Image {
 			
 	
 
+	/**
+	 * @return the height of the image
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * @return the width of the image 
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * @return the number of pixels in the image 
+	 */
 	public int getNbPixels() {
 		return this.width * this.height;
 	}
@@ -59,6 +72,12 @@ public abstract class Image {
 		return clone;
 	}
 	
+	/** 
+	 * Return true if the coordinates i and j are in the image. 
+	 * @param i the horizontal coordinate i  
+	 * @param j the vertical coordinate j 
+	 * @return 
+	 */
 	public boolean isInBound(int i, int j) {
 		return i >= 0 && i < this.width && j >= 0 && j < this.height;
 	}
@@ -103,10 +122,20 @@ public abstract class Image {
 	
 	
 	
+	/**
+	 * Save the image into a file given by his path in a string.
+	 * @param pathToFile 
+	 * @throws IOException
+	 */
 	public void saveAs(String pathToFile) throws IOException {	
 		this.saveAs(new File(pathToFile));
 	}
 	
+	/**
+	 * Save the image into a file 
+	 * @param file
+	 * @throws IOException
+	 */
 	public void saveAs(File file) throws IOException {
 		BufferedImage bufferedImage = this.getBufferedImage();
 		ImageIO.write(bufferedImage, "jpg", file);
