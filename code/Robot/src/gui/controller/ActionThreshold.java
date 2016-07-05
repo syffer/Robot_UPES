@@ -13,6 +13,13 @@ import javax.swing.AbstractAction;
 
 import transform.Threshold;
 
+/**
+ * Action that allows the user to perform a threshold on an image. 
+ * Open a window so that the user can give the threshold value. 
+ * @see image.Image
+ * @see transform.Threshold
+ * @author Maxime PINEAU
+ */
 public class ActionThreshold extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 

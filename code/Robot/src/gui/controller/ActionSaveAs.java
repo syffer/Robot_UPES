@@ -12,6 +12,12 @@ import java.util.Observer;
 import javax.swing.AbstractAction;
 
 
+/**
+ * Action that allows the user to save an image.
+ * @see image.Image
+ * @see gui.view.View#getFileToSave()
+ * @author Maxime PINEAU
+ */
 public class ActionSaveAs extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 

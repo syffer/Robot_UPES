@@ -11,6 +11,12 @@ import javax.swing.AbstractAction;
 
 import transform.Transformation;
 
+/**
+ * Action that allows the user to perform some transformation on an image
+ * @see image.Image
+ * @see transform.Transformation
+ * @author Maxime PINEAU
+ */
 public class ActionTransformation extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 	

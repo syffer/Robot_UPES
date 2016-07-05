@@ -38,6 +38,10 @@ import transform.morphology.Erosion;
 
 
 
+/**
+ * General controller of the GUI.
+ * @author Maxime PINEAU
+ */
 public class GeneralController {
 
 	protected GeneralModel model;
@@ -67,6 +71,11 @@ public class GeneralController {
 	protected ActionFeatureExtraction actionFeatureExtraction;
 	protected ActionKMeans actionKMeans;
 	
+	/**
+	 * Creates a new GeneralController using the given model.
+	 * Creates the GUI view and show it to the user. 
+	 * @param generalModel the model of the controller 
+	 */
 	public GeneralController(GeneralModel generalModel) {
 		
 		this.model = generalModel;
@@ -131,23 +140,39 @@ public class GeneralController {
 	}
 	
 	
+	/**
+	 * @return true if there is a ImageModel selected by the user (via the GUI), false otherwise
+	 */
 	public boolean hasImageModelSelected() {
 		return this.model.hasImageModelSelected();
 	}
 	
+	/**
+	 * @return true if there is a InternalModel selected by the user (via the GUI), false otherwise
+	 */
 	public boolean hasInternalModelSelected() {
 		return this.model.hasModelSelected(); 
 	}
 	
+	/**
+	 * @return the internal model selected by the user via the GUI
+	 */
 	public InternalModel getSelectedInternalModel() {
 		return this.model.getSelectedModel();
 	}
 	
+	/**
+	 * Sets the selected internal model 
+	 * @param selectedModel the new selected internal model 
+	 */
 	public void setSelectedInternalModel(InternalModel selectedModel) {
 		this.model.setSelectedModel(selectedModel);
 	}
 	
 	
+	/**
+	 * @return the internal view selected by the user via the GUI
+	 */
 	public InternalView getSelectedInternalView() {
 		return this.view.getSelectedInternalView();
 	}
@@ -155,35 +180,66 @@ public class GeneralController {
 	
 	
 	
+	/**
+	 * Adds a new ImageModel to the GUI and select it by opening a new internal view.
+	 * @param imageModel the ImageModel to be added in the GUI
+	 * @see gui.view.View  
+	 */
 	public void addInternalModel(ImageModel imageModel) {
 		InternalController imageController = new ImageController(imageModel);
 		this.addInternalModel(imageController , imageModel.getOperationName().equals("Loading"));
 	}
 	
+	/**
+	 * Add a new StatisticAnalysisInfo to the GUI and select it by opening a new internal view.
+	 * @param statisticAnalysisInfo the StatisticAnalysisInfo to be added to the GUI
+	 */
 	public void addInternalModel(StatisticAnalysisInfo statisticAnalysisInfo) {
 		InternalController imageController = new StatisticAnalysisController(statisticAnalysisInfo);
 		this.addInternalModel(imageController);
 	}
 	
+	/**
+	 * Add a new HistogramModel to the GUI and select it by opening a new internal view.
+	 * @param histogramModel the HistogramModel to be added to the GUI 
+	 */
 	public void addInternalModel(HistogramModel histogramModel) {
 		InternalController imageController = new HistogramController(histogramModel);
 		this.addInternalModel(imageController);
 	}
 	
+	/**
+	 * Add a new FeatureExtractionModel to the GUI and select it by opening a new internal view.
+	 * @param featureExtractionModel the new internal model to be added to the GUI
+	 */
 	public void addInternalModel(FeatureExtractionModel featureExtractionModel) {
 		FeatureExtractionController featureExtractionController = new FeatureExtractionController(featureExtractionModel);
 		this.addInternalModel(featureExtractionController);
 	}
 	
+	/**
+	 * Add a new ClassificationModel to the GUI and select it by opening a new internal view.
+	 * @param classificationModel the new internal model to be added to the GUI
+	 */
 	public void addInternalModel(ClassificationModel classificationModel) {
 		ClassificationController classificationController = new ClassificationController(classificationModel);
 		this.addInternalModel(classificationController);
 	}
 	
+	/**
+	 * Add a new internal controller to the GUI. 
+	 * Open the corresponding internal view relatively to the last selected internal view 
+	 * @param internalController the new internal controller to be added to the GUI
+	 */
 	public void addInternalModel(InternalController internalController) {
 		this.addInternalModel(internalController, false);
 	}
 	
+	/**
+	 * Add a new internal controller to the GUI. 
+	 * @param internalController the new internal controller to be added to the GUI
+	 * @param newInternalFrame whether if the new internal controller should be added relatively to the last selected internal view or not
+	 */
 	public void addInternalModel(InternalController internalController, boolean newInternalFrame) {		
 		// http://stackoverflow.com/questions/18633164/how-to-ask-are-you-sure-before-close-jinternalframe 
 		internalController.internalView.addInternalFrameListener(new ActionInternalFrame(this));

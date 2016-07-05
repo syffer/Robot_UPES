@@ -11,6 +11,11 @@ import java.util.Observer;
 import javax.swing.AbstractAction;
 
 
+/**
+ * Action that allows the user to perform a statistic analysis on an image.
+ * @see gui.model.StatisticAnalysisInfo
+ * @author Maxime PINEAU
+ */
 public class ActionStatisticAnalysis extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 
