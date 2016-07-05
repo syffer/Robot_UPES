@@ -9,11 +9,11 @@ import java.util.Observer;
 
 import javax.swing.AbstractAction;
 
-import clustering.Cluster;
-import clustering.Individual;
-import clustering.KMeans;
-import clustering.KMeansException;
-import clustering.NumberOfVariablesException;
+import classification.Cluster;
+import classification.Individual;
+import classification.KMeans;
+import classification.KMeansException;
+import classification.NumberOfVariablesException;
 
 import features.Feature;
 import features.FeatureExtractor;

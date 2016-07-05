@@ -9,11 +9,11 @@ import java.util.Observer;
 
 import javax.swing.AbstractAction;
 
-import clustering.Cluster;
-import clustering.Individual;
-import clustering.KMeans;
-import clustering.KMeansException;
-import clustering.NumberOfVariablesException;
+import classification.Cluster;
+import classification.Individual;
+import classification.KMeans;
+import classification.KMeansException;
+import classification.NumberOfVariablesException;
 
 import features.Feature;
 import gui.model.ClassificationModel;
@@ -27,7 +27,7 @@ import gui.view.JOptionPaneSlider;
  * 
  * Asks to the user the number of classes that sould be used.
  * 
- * @see clustering.KMeans
+ * @see classification.KMeans
  * @see features.Feature 
  * @author Maxime PINEAU
  */

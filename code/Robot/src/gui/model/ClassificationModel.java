@@ -15,7 +15,7 @@ import java.util.List;
  * 
  * Each cluster will be represented by a color on an image. 
  * 
- * @see clustering.KMeans
+ * @see classification.KMeans
  * @author Maxime PINEAU
  */
 public class ClassificationModel extends ImageModel {

@@ -8,7 +8,7 @@ import gui.view.ClassificationView;
  * Creates the classification internal view.
  * @see image.MonoImage
  * @see features.Feature
- * @see clustering.KMeans
+ * @see classification.KMeans
  * @author Maxime PINEAU
  */
 public class ClassificationController extends InternalController {
