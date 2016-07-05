@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Represents a cluster (or a cloud). 
+ * The cluster is composed by a list of individuals, and a gravity center (which is also an individual). 
+ * 
+ * In order to speed up some process (e.g. the gravity center calculation after adding an individual), 
+ * other lists are used to memorize the sum, the mean and the variance of each variables in the cluster.  
+ * 
+ * @see clustering.Individual 
+ * @author Maxime PINEAU
+ */
 public class Cluster implements Iterable<Individual> {
 
 	private int nbVariables;
@@ -15,6 +25,10 @@ public class Cluster implements Iterable<Individual> {
 	private List<Double> means;
 	private List<Double> variances;
 	
+	/**
+	 * Creates a new cluster in which the individuals must have "nbVariables" variables.
+	 * @param nbVariables the number of variables the individuals in the cluster must have 
+	 */
 	public Cluster(int nbVariables) {
 		this.nbVariables = nbVariables;
 		this.individuals = new ArrayList<Individual>();
@@ -35,23 +49,47 @@ public class Cluster implements Iterable<Individual> {
 		
 	}
 	
+	/**
+	 * Returns the individual at the given index
+	 * @param index the index at which we want to get the individual 
+	 * @return the individual at the given index 
+	 */
 	public Individual getIndividual(int index) {
 		return this.individuals.get(index);
 	}
 
+	/**
+	 * Returns the number of individuals in the cluster 
+	 * @return the number of individuals in the cluster 
+	 */
 	public int getNbIndividuals() {
 		return this.individuals.size();
 	}
 	
+	/**
+	 * Returns the number of variables the individuals in the cluster must have 
+	 * @return the number of variables that the individuals must have 
+	 */
 	public int getNbVariables() {
 		return this.nbVariables;
 	}
 	
+	/**
+	 * Returns the gravity center of the cluster, i.e. an individual in which each of his variables 
+	 * correspond to the mean of the variable (the same index) of all the individuals in the cluster 
+	 * @return the gravity center of the cluster 
+	 */
 	public Individual getGravityCenter() {
 		return this.gravityCenter;
 	}
 	
 	
+	/**
+	 * Adds a new individual to the cluster. 
+	 * Changes the gravity center. 
+	 * @param individual the added individual 
+	 * @throws NumberOfVariablesException if the new individual don't have the same required number of variables 
+	 */
 	public void add(Individual individual) throws NumberOfVariablesException { 
 		if(individual.getNbVariables() != this.nbVariables) throw new NumberOfVariablesException();
 		
@@ -71,11 +109,23 @@ public class Cluster implements Iterable<Individual> {
 		}
 	}
 	
+	/**
+	 * Removes the individual at the given index. 
+	 * Changes the gravity center. 
+	 * @param index the given index at which we want to remove the individual from the cluster 
+	 * @return true if the individual has been removed, false otherwise 
+	 */
 	public boolean remove(int index) {
 		Individual individual = this.individuals.get(index);
 		return this.remove(individual);
 	}
 	
+	/**
+	 * Removes the individual from the cluster. 
+	 * Changes the gravity center. 
+	 * @param individual the individual to remove 
+	 * @return true if the individual has been removed, false otherwise 
+	 */
 	public boolean remove(Individual individual) {
 		boolean succes = this.individuals.remove(individual);
 		
@@ -100,6 +150,13 @@ public class Cluster implements Iterable<Individual> {
 	
 
 	
+	/**
+	 * Center and reduce the variables of the individuals.
+	 * After this operation, all the variables will be on the same scale. 
+	 * 
+	 * Changes the gravity center. 
+	 * Changes the variable values of all the individuals. 
+	 */
 	public void centerAndReduce() {
 
 		double biais = Math.sqrt(this.getNbIndividuals() / (this.getNbIndividuals() - 1));
@@ -121,6 +178,7 @@ public class Cluster implements Iterable<Individual> {
 			
 		}
 		
+		this.gravityCenter = new Individual(this.means);
 	}
 
 	

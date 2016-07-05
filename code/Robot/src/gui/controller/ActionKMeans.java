@@ -62,7 +62,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 			KMeans kmeans = new KMeans();
 			
 			long startTime = System.currentTimeMillis();
-			kmeans.clustering(true, cluster, nbClasses);
+			kmeans.clustering(cluster, nbClasses);
 			long endTime = System.currentTimeMillis();
 			
 			ClassificationModel classificationModel = new ClassificationModel(image, features, nbClasses, kmeans.getClasses(), endTime - startTime);

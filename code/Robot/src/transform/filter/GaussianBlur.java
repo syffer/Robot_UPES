@@ -33,7 +33,7 @@ public class GaussianBlur extends AbstractFilter {
 	@Override
 	public void apply(RGBImage image) {
 		// TODO Auto-generated method stub
-		
+		this.imageTransformed = null;
 	}
 
 	@Override

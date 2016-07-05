@@ -219,7 +219,7 @@ public class GeneralController {
 				}
 				
 				KMeans kmean = new KMeans();
-				List<Cluster> clusters = kmean.clustering(false, cluster, 4);
+				List<Cluster> clusters = kmean.clustering(cluster, 4);
 				for(Cluster c : clusters) {
 					System.out.println(c);
 				}
