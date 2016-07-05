@@ -19,6 +19,10 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
+/**
+ * Represents the view used for the GUI
+ * @author Maxime PINEAU
+ */
 public class View extends JFrame {
 	
 	private static final long serialVersionUID = 2118299654730994785L;

@@ -2,6 +2,10 @@ package gui.model;
 
 import image.Image;
 
+/**
+ * Represents an internal model that contains the results of a statistic analysis of an image
+ * @author Maxime PINEAU
+ */
 public class StatisticAnalysisInfo extends InternalModel {
 
 	//private Image image;
