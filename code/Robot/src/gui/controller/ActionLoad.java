@@ -17,6 +17,11 @@ import javax.swing.AbstractAction;
 
 
 
+/**
+ * Action that allows the user to load an RGBImage on the GUI by asking him a path. 
+ * @see image.RGBImage
+ * @author Maxime PINEAU
+ */
 public class ActionLoad extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 7721629641991701632L;
 

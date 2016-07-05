@@ -7,6 +7,11 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 
+/**
+ * Action that changes the selected internal model when the user selects 
+ * another internal view on the destok GUI
+ * @author Maxime PINEAU
+ */
 public class ActionInternalFrame implements InternalFrameListener {
 	
 	private GeneralController controller;

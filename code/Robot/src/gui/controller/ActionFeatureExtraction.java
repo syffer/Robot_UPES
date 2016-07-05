@@ -14,6 +14,13 @@ import features.FeatureExtractor;
 import gui.model.FeatureExtractionModel;
 import gui.model.ImageModel;
 
+/**
+ * Action that allows the user to perform a feature extraction on a monochromatic image. 
+ * @see image.MonoImage 
+ * @see features.Feature 
+ * @see features.FeatureExtractor 
+ * @author Maxime PINEAU
+ */
 public class ActionFeatureExtraction extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 

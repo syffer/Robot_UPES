@@ -13,6 +13,11 @@ import javax.swing.AbstractAction;
 
 import transform.symbolic.Clap;
 
+/**
+ * Action that allows the user to perform a CLAP algorithm on an image 
+ * @see transform.symbolic.Clap
+ * @author Maxime PINEAU
+ */
 public class ActionClap extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 

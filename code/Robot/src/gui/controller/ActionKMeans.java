@@ -21,6 +21,16 @@ import gui.model.FeatureExtractionModel;
 import gui.view.ChoiceCanceledException;
 import gui.view.JOptionPaneSlider;
 
+/**
+ * Action that allows the user to perform a KMeans classification algorithm on the 
+ * features extracted from a monochromatic image, and display the resulsts on the GUI. 
+ * 
+ * Asks to the user the number of classes that sould be used.
+ * 
+ * @see clustering.KMeans
+ * @see features.Feature 
+ * @author Maxime PINEAU
+ */
 public class ActionKMeans extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 
@@ -41,6 +51,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 		
 		try {
 			
+			// creation on the individual from the features 
 			Cluster cluster = new Cluster(10);
 			for(Feature feature : features) {
 				Individual individual = new Individual(feature.getArea(), 

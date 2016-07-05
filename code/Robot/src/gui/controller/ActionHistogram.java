@@ -12,6 +12,12 @@ import java.util.Observer;
 import javax.swing.AbstractAction;
 
 
+/**
+ * Action that allows the user to generate the histogram of an image and to display it on the GUI
+ * @see image.Image 
+ * @see image.Histogram
+ * @author Maxime PINEAU
+ */
 public class ActionHistogram extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 

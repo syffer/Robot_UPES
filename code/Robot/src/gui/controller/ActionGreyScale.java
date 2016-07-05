@@ -11,6 +11,11 @@ import java.util.Observer;
 import javax.swing.AbstractAction;
 
 
+/**
+ * Action that allow the user to pass an image to a grey scale 
+ * @see image.GreyImage
+ * @author Maxime PINEAU
+ */
 public class ActionGreyScale extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 6509734674576991637L;
 
