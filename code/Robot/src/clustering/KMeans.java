@@ -39,7 +39,7 @@ public class KMeans {
 	 * @param nbClasses the number of resulting classes / clusters
 	 * @return a list of "nbClasses" clusters, each one containing nearest individuals 
 	 * @throws NumberOfVariablesException if one individual doesn't have the required number of variables 
-	 * @throws KMeansException if the number of classes is <= 0 or is > to the number of individuals in the data cluster 
+	 * @throws KMeansException if the number of classes is &lt;= 0 or is &gt; to the number of individuals in the data cluster 
 	 */
 	public List<Cluster> clustering(Cluster data, int nbClasses) throws NumberOfVariablesException, KMeansException {
 		return this.clustering(data, nbClasses, true);
@@ -52,7 +52,7 @@ public class KMeans {
 	 * @param shouldCenterReduce whether the data must be centered and reduced or not 
 	 * @return a list of "nbClasses" clusters, each one containing nearest individuals 
 	 * @throws NumberOfVariablesException if one individual doesn't have the required number of variables 
-	 * @throws KMeansException if the number of classes is <= 0 or is > to the number of individuals in the data cluster 
+	 * @throws KMeansException if the number of classes is &lt;= 0 or is &gt; to the number of individuals in the data cluster 
 	 */
 	public List<Cluster> clustering(Cluster data, int nbClasses, boolean shouldCenterReduce) throws NumberOfVariablesException, KMeansException {
 		if(nbClasses > data.getNbIndividuals()) throw new KMeansException();

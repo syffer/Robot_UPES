@@ -13,7 +13,8 @@ import java.io.IOException;
  * 	<li>the name of an operation performed on an image</li>
  * 	<li>the original image</li>
  * 	<li>the resulting image</li>
- * </ul>the time the operation has taken</li>
+ * 	<li>the time the operation has taken</li>
+ * </ul>
  * @author Maxime PINEAU
  */
 public class ImageModel extends InternalModel {
