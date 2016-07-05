@@ -83,6 +83,9 @@ public class View extends JFrame {
 	}
 	
 	
+	/**
+	 * Initializes the menu bar
+	 */
 	private void initialiseMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		
@@ -150,6 +153,9 @@ public class View extends JFrame {
 		this.setJMenuBar(menuBar);
 	}
 	
+	/**
+	 * Initializes the file choosers (open and save)
+	 */
 	private void initialiseFileChooser() { 
 		this.fileChooserOpen = new JFileChooser();
 		this.fileChooserSave = new JFileChooserConfirm();
@@ -180,22 +186,41 @@ public class View extends JFrame {
 		this.add(this.toolBar, BorderLayout.PAGE_START);
 	}
 	
+	/**
+	 * Initialize the desktop (where the windows are dragged/dropped)
+	 */
 	private void initialiseDesktop() {
 		this.desktop = new JDesktopPane();
 		this.add(desktop);
 	}
 	
 	
+	/**
+	 * Returns the actual selected internal view (window) in the destop 
+	 * @return the selected internal view in the desktop 
+	 */
 	public InternalView getSelectedInternalView() {
 		return (InternalView) this.desktop.getSelectedFrame();
 	}
 	
 	
 	
+	/**
+	 * Adds a new internal view (window) in the desktop.
+	 * The new internal window will be then automatically selected. 
+	 * It will also be added relatively to the last selected internal view.
+	 * @param internalView the internal view to be added 
+	 */
 	public void addInternalView(InternalView internalView) {
 		this.addInternalView(internalView, false);
 	}
 	
+	/**
+	 * Adds a new internal view (window) in the desktop.
+	 * The new internal window will be then automatically selected. 
+	 * @param internalView the internal view to be added 
+	 * @param newImage add the new internal view at the position (0, 0) if true, and relatively to the last selected internal window otherwise
+	 */
 	public void addInternalView(InternalView internalView, boolean newImage) {
 		
 		// calculate the new position 
@@ -205,9 +230,10 @@ public class View extends JFrame {
 			position.setLocation(previousPosition.getX() + 50, previousPosition.getY() + 50);
 		}
 		
-		// add the iframe 
+		// add the iframe (internal view)
 		this.desktop.add(internalView);
 		
+		// select it 
 		internalView.setLocation(position);
 		internalView.toFront();
 		
@@ -218,6 +244,9 @@ public class View extends JFrame {
 		}
 	}
 	
+	/**
+	 * Closes all the internal views opened in the desktop
+	 */
 	public void closeAllImageView() {
 		for(JInternalFrame imageView : this.desktop.getAllFrames()) {
 			imageView.dispose();
@@ -225,6 +254,11 @@ public class View extends JFrame {
 	}
 	
 	
+	/**
+	 * Opens a file chooser allowing the user to choose a file that he wants to open, and return it.
+	 * @return the choosed file to be open
+	 * @throws ChoiceCanceledException if the user cancel the selection (e.g. by closing the file chooser)
+	 */
 	public File getFileToLoad() throws ChoiceCanceledException {
 		
 		int results = this.fileChooserOpen.showOpenDialog(this);
@@ -237,6 +271,11 @@ public class View extends JFrame {
 	}	
 	
 	
+	/**
+	 * Opens a file chooser allowing the user to choose a "jpg" file for saving something.
+	 * @return the choosed file where something will be saved 
+	 * @throws ChoiceCanceledException if the user cancel the selection (e.g. by closing the file chooser)
+	 */
 	public File getFileToSave() throws ChoiceCanceledException {
 		
 		int results = this.fileChooserSave.showSaveDialog(this);
@@ -245,7 +284,7 @@ public class View extends JFrame {
 		
 		File file = this.fileChooserSave.getSelectedFile();
 		
-		// on ajoute l'extention ".tournoi" si elle n'y est pas
+		// adding the file extension if none exists 
 		String pathToFile = file.getAbsolutePath();
 		if( ! pathToFile.endsWith(".jpg") && ! pathToFile.endsWith(".JPG") ) {
 			file = new File( file.getAbsoluteFile() + ".jpg" );

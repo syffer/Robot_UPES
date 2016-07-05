@@ -11,6 +11,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 
+/**
+ * Represents an internal view that contains : 
+ * <ul>
+ * 	<li>an image</li>
+ *  <li>a title</li>
+ * 	<li>the time of execution of the operation that had generated the image</li>
+ * </ul>
+ * @author Maxime PINEAU
+ */
 public class ImageView extends InternalView  {
 	private static final long serialVersionUID = 1383374106891634092L;
 

@@ -8,6 +8,11 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 
 
+/**
+ * Represents an internal view that contains the results of a statistic analysis of an image. 
+ * @author Maxime PINEAU
+ *
+ */
 public class StatisticAnalysisView extends InternalView {
 	private static final long serialVersionUID = 1L;
 	

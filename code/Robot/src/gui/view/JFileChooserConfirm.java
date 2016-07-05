@@ -5,6 +5,10 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+/**
+ * represents a JFileCooser that demands a confirmation if the file given by the user already exists.
+ * @author Maxime PINEAU
+ */
 public class JFileChooserConfirm extends JFileChooser {
 	
 	private static final long serialVersionUID = 61185538418586982L;
