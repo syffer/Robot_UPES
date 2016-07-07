@@ -2,7 +2,6 @@ package image;
 
 import java.awt.image.BufferedImage;
 
-import transform.VisitorImage;
 
 /**
  * Represents a RGB image (Red Green Blue) 

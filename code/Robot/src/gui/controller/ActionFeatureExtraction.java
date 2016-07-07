@@ -42,6 +42,8 @@ public class ActionFeatureExtraction extends AbstractAction implements Observer 
 		List<Feature> features = FeatureExtractor.extract(image);
 		long endTime = System.currentTimeMillis();
 		
+		System.out.println(features);
+		
 		FeatureExtractionModel featureExtractionModel = new FeatureExtractionModel(image, features, endTime - startTime);		
 		this.controller.addInternalModel(featureExtractionModel); 
 	}

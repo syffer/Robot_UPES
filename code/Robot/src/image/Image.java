@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import transform.VisitorImage;
 
 
 /** 
@@ -22,7 +21,7 @@ import transform.VisitorImage;
  * according to the instance of the image (RGB, grey, ...).
  * 
  * @author Maxime PINEAU
- * @see transform.VisitorImage 
+ * @see image.VisitorImage 
  */
 public abstract class Image {
 	

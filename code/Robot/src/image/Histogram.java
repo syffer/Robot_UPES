@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import transform.VisitorImage;
 
 
 /**  
@@ -24,7 +23,7 @@ import transform.VisitorImage;
  * 
  * @author Maxime PINEAU
  * @see image.Image
- * @see transform.VisitorImage 
+ * @see image.VisitorImage 
  */
 public class Histogram implements VisitorImage {
 

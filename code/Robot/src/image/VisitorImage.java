@@ -1,8 +1,5 @@
-package transform;
+package image;
 
-import image.GreyImage;
-import image.MonoImage;
-import image.RGBImage;
 
 /**
  * The visitor pattern is used to separate the data structure from the operations. 

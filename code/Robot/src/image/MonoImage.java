@@ -3,7 +3,6 @@ package image;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import transform.VisitorImage;
 
 /**
  * Represents a monochromatic image (i.e. an image which contains only 2 values, back and white)

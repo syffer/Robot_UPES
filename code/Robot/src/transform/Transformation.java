@@ -4,6 +4,7 @@ import image.GreyImage;
 import image.Image;
 import image.MonoImage;
 import image.RGBImage;
+import image.VisitorImage;
 
 /**
  * Applies a transformation to an image (filter, threshold, ...). 
