@@ -40,10 +40,10 @@ threshold value, then a pixel will be represented in black if it's grey value is
 
 \begin{equation} \label{eq:threshold}
 mono_{threshold}(greyValue) = 
-\begin{cases}
-	BLACK & \text{if } greyValue < threshold\\
-	WHITE & \text{otherwise} \\ 
-\end{cases}
+	\begin{cases}
+		BLACK & \text{if } greyValue < threshold \\
+		WHITE & \text{otherwise} \\ 
+	\end{cases}
 \end{equation}
 
 
@@ -71,7 +71,7 @@ The visitor pattern was also used in order to facilitate the implementation of n
 
 ~~
 
-The axis we used to represent an image are illustrated in the \vref{fig:axis representation}. 
+The axis we used to represent an image are illustrated on the \vref{fig:axis representation}. 
 
 \begin{figure}[h]
 	\centering
@@ -80,47 +80,6 @@ The axis we used to represent an image are illustrated in the \vref{fig:axis rep
 	\label{fig:axis representation}
 \end{figure}
 
-
-
-
-\subsection{Rajan Tranform and Set Theoretic Rajan Transform}
-
-We planned to use the Set Theoretic Rajan Transform (STRT) in our process but it wasn't possible due to some issues and imprecisions in the documentation concerning the STRT$^{-1}$. We wanted to use this transformation on an image mainly because it has noise removal properties.
-
-~~
-
-The Set Theoretic Rajan Transform (STRT) correspond to the Rajan Transform (RT) applied on the sets domain. First I will present the forward rajan transform, and then it's application in the sets domain. Every equations, figures and explainations have been inspired by the following reference  \cite{bib:symbolic:RajanTransform}.
-
-~~
-
-The rajan transform take a sequence of $2^{i}$ numbers (the number of elements of the sequence have to be a power of 2), transform it, and return another sequence of $2^{i}$ numbers. We will call $x(k)$ the input sequence, $X(k)$ the output sequence of the tranform, and $N$ the number of element in the sequence \cite{bib:symbolic:RajanTransform}. 
-
-~~
-
-We can define the sequences $x(k)$, $g(k)$ and $h(k)$ as following : 
-\begin{align}
-x &= x(0), x(2), \cdots, x(k-1) & \text{where k is a power of 2} \\
-g(k) &= x(k) + x(k + \frac{N}{2}) & \text{with } 0 \leq k \leq N / 2 \\
-h(k) &= | x(k) - x(k - \frac{N}{2}) | & \text{with } N / 2 \leq k \leq N
-\end{align}
-
-~~
-
-In other words, the sequence $x$ will be divided in two. Then we will sum the two first value of the subsequences (which will give us the results of $g(1)$), then the two seconds values (which is $g(2)$), then the thirds values, and so on until all the elements were processed. Then we will do the same operations but with a substraction instead (to get the sequence $h$).
-
-~~
-
-This processus will then have to be repeated on the subsequences $g$ and $h$ separately. We can see here the recursive character of this transformation. The figure \ref{fig:diagram:flowchart:rajan} illustrate the rajan tranformation in a more procedural way, with a sequence of 4 elements. 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.7\textwidth]{images/diagrams/flowchart_rajan_transform}
-	\caption{The forward Rajan Tranfform (RT)}
-	\label{fig:diagram:flowchart:rajan}	
-\end{figure}
-
-
-The Set Theoretic Rajan Transform is the application of the Rajan Transform in the sets domain, and so instead of tranforming a sequence of numbers, it will tranform a sequence of sets, and return another sequence of sets (e.g. $x(1)$ and $X(1)$ wouldn't be numbers, but two sets). In the set domain, the addition correspond to the union, and the substraction to the difference of two sets.
 
 
 
@@ -140,6 +99,12 @@ The Set Theoretic Rajan Transform is the application of the Rajan Transform in t
 
 We defined a feature as something in the image that have a certain shape and edges. 
 
+%As we said before, in order to detect the different edges in th eimage, we used a filter edge detection, like sobel or canny. 
+
+%In order to extracts the differents features in the image, 
+
+
+
 
 \subsubsection{Freeman Chain Code and it's extraction}
 
@@ -147,7 +112,7 @@ The Freeman Chain Code is a coding edge algorithm. It allows to represent a shap
 
 ~~
 
-In order to extract the chain code of a shape in a binary image, it is necessary to start from on of the end edges. For this project, it has been decided to start from the most left upper edge point of the shape, i.e. there isn't any other edge point that is at the left of the starting point. In order to have this starting point, the image has been travelled from up to down, and then from left to right.
+In order to extract the chain code of a shape in a binary image, it is necessary to start from on of the end edges. For this project, it has been decided to start from the most left upper edge point of the shape, i.e. there isn't any other edge point that is at the left of the starting point. In order to have this starting point, the image has been travelled from up to down, and then from left to right, as it is shown on the \vref{fig:chain code:course order}.
 
 \begin{figure}[H]
 	\centering
@@ -169,17 +134,98 @@ Once the starting point is determined, it is then possible to follow the boundar
 
 Moreover, in order to support more complexe shapes, the pixel neibors of the current boundary pixel are travelled depending on the last generated code (i.e. on the last direction). In other words, the stating point of the star is changed depending on the last direction. The first pixel neibor that should be visited must be the previous pixel boundary (i.e. the origin of the direction used to get on the current pixel). 
 
+~~
+
+For example, the chain code "6011445" can be produced with the shape given on the \vref{fig:chain code:course order}. The \vref{fig:chain code:example} explains the procedure. 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/chain_code/example}
+	\caption{Example of a chain code}
+	\label{fig:chain code:example}	
+\end{figure}
+
 
 \subsubsection{Feature Extraction}
 
 
-As we said before, in order to detect the different edges in th eimage, we used a filter edge detection, like sobel or canny. 
+After extracting the chain code from a shape, it is then possible to extracts features from it. A feature is another piece of information or characteristic which is relevent for solving a task \cite{bib:extraction:definition}. The following features were extracted : 
+\begin{itemize}
+	\item the perimeter (the number of boundary pixels)
+	\item the area, which is the number of pixels in the region or shape 
+	\item the width and the height 
+	\item the compactness 
+	\item the circularity 
+	\item the curvature, representing the successive changes in directions 
+	\item the bending energy 
+\end{itemize}
 
-In order to extracts the differents features in the image, 
+~~ 
+
+The perimeter can be calculated using the following \vref{eq:feature extraction:perimeter}. $n_e$ represents the number of even chain elements (i.e. code), and $n_o$ the number of odd chain elements \cite{bib:chain:EstimateAreasAndPerimetersChainCode}. Others equations improve the perimeter length estimation, like the \vref{eq:feature extraction:kulpa} given by Kulpa which is used in this project \cite{bib:chain:ObjectDescription}.
+\begin{align} 
+P &= n_e + \sqrt{2}*n_o \label{eq:feature extraction:perimeter} \\
+P_K &= \frac{\pi}{8} * (1 + \sqrt{2}) * P \label{eq:feature extraction:kulpa}
+\end{align}
+% http://www.mva-org.jp/Proceedings/CommemorativeDVD/1994/papers/1994272.pdf 
+% https://www.uio.no/studier/emner/matnat/ifi/INF4300/h15/undervisningsmateriale/inf4300-2015-f06-description.pdf 
+
+~~
+
+The area 
+
+~~
+
+The width and height can be calculated by knowing the chain code values, and thanks to the direction shape star (\vref{fig:chain code:direction scheme star}). As the chain code should return to the starting point, there is the same number of displacements from the left to the right and from the right to the left. It is then possible to calculate the width by counting the number of displacement from one direction (e.g. from the left to the right), which can be known by using thedirection shape star values. The same goes for the height. The following equations illustrate the process, where $N$ is the number of elements (or code) in the chain code, and $code_i$ is the i$^{th}$ element of the chain code \cite{bib:chain:ShapeDescription}.
+\begin{align}
+width &= \sum_{i = 1}^{N} w_i 
+& \text{ with } w_i = 
+	\begin{cases}
+		1 & \text{if } code_i = 0, 1, 7 \\
+		0 & \text{otherwise} \\
+	\end{cases} \\
+height &= \sum_{i = 1}^{N} h_i 
+& \text{ with }  h_i = 
+	\begin{cases}
+		1 & \text{if } code_i = 5, 6, 7 \\
+		0 & \text{otherwise} \\
+	\end{cases} 
+\end{align}
+
+% \label{eq:feature extraction:compactness} 
+
+~~
+
+The compactness is calculated with the following \vref{eq:feature extraction:compactness}. It is invariant to translation, rotation and scale  \cite{bib:chain:RepresentationAndDescription}.
+\begin{equation} \label{eq:feature extraction:compactness}
+compactness = \frac{perimeter^2}{area}
+\end{equation}
+
+~~
+
+The circularity ratio is given by the \vref{eq:feature extraction:circularity}. It is equal to 1 when the shape is a perfect continuous circle and between 0 and 1 for other shapes \cite{bib:chain:ObjectDescription}.
+\begin{equation} \label{eq:feature extraction:circularity}
+circularity = \frac{4 * \pi * area}{perimeter^2}
+\end{equation}
+
+~~ 
+
+The curvature is the change of rate of slope \cite{bib:chain:ObjectDescription}, in other words it is the ratio between the number of direction changes and the total number of boundary pixels. It can be obtained by summing the elements of the shape differencial chain code  \cite{bib:chain:ShapeRepresentationDescription}. In the following equation, $N$ represents the number of the chain code elements, and $diffCode_i$ represents the i$^{th}$ element of the differential chain code. 
+\begin{equation}
+curvature = \sum_{i = 0}^{N} \text{diffCode}_i
+\end{equation}
+
+% http://www.cb.uu.se/~ingela/Teaching/ImageAnalysis/Shape2002.pdf 
+% bib:chain:ShapeRepresentationDescription 
+
+~~
+
+The bending energy is calculated by integrating the squared curvature along the entire contour of the shape \cite{bib:chain:ShapeRepresentationDescription}. According to \cite{bib:chain:ShapeDescriptionLesson}, it is a good feature for shape matching. 
+\begin{equation}
+bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
+\end{equation}
 
 
-
-
+% http://www.cb.uu.se/~ingela/Teaching/ImageAnalysis/Shape2002.pdf
 
 \subsection{Classification}
 
