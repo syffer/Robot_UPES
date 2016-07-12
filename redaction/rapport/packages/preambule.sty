@@ -1,7 +1,12 @@
 %
 % auteur : Maxime PINEAU
-% version : 2.1.1 
+% version : 2.2
 % 
+% mise à jour 2.2 : 
+% - mathtools 
+% - varioref + hyperref + cleveref + babel (passage de la langue)
+% - obtenir le schema de numérotation actuel et sa dernière page (footer automatique)
+%
 % mise à jour 2.1.1 :
 % - correction listoflisting (problème d'indentation)
 % - booktabs + saving footnotes table 
@@ -36,8 +41,8 @@
 % - auteur hyperref
 % - changer color en xcolor
 %
-\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{preambule}[27/05/2016 v2.1.1 preambule perso]
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preambule}[2016/07/08 v2.2 preambule perso]
 
 \RequirePackage{etoolbox}	% \newtoggle, \toggletrue, \ifbool, \iftoggle 
 \RequirePackage{ifthen}		% \ifthenelse 
@@ -66,16 +71,22 @@
 	\PackageWarning{preambule}{Unknown ‘\CurrentOption’}{}
 }
 
-% exécute le code des options passées
+% exécute le code des options passées 
+% * pour les traiter dans l'ordre d'apparition 
 %\ProcessOptions\relax
 \ProcessKeyvalOptions* 
 
+\PassOptionsToPackage{\package@langue}{babel}
+\PassOptionsToPackage{\package@langue}{varioref}
+\PassOptionsToPackage{\package@langue}{cleveref}
 
 
 \ifthenelse{\equal{\package@bibStyle}{apa} \AND \NOT\equal{\package@langue}{american}}{ 
 	\PackageError{preambule}{With apa, you have to switch the language to american. Use the option : 'langue=american' (and compile twice, as you just change the language)}{}
 }{}
 
+
+%\newcommand{langue}{\expandafter\package@langue}
 
 
 % ********************************************************************
@@ -89,9 +100,11 @@
 
 
 % ********************************************************************
-% Internationnalisation
+% Internationnalisation 
+% - langue passée avec kvoptions 
+% - http://tex.stackexchange.com/questions/30013/pass-keyval-string-option-to-babel/30150#30150
 % ********************************************************************
-\usepackage[\package@langue]{babel} 
+\usepackage{babel}	% [\package@langue]
 
 \ifthenelse{\equal{\package@langue}{french}}{
 	\frenchbsetup{StandardLists=true} 	% evite erreurs de personalisation listes
@@ -114,13 +127,14 @@
 % ********************************************************************
 % Tout ce qui est textuel 
 % ********************************************************************
-\usepackage{microtype} 	% améliore espace entre mots et lettres (peu visible), plus facile à lire  
+\usepackage{microtype} 	% améliore espace entre mots et lettres (peu visible), plus facile à lire 
 \usepackage{mathptmx}	% font family to times (\usepackage{pslatex} time new roman, old package)
 \usepackage{indentfirst}% indente le premier paragraphe (ce qui n'est pas le cas par défaut)
 \usepackage{setspace}	% espace entre les lignes (\onehalfspacing \singlespacing \doublespacing \setstretch{<factor>})
 
-\usepackage{parskip}			% espace entre les paragraphes (mais retire l'indentation)
-\setlength{\parindent}{15pt}	% restaure l'indentation 	% \edef\restoreparindent{\parindent=\the\parindent\relax}
+% utiliser \par ou ~~ à la place (non automatique...)
+%\usepackage{parskip}			% espace entre les paragraphes (mais retire l'indentation)
+%\setlength{\parindent}{15pt}	% restaure l'indentation 	% \edef\restoreparindent{\parindent=\the\parindent\relax}
 
 \usepackage{lipsum}
 \usepackage{multicol} 	% séparer le texte sur plusieurs colonnes
@@ -136,9 +150,15 @@
 
 % ********************************************************************
 % Mathématique 
+% - \mathbb{N}
+% - mathrsfs : http://tex.stackexchange.com/questions/151549/mathscr-latex-or-xelatex 
+% - https://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics#The_cases_environment 
 % ********************************************************************
-\usepackage{amsmath, amsfonts, amssymb}	% extensions pour les mathématiques
-\usepackage{mathrsfs}	% police calligraphique, http://tex.stackexchange.com/questions/151549/mathscr-latex-or-xelatex 
+\usepackage{amsmath}
+\usepackage{amssymb}	% principaux symboles + amsfonts (automatique)
+\usepackage{mathtools}	% améliore amsmath 
+\usepackage{mathrsfs}	% Police calligraphique \mathscr{A} 
+%\usepackage{amsthm}	% theoremes 
 %\usepackage{theorem}
 \usepackage{calc}	% permet les calcules avec les compteurs latex
 
@@ -216,7 +236,7 @@
 % Table of Contents  
 % ******************************************************************** 
 \usepackage[nottoc]{tocbibind} 	% ajoute lot et lof dans la toc 
-%\usepackage{tocloft} 
+%\usepackage{tocloft}	% to control the typographic design of toc, lof, lot
 
 
 
@@ -563,7 +583,7 @@
 	\renewcommand{\thelisting}{\ifnum\value{chapter}>0\relax\thechapter.\fi\arabic{listing}}
 }
 
-% ajout d'une entrée de la lol dans la toc 
+% ajout d'une entrée de la lol dans la toc (tocbibind)
 % - http://ctan.imsc.res.in/macros/latex/contrib/tocbibind/tocbibind.pdf 
 \renewcommand{\listoflistings}{
 	\begingroup 
@@ -693,16 +713,29 @@
 %\AtEndEnvironment{listing}{\stepcounter{lstlisting}}
 
 \makeatletter
-	\AtBeginDocument{\let\c@listing\c@lstlisting} % avoir le même compteur
+	% avoir le même compteur
+	\AtBeginDocument{\let\c@listing\c@lstlisting} 
 
-	\let\l@listing\l@lstlisting % résoudre problème avec tocbibind (listing devient la même chose que lstlisting)
+	% résoudre problème avec tocbibind (listing devient la même chose que lstlisting) 
+	\let\l@listing\l@lstlisting 
 \makeatother
 
+
+
+% ********************************************************************
+% Référencement
+% - commande à utiliser : \vref 
+% - \fullref 2.1 page 2
+% - ordre packages : varioref, hyperlink, cleveref
+% - langue doit être passée en paramètre (fait avec kvoptions)
+% ********************************************************************
+\usepackage{varioref}
 
 
 
 % ********************************************************************
 % Hyperreferences
+% - http://www.tex.ac.uk/FAQ-pdfpagelabels.html 
 %
 % - package à mettre après hyperref :  		http://texblog.net/hyperref/
 % cleveref, amsrefs, algorithm, chappg, sidecap, minitoc, linguex
@@ -712,6 +745,8 @@
 % ********************************************************************
 \usepackage[
 	% dvips, % commented for pdflatex
+	plainpages = false, 	% make page anchor using the formatted form of the page number
+	pdfpagelabels, 			% write the value of \thepage to the PDF file (say ‘ii (4 of 40)’)
 	% hyperfootnotes=false, 
 	% pdftitle = {},
 	% pdfborder = {0 0 0}, % lance un warning 
@@ -730,7 +765,12 @@
 
 
 % packages après hyperref
-\usepackage[french]{cleveref}	% \cref{...} : eq. 1, fig. 1, tab. 1
+
+% cleveref doit être le dernier package chargé qui modifie \ref 
+% - langue doit être passée en paramètre (fait avec kvoptions) 
+\usepackage{cleveref}	% \cref{...} : eq. 1, fig. 1, tab. 1
+
+
 \usepackage[symbol=${}^{\scriptscriptstyle\uparrow}\,\,\,$]{footnotebackref} % ne marche pas bien avec Babel
 % $\mkern-3\thinmuskip{}^{\scriptscriptstyle\uparrow}\,\,\,$
 
@@ -768,8 +808,17 @@
 \usepackage{fancyhdr}	% ajoute les styles pour les header / footer
 \usepackage{pageslts}	% pour compter le nombre de pages
 
-\fancyhf{} 	% to clear all predefined fields (compatibilité package nag, chercheur d'erreur)
-\pagestyle{fancy}		% utiliser style "fancy" (header/footer)
+\fancyhf{} 			% to clear all predefined fields (compatibilité package nag, chercheur d'erreur)
+\pagestyle{fancy}	% utiliser style "fancy" (header/footer)
+%\pagenumbering{arabic}
+
+
+% obtenir le schema de numérotation actuel et sa dernière page 
+\makeatletter 
+	\def \currentNumberingScheme {\expandafter\string\pagesLTS@pnc}
+	\def \lastPageCurrentNumberingScheme {pagesLTS.\currentNumberingScheme}
+\makeatother
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -783,7 +832,7 @@
 
 \fancyfoot[L]{\emph{École Polytechnique de l'Université de Nantes, Département Informatique}}
 \fancyfoot[C]{}	% ou : \fancyfoot[C]{} \cfoot
-\fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{pagesLTS.arabic} }
+\fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme} }
 
 \ifundef{\chapter}{ } {
 	% on modifie la façon d'afficher le titre du chapitre
@@ -802,7 +851,7 @@
 	\renewcommand{\headrulewidth}{0pt}
 	\renewcommand{\footrulewidth}{0.4pt}
 
-	\fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{pagesLTS.arabic} } 
+	\fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme} } 
 }
 
 
@@ -810,17 +859,17 @@
 % Style annexes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fancypagestyle{appendix}{
-	% affiche le compteur en 1, 2, 3
+	% affiche le compteur en .1, .2, .3
 	\renewcommand*{\thepage}{.\arabic{page}}	
 	
     % modifie le footer pour avoir le bon compteur de pages (le Romain)
-    \fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{pagesLTS.Roman} }
+    \fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme} }
 
 	% on modifie le style plain pour avoir le bon compteur
 	\fancypagestyle{plain}{
 		\fancyhead[R]{}
 		\renewcommand{\headrulewidth}{0pt}
-		\fancyfoot[R]{Page ~\thepage ~ / ~\lastpageref{pagesLTS.Roman}}
+		\fancyfoot[R]{Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme}}
 	}
 
 }
