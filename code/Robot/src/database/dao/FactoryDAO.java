@@ -16,7 +16,7 @@ public class FactoryDAO {
 		
 		AnnotatedObjectDAO annotatedObjectDAO = FactoryDAO.singletons.get(session);
 		
-		if(!FactoryDAO.singletons.containsKey(session)) {
+		if(annotatedObjectDAO == null) { // !FactoryDAO.singletons.containsKey(session)
 			annotatedObjectDAO = new AnnotatedObjectDAO(session);
 			FactoryDAO.singletons.put(session, annotatedObjectDAO);
 		}
