@@ -6,6 +6,9 @@
 % - mathtools 
 % - varioref + hyperref + cleveref + babel (passage de la langue)
 % - obtenir le schema de numérotation actuel et sa dernière page (footer automatique)
+% - simplification de la partie header/footer 
+% - authblk (multiple auteurs avec différentes affiliations)
+% - bib style apa pour french et english 
 %
 % mise à jour 2.1.1 :
 % - correction listoflisting (problème d'indentation)
@@ -42,8 +45,9 @@
 % - changer color en xcolor
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{preambule}[2016/07/08 v2.2 preambule perso]
+\ProvidesPackage{packages/preambule}[2016/07/08 v2.2 preambule perso]
 
+\RequirePackage{atveryend}  % chargé pour éviter erreurs entre pagelst et etoolbox
 \RequirePackage{etoolbox}	% \newtoggle, \toggletrue, \ifbool, \iftoggle 
 \RequirePackage{ifthen}		% \ifthenelse 
 \RequirePackage{keyval}		% key=val options
@@ -81,20 +85,13 @@
 \PassOptionsToPackage{\package@langue}{cleveref}
 
 
-\ifthenelse{\equal{\package@bibStyle}{apa} \AND \NOT\equal{\package@langue}{american}}{ 
-	\PackageError{preambule}{With apa, you have to switch the language to american. Use the option : 'langue=american' (and compile twice, as you just change the language)}{}
-}{}
-
-
-%\newcommand{langue}{\expandafter\package@langue}
-
 
 % ********************************************************************
 % Mise en page 
 % ********************************************************************
 
 % Marges de la page
-\usepackage[top=0.70in, bottom=0.70in, left=0.8in,right=0.80in, headheight=27.06pt]{geometry} 
+\usepackage[top=0.70in, bottom=0.70in, left=0.8in, right=0.80in, headheight=27.06pt]{geometry} 
 % 'headheight' augmenté afin d'éviter warnings
 
 
@@ -188,7 +185,7 @@
 \usepackage{url}		% comme une balise <a>
 %\usepackage{import}	% importer fichiers de façon plus précise ( \import{dossier le contenant}{nom fichier} )
 \usepackage{comment}	% commentaires multi-lignes ( \begin{comment} )
-\usepackage{atveryend}  % chargé pour éviter erreurs entre pagelst et etoolbox
+\usepackage{authblk}	% multiples auteurs avec différentes affiliations (\author \affil \author[] \affil[])
 
 
 
@@ -352,7 +349,7 @@
 % ********************************************************************
 \usepackage[
 	hyperref = true,
-	backref = true,
+	backref = true, 		% back reference to the citation (index like)
 	backend = biber,
 	sorting = none, 		% à "none" pour ranger par ordre d'apparition
 	style = \package@bibStyle, 
@@ -360,8 +357,12 @@
 % explications : http://www.latex-tutorial.com/tutorials/beginners/lesson-7/
 % \printbibliography[heading=bibintoc] % ajouter dans la toc 
 
+
+% for APA-style, maps a babel/polyglossia language identifier to an lbx file (doc p.223)
+% - http://tex.stackexchange.com/questions/312091/citations-in-small-caps-using-biblatex-in-french-apa-style 
 \ifthenelse{\equal{\package@bibStyle}{apa}}{
-	\DeclareLanguageMapping{american}{american-apa}
+	\DeclareLanguageMapping{\package@langue}{\package@langue-apa}
+	%\DeclareCaseLangs{french} 
 }
 
 
@@ -582,6 +583,9 @@
 \ifundef{\chapter}{}{
 	\renewcommand{\thelisting}{\ifnum\value{chapter}>0\relax\thechapter.\fi\arabic{listing}}
 }
+
+% fix pour \autoref{listing} (hyperref)
+\providecommand*{\listingautorefname}{\listingscaption}
 
 % ajout d'une entrée de la lol dans la toc (tocbibind)
 % - http://ctan.imsc.res.in/macros/latex/contrib/tocbibind/tocbibind.pdf 
@@ -806,7 +810,7 @@
 % En-têtes et Pieds de page
 % ********************************************************************
 \usepackage{fancyhdr}	% ajoute les styles pour les header / footer
-\usepackage{pageslts}	% pour compter le nombre de pages
+\usepackage{pageslts}	% pour compter le nombre de pages 	% packages/
 
 \fancyhf{} 			% to clear all predefined fields (compatibilité package nag, chercheur d'erreur)
 \pagestyle{fancy}	% utiliser style "fancy" (header/footer)
@@ -816,28 +820,32 @@
 % obtenir le schema de numérotation actuel et sa dernière page 
 \makeatletter 
 	\def \currentNumberingScheme {\expandafter\string\pagesLTS@pnc}
-	\def \lastPageCurrentNumberingScheme {pagesLTS.\currentNumberingScheme}
+	\def \lastPageCurrentNumberingScheme {pagesLTS.\currentNumberingScheme} 
+	\def \thecurrentlastpage {\lastpageref{\lastPageCurrentNumberingScheme}}
 \makeatother
 
+% \leftmark : top level structure (chapter for report)
+% \rightmark : next top level structure (section for report) 
+
+%\ifundef{\chapter}{ } {
+	% on modifie la façon d'afficher le titre du chapitre
+	%\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\ #1}}{}} 
+%}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Style fancy
 % - style des pages normales
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[L]{} 	% \lhead{\nouppercase{\rightmark}}
+\fancyhead[L]{\rightmark} 	% \lhead{\nouppercase{\rightmark}}
+\fancyhead[R]{\leftmark} 
 
 \renewcommand{\headrulewidth}{0.4pt}	% trait horizontal en-tête
 \renewcommand{\footrulewidth}{0.4pt}	% trait horizontal pied de page
 
 \fancyfoot[L]{\emph{École Polytechnique de l'Université de Nantes, Département Informatique}}
-\fancyfoot[C]{}	% ou : \fancyfoot[C]{} \cfoot
-\fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme} }
-
-\ifundef{\chapter}{ } {
-	% on modifie la façon d'afficher le titre du chapitre
-	\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\ #1}}{}} 
-}
+\fancyfoot[C]{}	% ou : \cfoot
+\fancyfoot[R]{ Page ~\thepage ~ / ~\thecurrentlastpage }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -850,8 +858,6 @@
 
 	\renewcommand{\headrulewidth}{0pt}
 	\renewcommand{\footrulewidth}{0.4pt}
-
-	\fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme} } 
 }
 
 
@@ -862,14 +868,10 @@
 	% affiche le compteur en .1, .2, .3
 	\renewcommand*{\thepage}{.\arabic{page}}	
 	
-    % modifie le footer pour avoir le bon compteur de pages (le Romain)
-    \fancyfoot[R]{ Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme} }
-
-	% on modifie le style plain pour avoir le bon compteur
+	% on modifie le style plain 
 	\fancypagestyle{plain}{
 		\fancyhead[R]{}
 		\renewcommand{\headrulewidth}{0pt}
-		\fancyfoot[R]{Page ~\thepage ~ / ~\lastpageref{\lastPageCurrentNumberingScheme}}
 	}
 
 }
