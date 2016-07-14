@@ -33,7 +33,6 @@ public class Feature {
 	private int width;
 	private int height;
 	private double ratioWidthHeight;
-	private double depth;
 	
 	
 	public Feature(Position origin, ChainCode chainCode) {
@@ -157,12 +156,7 @@ public class Feature {
 		return ratioWidthHeight;
 	}
 
-
-	public double getDepth() {
-		return depth;
-	}
-
-
+	
 	@Override
 	public String toString() {
 		return "Feature [ " 
@@ -173,8 +167,8 @@ public class Feature {
 				+ "\n\t compactness=" + compactness + ", circularity=" + circularity 
 				+ "\n\t curvature=" + curvature + ", bendingenergy=" + bendingEnergy 
 				+ "\n\t width=" + width + ", height=" + height
-				+ "\n\t ratioWidthHeight=" + ratioWidthHeight + ", depth=" + depth
-				+ "]";
+				+ "\n\t ratioWidthHeight=" + ratioWidthHeight
+				+ " ]";
 	}
 		
 }

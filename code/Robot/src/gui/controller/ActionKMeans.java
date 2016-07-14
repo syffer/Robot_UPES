@@ -62,8 +62,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 														feature.getBendingEnergy(), 
 														feature.getWidth(), 
 														feature.getHeight(), 
-														feature.getRatioWidthHeight(), 
-														feature.getDepth());
+														feature.getRatioWidthHeight());
 				cluster.add(individual);
 			}
 			

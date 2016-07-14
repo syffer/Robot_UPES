@@ -52,9 +52,9 @@ We choosed to represent the grey and monochromatic image by a one matrix.
 
 .... 
 
-
-
 <changer RGB image> 
+
+~~
 
 \begin{figure}
 	\centering 
@@ -63,8 +63,7 @@ We choosed to represent the grey and monochromatic image by a one matrix.
 	\label{fig:diagram:class:image}
 \end{figure}
 
-
-The visitor pattern was also used in order to facilitate the implementation of new processes (or algorithms) on a data structure without changing it. It does so by separating the algorithm and the data structure from each other. A new process (or algorithm) could be added by extending the VisitorImage class and implementing the apply method for each image subclasses \cite{bib:pattern:Visitor}. 
+The \vref{fig:diagram:class:image} shows the class diagram that was used. The visitor pattern was also used in order to facilitate the implementation of new processes (or algorithms) on a data structure without changing it. It does so by separating the algorithm and the data structure from each other. A new process (or algorithm) could be added by extending the VisitorImage class and implementing the apply method for each image subclasses \cite{bib:pattern:Visitor}. 
 
 % + cours 
 % + book
@@ -145,6 +144,40 @@ For example, the chain code "6011445" can be produced with the shape given on th
 \end{figure}
 
 
+Chain codes are translation invariant but depend on rotation, which mean that differents chain codes will be produced for the shape and it's rotation. It is possible to make the chain code invariant to rotation by using the fisrt difference of the chain code instead, i.e. each code will be substracted with the previous code modulo 8 (as we are in 8-connexity). The new chain will be named differential chain code \cite{bib:chain:RepresentationAndDescription}. The calculation of the differential chain code of the shape of the \vref{fig:chain code:course order} is given with the \vref{tab:chain code:differential chain code}.
+\begin{equation} \label{eq:chain code:differential chain code}
+d_i = code_i - code_{(i-1) \bmod N} \bmod 8
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{comment}
+	\begin{cases}
+		code_i - code_{i-1} mod 8 & \text{if } i \not = 1 \\
+		code_i - code_{N} mod 8 & \text{otherwise} \\
+	\end{cases}
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{table}[H]
+	\centering
+	\caption{Example of a differential chain code}
+	\label{tab:chain code:differential chain code}
+	\begin{tabular}{rccccccc}
+\toprule 
+chain code   & 6     & 0     & 1     & 1     & 4     & 4     & 5     \\
+substraction & 6 - 5 & 0 - 6 & 1 - 0 & 1 - 1 & 4 - 1 & 4 - 4 & 5 - 4 \\
+value     	 & 1     & -6    & 1     & 0     & 3     & 0     & 1     \\
+modulo 8 (differential code)  	 & 1     & 2     & 1     & 0     & 3     & 0     & 1     \\ 
+\bottomrule 
+	\end{tabular}
+\end{table}
+
+
+% http://poseidon.csd.auth.gr/LAB_PUBLICATIONS/Books/dip_material/chapter_7/chap7en.pdf 
+% http://www.ece.uvic.ca/~aalbu/computer%20vision%202009/Lecture%2022.%20Shape%20description-contours.pdf 
+% http://www.vis.uky.edu/~ryang/teaching/cs635-2016spring/Lectures/16-representation.pdf 
+
 \subsubsection{Feature Extraction}
 
 
@@ -169,9 +202,6 @@ P_K &= \frac{\pi}{8} * (1 + \sqrt{2}) * P \label{eq:feature extraction:kulpa}
 % http://www.mva-org.jp/Proceedings/CommemorativeDVD/1994/papers/1994272.pdf 
 % https://www.uio.no/studier/emner/matnat/ifi/INF4300/h15/undervisningsmateriale/inf4300-2015-f06-description.pdf 
 
-~~
-
-The area 
 
 ~~
 
@@ -225,7 +255,10 @@ bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
 \end{equation}
 
 
-% http://www.cb.uu.se/~ingela/Teaching/ImageAnalysis/Shape2002.pdf
+\subsubsection{Modelisation}
+
+
+
 
 \subsection{Classification}
 
