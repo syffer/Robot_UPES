@@ -237,7 +237,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 				
 				Session session = new SessionOracle();
 				
-				AnnotatedObjectDAO objectDAO = new AnnotatedObjectDAO(session);
+				AnnotatedObjectDAO objectDAO = FactoryDAO.getAnnotatedObjectDAO(session);
 				
 				for(int i = 0; i < 5; i++) {
 					AnnotatedObject annotatedObject = new AnnotatedObject(AnnotatedObject.Tag.ROCK, i, i, i, i, i, i, i, i, i);
@@ -267,13 +267,5 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 			
 		}
 	}
-
-
-
-
-
-	
-
-	
 	
 }
