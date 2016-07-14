@@ -34,7 +34,7 @@ increment by 1
 cache 10;
 
 -- auto increment id 
-create or replace trigger AnnotatedObjects_TriggerId
+create or replace trigger AnnotatedObjects_TriggerId 
 before insert 
 on AnnotatedObjects 
 for each row 
@@ -45,6 +45,12 @@ begin
 		from sys.dual;
 	end if;
 end;
+/
 
 commit; 
 
+-- tests
+/* 
+insert into AnnotatedObjects(tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight)
+values('ROCK', 1, 1, 1, 1, 1, 1, 1, 1, 1);
+*/
