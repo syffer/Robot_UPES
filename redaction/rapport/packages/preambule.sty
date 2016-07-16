@@ -368,15 +368,17 @@
 
 \usepackage[babel=true]{csquotes} % pour la gestion des guillemets français.
 
-% biblio in toc by default (exept when passing arguments : heading=bibintoc)
+% (1) biblio in toc by default (exept when passing arguments : heading=bibintoc) 
 % - http://tex.stackexchange.com/questions/89884/bibliography-and-headers-with-titleps-and-biblatex 
-% afficher toute la bibliographie même celle non utilisées
+% (2) afficher toute la bibliographie même celle non utilisées
+% (3) modifier header bibliographie (avant \leftmark = \rightmark = name)
 \let\oldPrintbibliography\printbibliography
 \renewcommand*{\printbibliography}[1][heading=bibintoc]{
 	\nocite{*}	% affiche les références non utilisées également 
-	\oldPrintbibliography[#1] 
+	\oldPrintbibliography[#1]
+
+	\markboth{\leftmark}{}	% modifier header bibliographie 
 }
-%\defbibheading{bibliography}[\refname]{\section*{#1}}
 
 
 
@@ -837,8 +839,8 @@
 % Style fancy
 % - style des pages normales
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fancyhead[L]{\rightmark} 	% \lhead{\nouppercase{\rightmark}}
-\fancyhead[R]{\leftmark} 
+\fancyhead[L]{\nouppercase{\rightmark}} 
+\fancyhead[R]{\nouppercase{\leftmark}}
 
 \renewcommand{\headrulewidth}{0.4pt}	% trait horizontal en-tête
 \renewcommand{\footrulewidth}{0.4pt}	% trait horizontal pied de page
