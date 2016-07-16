@@ -235,6 +235,11 @@
 \usepackage[nottoc]{tocbibind} 	% ajoute lot et lof dans la toc 
 %\usepackage{tocloft}	% to control the typographic design of toc, lof, lot
 
+% modification header lof lot lol 
+% - http://tex.stackexchange.com/questions/204974/how-to-change-the-appearance-of-listof-headers 
+\renewcommand{\tocetcmark}[1]{
+	\markboth{#1}{}
+}
 
 
 
@@ -575,7 +580,7 @@
 % - \inputminted[options]{language}{cheminFichier}
 
 % renommage 
-\renewcommand{\listoflistingscaption}{List of Listings}			% \listoflistings 
+\renewcommand{\listoflistingscaption}{List of Listings}	% \listoflistings 
 \addto\captionsfrench{ 
 	%\renewcommand{\listingscaption}{Program code}
 	\renewcommand{\listoflistingscaption}{Liste des listings} 
@@ -596,13 +601,6 @@
 	\tocfile{\listoflistingscaption}{lol}
 	\endgroup
 }
-
-%\renewcommand{\listoflistings}{%
-%	\ifundef{\chapter}{}{\cleardoublepage}
-%	\phantomsection
-%	\addcontentsline{toc}{\ifundef{\chapter}{section}{chapter}}{\listoflistingscaption}%
-%	\listof{listing}{\listoflistingscaption}%
-%}
 
 
 
@@ -638,15 +636,12 @@
 }
 
 
-\setminted[java]{
-	codetagify = [@Override],	% ajout d'un mot clé 
-}
+
 
 % styles utilisés
 \usemintedstyle[bash]{bw}
 \usemintedstyle[bat]{bw}
 
-\usemintedstyle[java]{borland}
 \usemintedstyle[python]{emacs}
 
 \usemintedstyle[c]{vs}
@@ -671,6 +666,11 @@
 \setminted[js]{
 	style = monokai,
 	bgcolor = monokai background,
+}
+
+\setminted[java]{
+	codetagify = [@Override],	% ajout d'un mot clé 
+	style = borland, 
 }
 
 
@@ -805,6 +805,12 @@
 \glstoctrue 
 \setglossarystyle{listgroup} 	% ordonner alphabétiquement, en les séparant (A, B, C, ...)
 \makeglossaries					% permet de générer le glossaire
+
+% modifier header glossaire (\leftmark seulement)
+% - http://tex.stackexchange.com/questions/78704/make-the-glossary-title-upper-case-in-header 
+\renewcommand{\glossarymark}[1]{ 
+	\markboth{#1}{}
+}
 
 
 
