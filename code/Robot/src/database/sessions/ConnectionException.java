@@ -1,4 +1,6 @@
-package database.exceptions;
+package database.sessions;
+
+import database.DatabaseException;
 
 public class ConnectionException extends DatabaseException {
 	private static final long serialVersionUID = 1L;

@@ -3,8 +3,6 @@ package database.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import database.exceptions.AccessTableException;
-import database.exceptions.NoResultsException;
 import database.sessions.Session;
 
 public abstract class DAO <T, Key extends Serializable> {

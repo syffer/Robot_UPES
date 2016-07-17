@@ -1,6 +1,5 @@
 package database.sessions;
 
-import database.exceptions.ConnectionException;
 
 
 public class SessionOracle extends Session {

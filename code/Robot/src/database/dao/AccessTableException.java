@@ -1,4 +1,6 @@
-package database.exceptions;
+package database.dao;
+
+import database.DatabaseException;
 
 
 public class AccessTableException extends DatabaseException {

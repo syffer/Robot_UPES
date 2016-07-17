@@ -3,14 +3,23 @@ package database.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-import database.exceptions.AccessTableException;
-import database.exceptions.ConnectionException;
+import database.sessions.ConnectionException;
 import database.sessions.Session;
 import database.sessions.SessionOracle;
 
 public class FactoryDAO {
 	
 	private static Map<Session, AnnotatedObjectDAO> singletons = new HashMap<Session, AnnotatedObjectDAO>();
+	
+	/*
+	public static DAO<?, ?> getDAO(Session session, Class<Bean> clazz) throws Exception {
+		
+		if(clazz.equals(AnnotatedObjectDAO.class)) return FactoryDAO.getAnnotatedObjectDAO(session);
+		
+		throw new Exception(")");
+		
+	}
+	*/
 	
 	public static AnnotatedObjectDAO getAnnotatedObjectDAO(Session session) throws AccessTableException {
 		

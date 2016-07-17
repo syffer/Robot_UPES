@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.bean.AnnotatedObject;
-import database.exceptions.AccessTableException;
-import database.exceptions.ConnectionException;
-import database.exceptions.NoResultsException;
+import database.sessions.ConnectionException;
 import database.sessions.Session;
 import database.sessions.SessionOracle;
 
