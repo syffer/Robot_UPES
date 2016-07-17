@@ -23,7 +23,6 @@ public class StatePt extends StateTag {
 	}
 	
 	
-
 	@Override
 	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {

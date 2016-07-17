@@ -7,12 +7,13 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
+
 
 public class Application {
 	public static void main(String[] args) {
 		
 		String pathToFile = "../dataset/annotations/p1010736.xml";
+		//pathToFile = "../dataset/annotations/test.xml";
 		
 		try {
 			// Create a new factory that will create the parser.
@@ -25,6 +26,11 @@ public class Application {
 		    parser.parse(pathToFile, handler);
 		    		    
 		    System.out.println("Success");
+		    
+		    
+		    for(XmlObject xmlObject : handler.getXmlObjects()) {
+		    	System.out.println(xmlObject);
+		    }
 		    
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();

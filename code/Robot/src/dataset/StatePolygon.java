@@ -30,7 +30,9 @@ public class StatePolygon extends StateTag {
 	@Override
 	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
+		if(!rawName.equals("polygon")) return;
 		
+		this.stateObject.setPolygon(this.polygon); 
 		context.popState();
 	}
 	

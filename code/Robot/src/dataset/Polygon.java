@@ -22,5 +22,10 @@ public class Polygon {
 	public void addPoint(int x, int y) {
 		this.addPoint(new Point(x, y));
 	}
+
+	@Override
+	public String toString() {
+		return "[" + points + "]";
+	}
 	
 }

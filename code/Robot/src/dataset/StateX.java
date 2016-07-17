@@ -19,7 +19,7 @@ public class StateX extends StateTag {
 		try {
 			int x = Integer.parseInt(this.stringBuffer.toString());
 			this.statePt.setX(x);
-			
+						
 			context.popState();
 			
 		} catch(NumberFormatException nfe) {

@@ -38,5 +38,10 @@ public class Point {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + this.x + "," + this.y + ")";
+	}
 	
 }

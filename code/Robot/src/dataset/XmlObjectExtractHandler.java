@@ -31,11 +31,6 @@ public class XmlObjectExtractHandler extends DefaultHandler {
 		this.previousTags = new Stack<StateTag>();
 	}
 	
-
-	public List<XmlObject> getXmlObjects() {
-		return this.xmlObjects;
-	}
-	
 	public void pushState(StateTag stateTag) {
 		this.previousTags.push(this.currentTag);
 		this.currentTag = stateTag;
@@ -47,6 +42,16 @@ public class XmlObjectExtractHandler extends DefaultHandler {
 		this.depth--;
 	}
 	
+	
+
+	public void addXmlObject(XmlObject xmlObject) {
+		this.xmlObjects.add(xmlObject);
+	}
+	
+	public List<XmlObject> getXmlObjects() {
+		return this.xmlObjects;
+	}
+		
 	public boolean isLabelResearched(String label) {
 		return this.researchedLabels.contains(label);
 	}

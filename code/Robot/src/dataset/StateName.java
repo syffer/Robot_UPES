@@ -14,16 +14,22 @@ public class StateName extends StateTag {
 	
 	@Override
 	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+
+		String name = this.stringBuffer.toString();
 		
+		if(context.isLabelResearched(name)) { 
+			this.stateObject.setName(name);
+			context.popState();
+		} else { 
+			context.popState(); // cancel StateName
+			context.popState(); // cancel StateObject 
+		}
 		
-		context.popState();
 	}
 
 	@Override
-	public void characters(XmlObjectExtractHandler context, char[] characters, int start, int length) throws SAXException {
-		
+	public void characters(XmlObjectExtractHandler context, char[] characters, int start, int length) throws SAXException { 
 		this.stringBuffer.append(characters, start, length);
-		System.out.println(this.stringBuffer);
 	}
 
 }
