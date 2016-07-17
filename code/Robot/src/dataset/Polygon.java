@@ -25,7 +25,7 @@ public class Polygon {
 
 	@Override
 	public String toString() {
-		return "[" + points + "]";
+		return "" + this.points;
 	}
 	
 }

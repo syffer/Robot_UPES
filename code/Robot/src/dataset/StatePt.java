@@ -3,6 +3,8 @@ package dataset;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import dataset.StatePtValue.Coordonnee;
+
 public class StatePt extends StateTag {
 
 	private StatePolygon statePolygon;
@@ -27,8 +29,8 @@ public class StatePt extends StateTag {
 	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {
 		
-		if(rawName.equals("x")) context.pushState(new StateX(this));
-		else if(rawName.equals("y")) context.pushState(new StateY(this));
+		if(rawName.equals("x")) context.pushState(new StatePtValue(this, Coordonnee.X));
+		else if(rawName.equals("y")) context.pushState(new StatePtValue(this, Coordonnee.Y));
 	}
 
 	@Override

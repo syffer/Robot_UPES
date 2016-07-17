@@ -2,13 +2,20 @@ package dataset;
 
 import org.xml.sax.SAXException;
 
-public class StateX extends StateTag {
+public class StatePtValue extends StateTag {
 
+	public enum Coordonnee {
+		X, 
+		Y
+	}
+	
 	private StatePt statePt;
+	private Coordonnee coordonnee;
 	private StringBuffer stringBuffer;
 	
-	public StateX(StatePt statePt) {
+	public StatePtValue(StatePt statePt, Coordonnee coordonnee) {
 		this.statePt = statePt;
+		this.coordonnee = coordonnee;
 		this.stringBuffer = new StringBuffer();
 	}
 	
@@ -17,9 +24,11 @@ public class StateX extends StateTag {
 	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
 		try {
-			int x = Integer.parseInt(this.stringBuffer.toString());
-			this.statePt.setX(x);
-						
+			int value = Integer.parseInt(this.stringBuffer.toString());
+			
+			if(this.coordonnee == Coordonnee.X)	this.statePt.setX(value);
+			else if(this.coordonnee == Coordonnee.Y)this.statePt.setY(value); 
+			
 			context.popState();
 			
 		} catch(NumberFormatException nfe) {

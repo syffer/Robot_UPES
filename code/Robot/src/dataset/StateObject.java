@@ -23,7 +23,8 @@ public class StateObject extends StateTag {
 			throws SAXException {
 		
 		if(rawName.equals("name")) context.pushState(new StateName(this));
-		else if(rawName.equals("polygon")) 	context.pushState(new StatePolygon(this));		
+		else if(rawName.equals("polygon")) 	context.pushState(new StatePolygon(this));	
+		else if(rawName.equals("box")) context.pushState(new StateBox(this));
 	}
 	
 	@Override
