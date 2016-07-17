@@ -36,14 +36,14 @@ public class StateBox extends StateTag {
 	}
 
 	
-	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs) throws SAXException {
+	public void startElement(ExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs) throws SAXException {
 		if(rawName.equals("xmin")) context.pushState(new StateBoxValue(this, Coordonnee.XMIN));
 		else if(rawName.equals("xmax")) context.pushState(new StateBoxValue(this, Coordonnee.XMAX));
 		else if(rawName.equals("ymin")) context.pushState(new StateBoxValue(this, Coordonnee.YMIN));
 		else if(rawName.equals("ymax")) context.pushState(new StateBoxValue(this, Coordonnee.YMAX));
 	}
 
-	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+	public void endElement(ExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
 		Polygon polygon = new Polygon();
 		polygon.addPoint((int) this.xmin, (int) this.ymin);

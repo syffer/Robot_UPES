@@ -21,7 +21,7 @@ public class Application {
 	
 		    // Create the XMLReader to be used to parse the document.
 		    SAXParser parser = saxParserFactory.newSAXParser();
-		    XmlObjectExtractHandler handler = new XmlObjectExtractHandler("car");
+		    ExtractHandler handler = new ExtractHandler("car");
 		    		    
 		    parser.parse(pathToFile, handler);
 		    		    

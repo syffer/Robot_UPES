@@ -13,7 +13,7 @@ public class StateName extends StateTag {
 	}
 	
 	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+	public void endElement(ExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 
 		String name = this.stringBuffer.toString();
 		
@@ -28,7 +28,7 @@ public class StateName extends StateTag {
 	}
 
 	@Override
-	public void characters(XmlObjectExtractHandler context, char[] characters, int start, int length) throws SAXException { 
+	public void characters(ExtractHandler context, char[] characters, int start, int length) throws SAXException { 
 		this.stringBuffer.append(characters, start, length);
 	}
 

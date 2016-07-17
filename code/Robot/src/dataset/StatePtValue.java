@@ -21,7 +21,7 @@ public class StatePtValue extends StateTag {
 	
 
 	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+	public void endElement(ExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
 		try {
 			int value = Integer.parseInt(this.stringBuffer.toString());
@@ -41,7 +41,7 @@ public class StatePtValue extends StateTag {
 	}
 
 	@Override
-	public void characters(XmlObjectExtractHandler context, char[] characters, int start, int length) throws SAXException {
+	public void characters(ExtractHandler context, char[] characters, int start, int length) throws SAXException {
 		this.stringBuffer.append(characters, start, length);
 	}
 

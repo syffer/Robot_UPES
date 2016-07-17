@@ -26,7 +26,7 @@ public class StatePt extends StateTag {
 	
 	
 	@Override
-	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
+	public void startElement(ExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {
 		
 		if(rawName.equals("x")) context.pushState(new StatePtValue(this, Coordonnee.X));
@@ -34,7 +34,7 @@ public class StatePt extends StateTag {
 	}
 
 	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+	public void endElement(ExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		this.statePolygon.addPointToPolygon(this.point);
 		context.popState();
 	}

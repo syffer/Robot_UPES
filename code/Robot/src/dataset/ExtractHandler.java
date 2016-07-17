@@ -11,7 +11,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XmlObjectExtractHandler extends DefaultHandler {
+public class ExtractHandler extends DefaultHandler {
 
 	private Set<String> researchedLabels;
 	private List<XmlObject> xmlObjects;
@@ -20,11 +20,11 @@ public class XmlObjectExtractHandler extends DefaultHandler {
 	private StateTag currentTag;
 	private int depth;
 	
-	public XmlObjectExtractHandler(String... labels) {
+	public ExtractHandler(String... labels) {
 		this(new HashSet<String>(Arrays.asList(labels)));
 	}
 	
-	public XmlObjectExtractHandler(Set<String> labels) {
+	public ExtractHandler(Set<String> labels) {
 		this.researchedLabels = labels;
 		this.xmlObjects = new ArrayList<XmlObject>();
 		

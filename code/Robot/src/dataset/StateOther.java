@@ -6,7 +6,7 @@ import org.xml.sax.SAXException;
 public class StateOther extends StateTag {
 	
 	@Override
-	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
+	public void startElement(ExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {
 		
 		if(rawName.equals("object")) {

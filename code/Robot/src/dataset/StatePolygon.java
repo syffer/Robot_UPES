@@ -20,7 +20,7 @@ public class StatePolygon extends StateTag {
 	
 	
 	@Override
-	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
+	public void startElement(ExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {
 		
 		if(rawName.equals("pt")) context.pushState(new StatePt(this));
@@ -28,7 +28,7 @@ public class StatePolygon extends StateTag {
 	}
 
 	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+	public void endElement(ExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
 		if(!rawName.equals("polygon")) return;
 		

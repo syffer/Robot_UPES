@@ -21,7 +21,7 @@ public class StateBoxValue extends StateTag {
 		this.stringBuffer = new StringBuffer();
 	}
 	
-	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+	public void endElement(ExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
 		try {
 			double value = Double.parseDouble(this.stringBuffer.toString());
@@ -40,7 +40,7 @@ public class StateBoxValue extends StateTag {
 		}
 	}
 	
-	public void characters(XmlObjectExtractHandler context, char[] characters, int start, int length) throws SAXException {
+	public void characters(ExtractHandler context, char[] characters, int start, int length) throws SAXException {
 		this.stringBuffer.append(characters, start, length);
 	}
 	
