@@ -5,38 +5,37 @@ import org.xml.sax.SAXException;
 
 public class StatePt extends StateTag {
 
-	@Override
-	public void startDocument(XmlObjectExtractHandler context) {
-		// TODO Auto-generated method stub
-		
+	private StatePolygon statePolygon;
+	private Point point;
+	
+	public StatePt(StatePolygon statePolygon) {
+		this.statePolygon = statePolygon;
+		this.point = new Point();
 	}
+	
+	
+	public void setX(int x) {
+		this.point.x = x;
+	}
+	
+	public void setY(int y) {
+		this.point.y = y;
+	}
+	
+	
 
 	@Override
-	public void endDocument(XmlObjectExtractHandler context) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void startElement(XmlObjectExtractHandler context, String nameSpace,
-			String localName, String rawName, Attributes attributs)
+	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {
-		// TODO Auto-generated method stub
 		
+		if(rawName.equals("x")) context.pushState(new StateX(this));
+		else if(rawName.equals("y")) context.pushState(new StateY(this));
 	}
 
 	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace,
-			String localName, String rawName) throws SAXException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void characters(XmlObjectExtractHandler context, char[] characteres,
-			int start, int length) throws SAXException {
-		// TODO Auto-generated method stub
-		
+	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
+		this.statePolygon.addPointToPolygon(this.point);
+		context.popState();
 	}
 
 }

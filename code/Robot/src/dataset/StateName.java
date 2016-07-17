@@ -1,6 +1,5 @@
 package dataset;
 
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 public class StateName extends StateTag {
@@ -14,37 +13,16 @@ public class StateName extends StateTag {
 	}
 	
 	@Override
-	public void startDocument(XmlObjectExtractHandler context) {
-		// TODO Auto-generated method stub
+	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
+		
+		context.popState();
 	}
 
 	@Override
-	public void endDocument(XmlObjectExtractHandler context) {
-		// TODO Auto-generated method stub
+	public void characters(XmlObjectExtractHandler context, char[] characters, int start, int length) throws SAXException {
 		
-	}
-
-	@Override
-	public void startElement(XmlObjectExtractHandler context, String nameSpace,
-			String localName, String rawName, Attributes attributs)
-			throws SAXException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace,
-			String localName, String rawName) throws SAXException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void characters(XmlObjectExtractHandler context, char[] characteres,
-			int start, int length) throws SAXException {
-		
-		this.stringBuffer.append(characteres, start, length);
+		this.stringBuffer.append(characters, start, length);
 		System.out.println(this.stringBuffer);
 	}
 

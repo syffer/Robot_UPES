@@ -5,38 +5,33 @@ import org.xml.sax.SAXException;
 
 public class StatePolygon extends StateTag {
 
-	@Override
-	public void startDocument(XmlObjectExtractHandler context) {
-		// TODO Auto-generated method stub
-		
+	private StateObject stateObject;
+	private Polygon polygon;
+	
+	public StatePolygon(StateObject stateObject) {
+		this.stateObject = stateObject;
+		this.polygon = new Polygon();
 	}
-
-	@Override
-	public void endDocument(XmlObjectExtractHandler context) {
-		// TODO Auto-generated method stub
-		
+	
+	
+	public void addPointToPolygon(Point point) {
+		this.polygon.addPoint(point);
 	}
-
+	
+	
 	@Override
-	public void startElement(XmlObjectExtractHandler context, String nameSpace,
-			String localName, String rawName, Attributes attributs)
+	public void startElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName, Attributes attributs)
 			throws SAXException {
-		// TODO Auto-generated method stub
+		
+		if(rawName.equals("pt")) context.pushState(new StatePt(this));
 		
 	}
 
 	@Override
-	public void endElement(XmlObjectExtractHandler context, String nameSpace,
-			String localName, String rawName) throws SAXException {
-		// TODO Auto-generated method stub
+	public void endElement(XmlObjectExtractHandler context, String nameSpace, String localName, String rawName) throws SAXException {
 		
-	}
-
-	@Override
-	public void characters(XmlObjectExtractHandler context, char[] characteres,
-			int start, int length) throws SAXException {
-		// TODO Auto-generated method stub
 		
+		context.popState();
 	}
-
+	
 }

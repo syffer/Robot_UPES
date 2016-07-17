@@ -13,19 +13,19 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XmlObjectExtractHandler extends DefaultHandler {
 
-	private Set<String> tags;
+	private Set<String> researchedLabels;
 	private List<XmlObject> xmlObjects;
 	
 	private Stack<StateTag> previousTags; 
 	private StateTag currentTag;
 	private int depth;
 	
-	public XmlObjectExtractHandler(String... tags) {
-		this(new HashSet<String>(Arrays.asList(tags)));
+	public XmlObjectExtractHandler(String... labels) {
+		this(new HashSet<String>(Arrays.asList(labels)));
 	}
 	
-	public XmlObjectExtractHandler(Set<String> tags) {
-		this.tags = tags;
+	public XmlObjectExtractHandler(Set<String> labels) {
+		this.researchedLabels = labels;
 		this.xmlObjects = new ArrayList<XmlObject>();
 		
 		this.previousTags = new Stack<StateTag>();
@@ -47,6 +47,9 @@ public class XmlObjectExtractHandler extends DefaultHandler {
 		this.depth--;
 	}
 	
+	public boolean isLabelResearched(String label) {
+		return this.researchedLabels.contains(label);
+	}
 	
 	
 	@Override
@@ -74,8 +77,8 @@ public class XmlObjectExtractHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void characters(char[] characteres, int start, int length) throws SAXException { 
-		this.currentTag.characters(this, characteres, start, length);
+	public void characters(char[] characters, int start, int length) throws SAXException { 
+		this.currentTag.characters(this, characters, start, length);
 	}
 	
 }
