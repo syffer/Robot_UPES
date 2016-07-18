@@ -1,5 +1,8 @@
 package dataset;
 
+import geometry.Point;
+import geometry.Polygon;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

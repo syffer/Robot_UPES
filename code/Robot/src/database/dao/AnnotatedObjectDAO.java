@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import database.bean.AnnotatedObject;
+import database.bean.AnnotatedObjectBean;
 import database.sessions.ConnectionException;
 import database.sessions.Session;
 import database.sessions.SessionOracle;
 
-public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
+public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 
 	private static final String insertSQL = "insert " + 
 											"into AnnotatedObjects(tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight) " +
@@ -70,21 +70,21 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 
 
 	@Override
-	public void insert(AnnotatedObject annotatedObject) throws AccessTableException {
+	public void insert(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
 			this.insertStatement.setString(1, annotatedObject.tag.name());
 			
-			this.insertStatement.setDouble(2, annotatedObject.area);
-			this.insertStatement.setDouble(3, annotatedObject.perimeter);
+			this.insertStatement.setDouble(2, annotatedObject.getArea());
+			this.insertStatement.setDouble(3, annotatedObject.getPerimeter());
 
-			this.insertStatement.setDouble(4, annotatedObject.compactness);
-			this.insertStatement.setDouble(5, annotatedObject.circularity);
-			this.insertStatement.setInt(6, annotatedObject.curvature);
-			this.insertStatement.setDouble(7, annotatedObject.bendingEnergy);
+			this.insertStatement.setDouble(4, annotatedObject.getCompactness());
+			this.insertStatement.setDouble(5, annotatedObject.getCircularity());
+			this.insertStatement.setDouble(6, annotatedObject.getCurvature());
+			this.insertStatement.setDouble(7, annotatedObject.getBendingEnergy());
 			
-			this.insertStatement.setInt(8, annotatedObject.width);
-			this.insertStatement.setInt(9, annotatedObject.height);
-			this.insertStatement.setDouble(10, annotatedObject.ratioWidthHeight);
+			this.insertStatement.setInt(8, annotatedObject.getWidth());
+			this.insertStatement.setInt(9, annotatedObject.getHeight());
+			this.insertStatement.setDouble(10, annotatedObject.getRatioWidthHeight());
 			
 			this.insertStatement.execute();
 			
@@ -97,23 +97,23 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 
 
 	@Override
-	public void update(AnnotatedObject annotatedObject) throws AccessTableException {
+	public void update(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
 			this.updateStatement.setInt(11, annotatedObject.id);
 			
 			this.updateStatement.setString(1, annotatedObject.tag.name());
 			
-			this.updateStatement.setDouble(2, annotatedObject.area);
-			this.updateStatement.setDouble(3, annotatedObject.perimeter);
+			this.updateStatement.setDouble(2, annotatedObject.getArea());
+			this.updateStatement.setDouble(3, annotatedObject.getPerimeter());
 
-			this.updateStatement.setDouble(4, annotatedObject.compactness);
-			this.updateStatement.setDouble(5, annotatedObject.circularity);
-			this.updateStatement.setInt(6, annotatedObject.curvature);
-			this.updateStatement.setDouble(7, annotatedObject.bendingEnergy);
+			this.updateStatement.setDouble(4, annotatedObject.getCompactness());
+			this.updateStatement.setDouble(5, annotatedObject.getCircularity());
+			this.updateStatement.setDouble(6, annotatedObject.getCurvature());
+			this.updateStatement.setDouble(7, annotatedObject.getBendingEnergy());
 			
-			this.updateStatement.setInt(8, annotatedObject.width);
-			this.updateStatement.setInt(9, annotatedObject.height);
-			this.updateStatement.setDouble(10, annotatedObject.ratioWidthHeight);
+			this.updateStatement.setInt(8, annotatedObject.getWidth());
+			this.updateStatement.setInt(9, annotatedObject.getHeight());
+			this.updateStatement.setDouble(10, annotatedObject.getRatioWidthHeight());
 			
 			this.updateStatement.execute();
 			
@@ -126,7 +126,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 
 
 	@Override
-	public void delete(AnnotatedObject annotatedObject) throws AccessTableException {
+	public void delete(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
 			this.deleteByIDStatement.setInt(1, annotatedObject.id);
 			this.deleteByIDStatement.execute();
@@ -139,7 +139,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 
 
 	@Override
-	public AnnotatedObject selectById(Integer id) throws AccessTableException, NoResultsException {
+	public AnnotatedObjectBean selectById(Integer id) throws AccessTableException, NoResultsException {
 		try {
 			this.selectByIdStatement.setInt(1, id);
 			
@@ -148,7 +148,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 			// true if the first result is a ResultSet object; false if the first result is an update count or there is no result
 			
 			ResultSet result = this.selectByIdStatement.getResultSet();
-			List<AnnotatedObject> annotatedObjects = this.getObjetcs(result);
+			List<AnnotatedObjectBean> annotatedObjects = this.getObjetcs(result);
 			
 			return annotatedObjects.get(0);
 			
@@ -158,13 +158,13 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 	}
 
 	
-	public List<AnnotatedObject> selectByTag(AnnotatedObject.Tag tag) throws AccessTableException {
+	public List<AnnotatedObjectBean> selectByTag(AnnotatedObjectBean.Tag tag) throws AccessTableException {
 		try {
 			boolean hasResultSet = this.selectByTagStatement.execute();
-			if(!hasResultSet) return new ArrayList<AnnotatedObject>();
+			if(!hasResultSet) return new ArrayList<AnnotatedObjectBean>();
 			
 			ResultSet result = this.selectByTagStatement.getResultSet();
-			List<AnnotatedObject> annotatedObjects = this.getObjetcs(result);
+			List<AnnotatedObjectBean> annotatedObjects = this.getObjetcs(result);
 			
 			return annotatedObjects;
 			
@@ -175,13 +175,13 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 
 
 	@Override
-	public List<AnnotatedObject> selectAll() throws AccessTableException {
+	public List<AnnotatedObjectBean> selectAll() throws AccessTableException {
 		try {
 			boolean hasResultSet = this.selectAllStatement.execute();
-			if(!hasResultSet) return new ArrayList<AnnotatedObject>();
+			if(!hasResultSet) return new ArrayList<AnnotatedObjectBean>();
 			
 			ResultSet result = this.selectAllStatement.getResultSet();
-			List<AnnotatedObject> annotatedObjects = this.getObjetcs(result);
+			List<AnnotatedObjectBean> annotatedObjects = this.getObjetcs(result);
 			
 			return annotatedObjects;
 			
@@ -201,14 +201,14 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 	}
 	
 	
-	protected List<AnnotatedObject> getObjetcs(ResultSet result) throws SQLException {
-		List<AnnotatedObject> objects = new ArrayList<AnnotatedObject>();
+	protected List<AnnotatedObjectBean> getObjetcs(ResultSet result) throws SQLException {
+		List<AnnotatedObjectBean> objects = new ArrayList<AnnotatedObjectBean>();
 		
 		while(result.next()) {
 			
 			int id = result.getInt("id");
 			String tagString = result.getString("tag");
-			AnnotatedObject.Tag tag = AnnotatedObject.Tag.valueOf(tagString);
+			AnnotatedObjectBean.Tag tag = AnnotatedObjectBean.Tag.valueOf(tagString);
 			double area = result.getDouble("area"); 
 			double perimeter = result.getDouble("perimeter");
 			double compactness = result.getDouble("compactness");
@@ -219,7 +219,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 			int height = result.getInt("height");
 			double ratioWidthHeight = result.getDouble("ratioWidthHeight"); 
 			
-			AnnotatedObject annotatedObject = new AnnotatedObject(id, tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight);;
+			AnnotatedObjectBean annotatedObject = new AnnotatedObjectBean(id, tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight);;
 			objects.add(annotatedObject);
 		}
 		
@@ -238,13 +238,13 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObject, Integer> {
 				AnnotatedObjectDAO objectDAO = FactoryDAO.getAnnotatedObjectDAO(session);
 				
 				for(int i = 0; i < 5; i++) {
-					AnnotatedObject annotatedObject = new AnnotatedObject(AnnotatedObject.Tag.ROCK, i, i, i, i, i, i, i, i, i);
+					AnnotatedObjectBean annotatedObject = new AnnotatedObjectBean(AnnotatedObjectBean.Tag.ROCK, i, i, i, i, i, i, i, i, i);
 					objectDAO.insert(annotatedObject);
 				}
 				
 				
-				List<AnnotatedObject> objects = objectDAO.selectAll();
-				for(AnnotatedObject ob : objects) {
+				List<AnnotatedObjectBean> objects = objectDAO.selectAll();
+				for(AnnotatedObjectBean ob : objects) {
 					System.out.println(ob.id);
 				}
 				

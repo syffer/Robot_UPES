@@ -2,6 +2,7 @@ package dataset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,11 @@ public class ExtractHandler extends DefaultHandler {
 	private int depth;
 	
 	public ExtractHandler(String... labels) {
-		this(new HashSet<String>(Arrays.asList(labels)));
+		this(Arrays.asList(labels));
+	}
+	
+	public ExtractHandler(Collection<String> labels) {
+		this(new HashSet<String>(labels));
 	}
 	
 	public ExtractHandler(Set<String> labels) {
@@ -38,6 +43,8 @@ public class ExtractHandler extends DefaultHandler {
 	}
 	
 	public void popState() {
+		if(this.previousTags.empty()) return;
+		
 		this.currentTag = this.previousTags.pop();
 		this.depth--;
 	}
@@ -56,10 +63,17 @@ public class ExtractHandler extends DefaultHandler {
 		return this.researchedLabels.contains(label);
 	}
 	
+	public int getDepth() {
+		return this.depth;
+	}
+	
+	
+	
 	
 	@Override
 	public void startDocument() {
 		this.xmlObjects = new ArrayList<XmlObject>();
+		this.previousTags = new Stack<StateTag>();
 		this.depth = 0;
 		
 		this.currentTag = new StateOther();

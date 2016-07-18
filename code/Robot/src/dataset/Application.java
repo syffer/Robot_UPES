@@ -24,10 +24,9 @@ public class Application {
 		    ExtractHandler handler = new ExtractHandler("car");
 		    		    
 		    parser.parse(pathToFile, handler);
-		    		    
+		    
 		    System.out.println("Success");
-		    
-		    
+		    		    
 		    for(XmlObject xmlObject : handler.getXmlObjects()) {
 		    	System.out.println(xmlObject);
 		    }

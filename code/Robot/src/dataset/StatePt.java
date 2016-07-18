@@ -1,5 +1,7 @@
 package dataset;
 
+import geometry.Point;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 

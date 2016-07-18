@@ -1,6 +1,8 @@
 package dataset;
 
-import database.bean.AnnotatedObject;
+import database.bean.AnnotatedObjectBean;
+import features.Feature;
+import geometry.Polygon;
 
 public class XmlObject {
 	
@@ -12,8 +14,10 @@ public class XmlObject {
 		this.polygon = polygon;
 	}
 	
-	public AnnotatedObject toAnnotatedObject() {
-		return null;
+	public AnnotatedObjectBean toAnnotatedObject() {
+		
+		Feature feature = new Feature(this.polygon);
+		return new AnnotatedObjectBean(this.label, feature);
 	}
 	
 	@Override
