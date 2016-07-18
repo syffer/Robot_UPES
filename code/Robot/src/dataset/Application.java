@@ -1,45 +1,32 @@
 package dataset;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.xml.sax.SAXException;
+import database.dao.AccessTableException;
+import database.sessions.ConnectionException;
+import database.sessions.Session;
+import database.sessions.SessionOracle;
 
 
 public class Application {
 	public static void main(String[] args) {
-		
-		String pathToFile = "../dataset/annotations/p1010736.xml";
-		//pathToFile = "../dataset/annotations/test.xml";
-		
+				
 		try {
-			// Create a new factory that will create the parser.
-		    SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-	
-		    // Create the XMLReader to be used to parse the document.
-		    SAXParser parser = saxParserFactory.newSAXParser();
-		    ExtractHandler handler = new ExtractHandler("car");
-		    		    
-		    parser.parse(pathToFile, handler);
-		    
-		    System.out.println("Success");
-		    		    
-		    for(XmlObject xmlObject : handler.getXmlObjects()) {
-		    	System.out.println(xmlObject);
-		    }
-		    
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
 			
+			Session session = new SessionOracle("localhost", 1521, "xe", "E125341Q", "E125341Q");
+			
+			DatasetRecorder datasetRecorder = new DatasetRecorder(session);
+			
+			datasetRecorder.record("../dataset/annotations/", "car", "tree", "rock", "person", "wall");
+			
+		} catch (ConnectionException e) {
+			e.printStackTrace();
+		} catch (DatasetRecorderInitializationException e) {
+			e.printStackTrace();
+		} catch (DatasetRecorderNotADirectoryException e) {
+			e.printStackTrace();
+		} catch (AccessTableException e) {
+			e.printStackTrace();
 		}
+		
 	    
 	}
 }

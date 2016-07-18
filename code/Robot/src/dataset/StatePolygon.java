@@ -35,6 +35,12 @@ public class StatePolygon extends StateTag {
 		
 		if(!rawName.equals("polygon")) return;
 		
+		if(this.polygon.getNbPoints() <= 1) {
+			context.popState();
+			context.popState();
+			return;
+		}
+		
 		this.stateObject.setPolygon(this.polygon); 
 		context.popState();
 	}

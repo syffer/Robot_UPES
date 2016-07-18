@@ -18,7 +18,7 @@ create table AnnotatedObjects (
 
 	compactness float not null,
 	circularity float not null,
-	curvature number(6) not null,
+	curvature float not null,
 	bendingEnergy float not null,
 
 	width number(6) not null,

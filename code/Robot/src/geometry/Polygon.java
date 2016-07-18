@@ -30,6 +30,10 @@ public class Polygon {
 		return this.points;
 	}
 	
+	public int getNbPoints() {
+		return this.points.size();
+	}
+	
 	
 	@Override
 	public String toString() {

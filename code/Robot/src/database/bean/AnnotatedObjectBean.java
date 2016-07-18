@@ -9,11 +9,11 @@ public class AnnotatedObjectBean {
 	public Tag tag;
 	private Feature feature;
 	
-	public AnnotatedObjectBean(String tag, double area, double perimeter, double compactness, double circularity, int curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
+	public AnnotatedObjectBean(String tag, double area, double perimeter, double compactness, double circularity, double curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
 		this(-1, tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight);
 	}
 	
-	public AnnotatedObjectBean(int id, String tag, double area, double perimeter, double compactness, double circularity, int curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
+	public AnnotatedObjectBean(int id, String tag, double area, double perimeter, double compactness, double circularity, double curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
 		this(id, tag, new Feature(area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight));
 	}
 

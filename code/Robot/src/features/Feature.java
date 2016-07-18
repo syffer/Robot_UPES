@@ -130,9 +130,9 @@ public class Feature {
 			// area and perimeter
 			this.area += (previousPoint.x * actualPoint.y) - (actualPoint.x * previousPoint.y);
 			
-			double diffX = actualPoint.x - previousPoint.x;
-			double diffY = actualPoint.y - previousPoint.y;
-			this.perimeter += Math.sqrt(diffX*diffX - diffY*diffY);
+			double diffX = (double)actualPoint.x - (double)previousPoint.x;
+			double diffY = (double)actualPoint.y - (double)previousPoint.y;
+			this.perimeter += Math.sqrt(diffX*diffX + diffY*diffY);
 			
 			// width and height 
 			minimalX = Math.min(minimalX, actualPoint.x);
@@ -147,19 +147,21 @@ public class Feature {
 			double angleRadian = Vector.getAngle(di, dii);
 			this.curvature += angleRadian;
 			this.bendingEnergy += angleRadian * angleRadian;
-			
+					
 			previousPoint = actualPoint;
 		}
 		
-		this.area = this.area / 2;
+		this.area = Math.abs(this.area) / 2;
 		this.compactness = (this.area > 0) ? this.perimeter * this.perimeter / this.area : 0; 
 		this.circularity = 4 * Math.PI * this.area / (this.perimeter * this.perimeter); 
-				
+		
 		this.width = maximalX - minimalX;
 		this.height = maximalY - minimalY;
 		this.ratioWidthHeight = (double)this.width / (double)this.height;
 		
 		this.bendingEnergy /= points.size();
+		
+		//System.out.println(this.area + " " + this.perimeter + " " + this.compactness + " " + this.circularity + " " + this.curvature + " " + this.bendingEnergy + " " + this.width + " " + this.height);
 	}
 		
 	
