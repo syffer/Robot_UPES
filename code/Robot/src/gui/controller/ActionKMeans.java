@@ -16,6 +16,7 @@ import classification.KMeansException;
 import classification.NumberOfVariablesException;
 
 import features.Feature;
+import features.SomeObject;
 import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
 import gui.view.ChoiceCanceledException;
@@ -46,14 +47,15 @@ public class ActionKMeans extends AbstractAction implements Observer {
 	@Override
 	public void actionPerformed(ActionEvent event) { 
 		FeatureExtractionModel featureExtractionModel = (FeatureExtractionModel) this.controller.getSelectedInternalModel();
-		List<Feature> features = featureExtractionModel.getFeatures();
+		List<SomeObject> someObjects = featureExtractionModel.getExtractedObjects();
 		MonoImage image = featureExtractionModel.getOriginalImage();
 		
 		try {
 			
 			// creation on the individual from the features 
-			Cluster cluster = new Cluster(10);
-			for(Feature feature : features) {
+			Cluster cluster = new Cluster(9);
+			for(SomeObject someObject : someObjects) {
+				Feature feature = someObject.getFeature();
 				Individual individual = new Individual(feature.getArea(), 
 														feature.getPerimeter(), 
 														feature.getCompactness(), 
@@ -66,7 +68,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 				cluster.add(individual);
 			}
 			
-			int nbClasses = JOptionPaneSlider.showConfirmDialog(this.controller.view, "Classification - Number of Classes", 1, features.size());
+			int nbClasses = JOptionPaneSlider.showConfirmDialog(this.controller.view, "Classification - Number of Classes", 1, someObjects.size());
 			
 			
 			KMeans kmeans = new KMeans();
@@ -75,7 +77,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 			kmeans.clustering(cluster, nbClasses);
 			long endTime = System.currentTimeMillis();
 			
-			ClassificationModel classificationModel = new ClassificationModel(image, features, nbClasses, kmeans.getClasses(), endTime - startTime);
+			ClassificationModel classificationModel = new ClassificationModel(image, someObjects, nbClasses, kmeans.getClasses(), endTime - startTime);
 			this.controller.addInternalModel(classificationModel); 
 			
 			

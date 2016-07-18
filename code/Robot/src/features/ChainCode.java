@@ -1,11 +1,11 @@
 package features;
 
-import image.Position;
+import geometry.Position;
+import geometry.Utils;
 
 import java.util.ArrayList;
 import java.util.List; 
 
-import transform.Utils;
 
 /**
  * Represents a Freeman chain code. 

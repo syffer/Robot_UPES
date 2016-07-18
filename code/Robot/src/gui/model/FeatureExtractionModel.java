@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.util.List;
 
 import features.ChainCode;
-import features.Feature;
+import features.SomeObject;
+import geometry.Position;
 
 import image.MonoImage;
-import image.Position;
 import image.RGBImage;
 
 /**
@@ -24,7 +24,7 @@ public class FeatureExtractionModel extends ImageModel {
 	private static final Color[] colors = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.DARK_GRAY};
 	
 	protected MonoImage original;
-	private List<Feature> features;
+	private List<SomeObject> someObjects;
 	
 	/**
 	 * Creates a new FeatureExtractionModel.
@@ -33,20 +33,20 @@ public class FeatureExtractionModel extends ImageModel {
 	 * @param features the result of the feature extraction 
 	 * @param executionTime the execution time the feature extraction has taken 
 	 */
-	public FeatureExtractionModel(MonoImage image, List<Feature> features, double executionTime) { 
+	public FeatureExtractionModel(MonoImage image, List<SomeObject> someObjects, double executionTime) { 
 		super(new RGBImage(image), image, "Feature Extraction", executionTime);
 		
 		this.original = image;
-		this.features = features;
+		this.someObjects = someObjects;
 		
 		int i = 0;
-		for(Feature feature : this.features) {
+		for(SomeObject someObject : this.someObjects) {
 			
 			Color color = FeatureExtractionModel.colors[i % FeatureExtractionModel.colors.length];
 			i++;
 			
-			Position origin = feature.getPosition();
-			ChainCode chainCode = feature.getChainCode();
+			Position origin = someObject.getPosition();
+			ChainCode chainCode = someObject.getChainCode();
 			
 			for(Position position : chainCode.getPositions(origin)) {
 				this.image.set(position.getI(), position.getJ(), color.getRGB());
@@ -63,8 +63,8 @@ public class FeatureExtractionModel extends ImageModel {
 	/**
 	 * @return the extracted features 
 	 */
-	public List<Feature> getFeatures() {
-		return this.features;
+	public List<SomeObject> getExtractedObjects() {
+		return this.someObjects;
 	}
 		
 	
