@@ -1,36 +1,29 @@
 package database.bean;
 
 import features.Feature;
+import features.Tag;
 
 public class AnnotatedObjectBean {
-	
-	public enum Tag {
-		PERSON, 
-		ROCK, 
-		TREE, 
-		CAR, 
-		OTHER
-	}
 	
 	public Integer id;
 	public Tag tag;
 	private Feature feature;
 	
-	public AnnotatedObjectBean(Tag tag, double area, double perimeter, double compactness, double circularity, int curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
+	public AnnotatedObjectBean(String tag, double area, double perimeter, double compactness, double circularity, int curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
 		this(-1, tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight);
 	}
 	
-	public AnnotatedObjectBean(int id, Tag tag, double area, double perimeter, double compactness, double circularity, int curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
+	public AnnotatedObjectBean(int id, String tag, double area, double perimeter, double compactness, double circularity, int curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
 		this(id, tag, new Feature(area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight));
 	}
 
-	public AnnotatedObjectBean(Tag tag, Feature feature) {
+	public AnnotatedObjectBean(String tag, Feature feature) {
 		this(-1, tag, feature);
 	}
 	
-	public AnnotatedObjectBean(int id, Tag tag, Feature feature) {
+	public AnnotatedObjectBean(int id, String tag, Feature feature) {
 		this.id = id;
-		this.tag = tag; 
+		this.tag = Tag.getTag(tag); 
 		this.feature = feature;
 	}
 	

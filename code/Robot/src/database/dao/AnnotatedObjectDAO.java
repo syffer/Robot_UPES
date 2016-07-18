@@ -72,7 +72,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	@Override
 	public void insert(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
-			this.insertStatement.setString(1, annotatedObject.tag.name());
+			this.insertStatement.setString(1, annotatedObject.tag.toString());
 			
 			this.insertStatement.setDouble(2, annotatedObject.getArea());
 			this.insertStatement.setDouble(3, annotatedObject.getPerimeter());
@@ -101,7 +101,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 		try {
 			this.updateStatement.setInt(11, annotatedObject.id);
 			
-			this.updateStatement.setString(1, annotatedObject.tag.name());
+			this.updateStatement.setString(1, annotatedObject.tag.toString());
 			
 			this.updateStatement.setDouble(2, annotatedObject.getArea());
 			this.updateStatement.setDouble(3, annotatedObject.getPerimeter());
@@ -158,7 +158,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	}
 
 	
-	public List<AnnotatedObjectBean> selectByTag(AnnotatedObjectBean.Tag tag) throws AccessTableException {
+	public List<AnnotatedObjectBean> selectByTag(String tag) throws AccessTableException {
 		try {
 			boolean hasResultSet = this.selectByTagStatement.execute();
 			if(!hasResultSet) return new ArrayList<AnnotatedObjectBean>();
@@ -207,8 +207,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 		while(result.next()) {
 			
 			int id = result.getInt("id");
-			String tagString = result.getString("tag");
-			AnnotatedObjectBean.Tag tag = AnnotatedObjectBean.Tag.valueOf(tagString);
+			String tag = result.getString("tag");
 			double area = result.getDouble("area"); 
 			double perimeter = result.getDouble("perimeter");
 			double compactness = result.getDouble("compactness");
@@ -238,7 +237,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 				AnnotatedObjectDAO objectDAO = FactoryDAO.getAnnotatedObjectDAO(session);
 				
 				for(int i = 0; i < 5; i++) {
-					AnnotatedObjectBean annotatedObject = new AnnotatedObjectBean(AnnotatedObjectBean.Tag.ROCK, i, i, i, i, i, i, i, i, i);
+					AnnotatedObjectBean annotatedObject = new AnnotatedObjectBean("rock", i, i, i, i, i, i, i, i, i);
 					objectDAO.insert(annotatedObject);
 				}
 				
