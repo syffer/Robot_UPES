@@ -1,11 +1,12 @@
 package classification;
 
+import geometry.Utils;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import transform.Utils;
 
 /**
  * Applies the KMeans algorithm on a cluster. 
