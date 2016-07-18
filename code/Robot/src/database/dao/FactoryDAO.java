@@ -21,7 +21,7 @@ public class FactoryDAO {
 	}
 	*/
 	
-	public static AnnotatedObjectDAO getAnnotatedObjectDAO(Session session) throws AccessTableException {
+	public static AnnotatedObjectDAO getAnnotatedObjectDAO(Session session) {
 		
 		AnnotatedObjectDAO annotatedObjectDAO = FactoryDAO.singletons.get(session);
 		
@@ -44,7 +44,7 @@ public class FactoryDAO {
 				AnnotatedObjectDAO dao2 = FactoryDAO.getAnnotatedObjectDAO(session);
 				System.out.println(dao1 == dao2);
 				
-			} catch (ConnectionException | AccessTableException e) {
+			} catch (ConnectionException e) {
 				e.printStackTrace();
 			}
 			

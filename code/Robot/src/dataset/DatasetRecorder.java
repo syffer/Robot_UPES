@@ -29,7 +29,7 @@ public class DatasetRecorder {
 		
 			this.annotatedObjectDAO = FactoryDAO.getAnnotatedObjectDAO(session);
 			
-		} catch(AccessTableException | ParserConfigurationException | SAXException e) {
+		} catch(ParserConfigurationException | SAXException e) {
 			throw new DatasetRecorderInitializationException(e);
 		}
 	}
