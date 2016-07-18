@@ -1,10 +1,10 @@
 package transform.symbolic;
 
+import geometry.Position;
 import image.GreyImage;
 import image.Image;
 import image.MonoImage;
 import image.Pixel;
-import image.Position;
 import image.RGBImage;
 
 import java.util.Set;

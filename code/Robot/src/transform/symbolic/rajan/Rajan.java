@@ -1,11 +1,12 @@
 package transform.symbolic.rajan;
 
 
+import geometry.Utils;
+
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
 
-import transform.Utils;
 
 
 public class Rajan {

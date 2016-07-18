@@ -1,9 +1,9 @@
 package transform.cellularAutomata;
 
+import geometry.Position;
 import image.GreyImage;
 import image.Image;
 import image.MonoImage;
-import image.Position;
 import image.RGBImage;
 
 import java.util.ArrayList;
