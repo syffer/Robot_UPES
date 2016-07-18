@@ -40,8 +40,8 @@ public class Vector {
 	public static class Test {
 		public static void main(String[] args) {
 			
-			Point A = new Point(0, 0);
-			Point B = new Point(0, -8);
+			//Point A = new Point(0, 0);
+			//Point B = new Point(0, -8);
 			
 			Vector v1 = new Vector(0, -8);
 			Vector v2 = new Vector(0, 0);

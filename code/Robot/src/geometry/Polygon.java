@@ -24,7 +24,10 @@ public class Polygon {
 	public void addPoint(int x, int y) {
 		this.addPoint(new Point(x, y));
 	}
-		
+	
+	public Point getPoint(int index) {
+		return this.points.get(index);
+	}
 
 	public List<Point> getPoints() {
 		return this.points;
@@ -34,6 +37,9 @@ public class Polygon {
 		return this.points.size();
 	}
 	
+	public boolean hasPoints() {
+		return !this.points.isEmpty();
+	}
 	
 	@Override
 	public String toString() {

@@ -18,6 +18,11 @@ public class StatePolygon extends StateTag {
 	
 	
 	public void addPointToPolygon(Point point) {
+		
+		// don't add the point if it is already is in the polygon 
+		// sometimes, LabelMe polygon has the same point twice (next to each other)
+		if(this.polygon.hasPoints() && point.equals(this.polygon.getPoint(this.polygon.getNbPoints() - 1))) return;
+		
 		this.polygon.addPoint(point);
 	}
 	
