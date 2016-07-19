@@ -16,20 +16,17 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 
 	@Override
 	public void apply(RGBImage image) {
-		// TODO Auto-generated method stub
-		
+		this.imageTransformed = new RGBImage(this.process(image));
 	}
 
 	@Override
 	public void apply(GreyImage image) {
-		// TODO Auto-generated method stub
-		
+		this.imageTransformed = new GreyImage(this.process(image));
 	}
 
 	@Override
 	public void apply(MonoImage image) {
-		// TODO Auto-generated method stub
-		
+		this.imageTransformed = new GreyImage(this.process(image));
 	}
 	
 	private int[][] process(Image image) {
@@ -59,15 +56,15 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 				
 				Collections.sort(values);
 				
+				// between 1 and size - 1 to eliminate the first and last values 
 				double avg = 0;
 				for(int k = 1; k < values.size() - 1; k++) {
 					avg += values.get(k);
 				}
-				avg /= values.size() - 1;
+				avg /= values.size() - 2;	// -2 because we eliminated 2 values 
 				
-				// apply rule 511 
-				
-				// newData[i][j] = ... 
+				// apply rule 511 (?) 
+				newData[i][j] = (int) avg;
 			}
 		}
 		

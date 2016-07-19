@@ -117,7 +117,7 @@ public class View extends JFrame {
 		//menuNoiseRemoval.add(this.menuMeanFilter);
 		menuNoiseRemoval.add(this.menuMedianFilter);
 		menuNoiseRemoval.add(this.menuGaussianFilter);
-		//menuNoiseRemoval.add(menuCellularAutomata);
+		menuNoiseRemoval.add(menuCellularAutomata);
 		
 		JMenu menuEdgeDetection = new JMenu("Edge Detection");
 		this.menuSobel = new JMenuItem("Sobel");

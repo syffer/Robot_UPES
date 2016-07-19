@@ -28,6 +28,7 @@ import gui.model.StatisticAnalysisInfo;
 import gui.view.InternalView;
 import gui.view.View;
 
+import transform.cellularAutomata.CellularAutomataAlgoII;
 import transform.filter.Canny;
 import transform.filter.GaussianBlur;
 import transform.filter.Laplacian;
@@ -66,6 +67,8 @@ public class GeneralController {
 	protected ActionTransformation actionMedianFilter;
 	protected ActionTransformation actionGaussianFilter;
 	
+	protected ActionTransformation actionCellularAutomataII;
+	
 	protected ActionTransformation actionErosion;
 	protected ActionTransformation actionDilation;
 	
@@ -102,6 +105,8 @@ public class GeneralController {
 		this.actionMedianFilter = new ActionTransformation(this, "Median", new MedianFilter());
 		this.actionGaussianFilter = new ActionTransformation(this, "Gaussian Blur", new GaussianBlur());
 		
+		this.actionCellularAutomataII = new ActionTransformation(this, "Cellular Automata II", new CellularAutomataAlgoII());
+		
 		this.actionErosion = new ActionTransformation(this, "Erosion", new Erosion());
 		this.actionDilation = new ActionTransformation(this, "Dilatation", new Dilation());
 		
@@ -127,6 +132,8 @@ public class GeneralController {
 		this.view.menuWeightedAverage.setAction(this.actionWeightedAverageFilter);
 		this.view.menuMedianFilter.setAction(this.actionMedianFilter);
 		this.view.menuGaussianFilter.setAction(this.actionGaussianFilter);
+		
+		this.view.menuCellularAutomataII.setAction(this.actionCellularAutomataII);
 		
 		this.view.menuGreyScale.setAction(this.actionGreyScale);
 		this.view.menuThreshold.setAction(this.actionThreshold);
