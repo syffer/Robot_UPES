@@ -45,7 +45,7 @@
 % - changer color en xcolor
 %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{packages/preambule}[2016/07/08 v2.2 preambule perso]
+\ProvidesPackage{packages/preambule}[2016/07/20 v2.3 preambule perso]
 
 \RequirePackage{atveryend}  % chargé pour éviter erreurs entre pagelst et etoolbox
 \RequirePackage{etoolbox}	% \newtoggle, \toggletrue, \ifbool, \iftoggle 
@@ -56,6 +56,7 @@
 
 % ********************************************************************
 % Les options 
+% - http://tex.stackexchange.com/questions/30013/pass-keyval-string-option-to-babel/30150#30150 
 % ********************************************************************
 
 \SetupKeyvalOptions{
@@ -63,11 +64,11 @@
 	prefix = package@
 }
 
-\DeclareBoolOption[false]{colorLinks}	% affiche la couleur des hyperrefs (défaut: faux) 
-\DeclareBoolOption[false]{debug}		% affiche bande noir quand "Overfull \hbox" (défaut: false) 
-\DeclareBoolOption[false]{minitoc}		% afficher les minitoc entre les chapitres (non fini)
-\DeclareStringOption[alphabetic]{bibStyle}[alphabetic] 
-\DeclareStringOption[french]{langue}[french] 
+\DeclareBoolOption[false]{colorlinks}	% affiche la couleur des hyperrefs (défaut: faux) 
+\DeclareBoolOption[false]{debug}		% affiche informations de debug (défaut: false) 
+\DeclareBoolOption[false]{minitoc}		% utiliser minitoc entre les chapitres (non fini)
+\DeclareStringOption[alphabetic]{bybstyle}[alphabetic] 
+\DeclareStringOption[english,french]{languages}[french] % languages={english,french} 
 
 % autres options 
 % \DeclareOption* 
@@ -80,9 +81,9 @@
 %\ProcessOptions\relax
 \ProcessKeyvalOptions* 
 
-\PassOptionsToPackage{\package@langue}{babel}
-\PassOptionsToPackage{\package@langue}{varioref}
-\PassOptionsToPackage{\package@langue}{cleveref}
+\PassOptionsToPackage{\package@languages}{babel}
+\PassOptionsToPackage{\package@languages}{varioref}
+\PassOptionsToPackage{\package@languages}{cleveref}
 
 
 
@@ -91,8 +92,8 @@
 % ********************************************************************
 
 % Marges de la page
-\usepackage[top=0.70in, bottom=0.70in, left=0.8in, right=0.80in, headheight=27.06pt]{geometry} 
-% 'headheight' augmenté afin d'éviter warnings
+% - 'headheight' augmenté afin d'éviter des warnings
+\usepackage[top=0.7in, bottom=0.7in, left=0.8in, right=0.8in, headheight=27.06pt]{geometry} 
 
 
 
@@ -101,14 +102,18 @@
 % - langue passée avec kvoptions 
 % - http://tex.stackexchange.com/questions/30013/pass-keyval-string-option-to-babel/30150#30150
 % ********************************************************************
-\usepackage{babel}	% [\package@langue]
+\usepackage{babel}	% [\package@langue] 
+\usepackage{iflang}	% IfLanguagePatterns{}{then}{else} \IfLanguageName
 
-\ifthenelse{\equal{\package@langue}{french}}{
+\IfLanguageName{french}{
 	\frenchbsetup{StandardLists=true} 	% evite erreurs de personalisation listes
-}
+}{}
 
-\usepackage[autolanguage]{numprint}	% écrire nombre selon langue (\numprint), après babel !
-\usepackage[detect-all]{siunitx} 	% unités et format des nombres (km-1, 1/km) : \num \SI{10}{\hertz}
+% écriture des nombres 
+% \unit{\numprint{''nombre''}}{\''unité''}
+% - https://fr.wikibooks.org/wiki/LaTeX/%C3%89crire_de_la_physique 
+\usepackage[autolanguage]{numprint}	% selon la langue (\numprint[unite]), après babel !
+\usepackage[detect-all]{siunitx} 	% unités et format (km-1, 1/km) : \num \SI{10}{\hertz}
 
 
 
@@ -246,10 +251,11 @@
 
 % ********************************************************************
 % Listes
+% - incompatibilité enimitem/enumerate
+% - http://tex.stackexchange.com/questions/58852/possible-incompatibility-with-enumitem 
 % ********************************************************************
 \usepackage{paralist}	% une liste ayant ses éléments en ligne
-\usepackage{enumerate}	% changer labels des énumérateurs (listes, ...)
-\usepackage{enumitem}	% personaliser les listes 
+\usepackage[shortlabels]{enumitem}	% personaliser les listes 
 
 % on essaie d'imiter la présentation de Babel
 % voir : http://daniel.flipo.free.fr/frenchb/frenchb-doc.pdf
@@ -257,18 +263,10 @@
 \newlength\mylabelwidth
 \newcommand*{\mylabel}{\textemdash}  % ou \textendash (tiret plus court)
 \settowidth{\mylabelwidth}{\mylabel}
+\setlist[itemize]{label=\mylabel, nosep}
 \setlist[1]{labelindent=\parindent}
-\setlist[itemize]{
-	label=\mylabel, nosep, 
+\setlist{
 	labelwidth=\mylabelwidth,
-	itemsep=0.4ex plus 0.2ex minus 0.2ex,
-	parsep=0.4ex plus 0.2ex minus 0.2ex,
-	topsep=0.8ex plus 0.4ex minus 0.4ex,
-	partopsep=0.4ex plus 0.2ex minus 0.2ex,
-	leftmargin=!
-}
-\setlist{ 
-	labelwidth=\mylabelwidth, 
 	itemsep=0.4ex plus 0.2ex minus 0.2ex,
 	parsep=0.4ex plus 0.2ex minus 0.2ex,
 	topsep=0.8ex plus 0.4ex minus 0.4ex,
@@ -288,7 +286,7 @@
 \usepackage{wrapfig}	% faire flotter une figure dans un paragraphe
 \usepackage{grffile}	% autorise les " " dans les noms 
 %\graphicspath{ {./images/} }   % répertoire des images par défaut
-\usepackage[font=small,labelfont=bf]{caption}
+\usepackage[font=small, labelfont=bf]{caption}
 
 
 
@@ -304,7 +302,7 @@
 \usepackage{longtable}	% tableau de plus d'une page
 \usepackage{multirow}	% \multicolumn{nbCell}{alignement}{texte} + \multirow{nbLignes}*{texte}
 \usepackage{makecell}	% \thead 
-\usepackage{hhline}		% nouvelle gestion des lignes horizontales 
+%\usepackage{hhline}	% nouvelle gestion des lignes horizontales 
 
 % prochaines lignes pour palier à certains défauts des tableaux standards 
 \setcellgapes{1pt}  	
@@ -316,16 +314,38 @@
 \newcolumntype{d}[1]{D{,}{.}{#1}} 	% d{nbDigitBefore.nbDigitAfter}
 \newcommand{\otoprule}{\midrule[\heavyrulewidth]} % after \toprule (delimite header)
 
+%\usepackage[flushleft]{threeparttable} %tablenotes
+
 
 
 % ********************************************************************
 % Notes de bas de pages
 % ********************************************************************
-\usepackage{footnote} 					% \begin{savenotes} pour dans tableaux 
-\makesavenoteenv{tabular} 				% sauvegarder les footnotes des tableaux automatiquement 
-\usepackage[bottom, multiple]{footmisc}	% footnote toujours collé en bas de page
-\usepackage{fnpct}						% multiple footnotes 1, 2, 3, et autre : \multfootnote{;;} (broken...!)
-%\setfnpct{dont-mess-around} % uncomment if don't want the kerning and punctuation switching
+\usepackage{footnote} 			% \begin{savenotes} pour dans tableaux 
+%\makesavenoteenv{tabular} 		% sauvegarder les footnotes des tableaux automatiquement 
+\usepackage[bottom]{footmisc}	% footnote toujours collé en bas de page 
+\usepackage[multiple]{fnpct}	% multiple footnotes '1, 2' avec \footnote{1;2}
+% - fnpct incompatible avec footnote : \makesavenoteenv 
+
+% fix pour \multfootnote 
+% - babel redéfini ';' au début du document 
+% - \shorthandon commande de babel 
+% - http://tex.stackexchange.com/questions/320066/incompatibility-between-french-babel-and-fnpct-multfootnote 
+% - http://tex.stackexchange.com/questions/121496/is-afterendpreamble-really-executing-code-after-any-atbegindocument-code
+\newcommand{\ifnotshorthand}[1]{
+	\@ifundefined{bbl@active@\string#1}
+}
+
+\AtBeginDocument{
+	\ifnotshorthand{;}{}{
+		\shorthandon{;} 
+		\setfnpct{mult-fn-delim={;}}
+		\shorthandoff{;}
+	}
+}
+
+% autre solution 
+% - http://tex.stackexchange.com/questions/40072/incompatibility-between-footmisc-option-multiple-and-hyperref 
 
 
 
@@ -350,40 +370,50 @@
 
 
 % ********************************************************************
-% Bibliographie et citations
+% Bibliographie et citations 
+% - http://www.latex-tutorial.com/tutorials/beginners/lesson-7/ 
 % ********************************************************************
 \usepackage[
 	hyperref = true,
-	backref = true, 		% back reference to the citation (index like)
+	backref = true, 	% back reference to the citation (index like)
 	backend = biber,
-	sorting = none, 		% à "none" pour ranger par ordre d'apparition
-	style = \package@bibStyle, 
+	sorting = none, 	% "none" pour ranger par ordre d'apparition
+	style = \package@bybstyle, 
 ]{biblatex}
-% explications : http://www.latex-tutorial.com/tutorials/beginners/lesson-7/
-% \printbibliography[heading=bibintoc] % ajouter dans la toc 
-
 
 % for APA-style, maps a babel/polyglossia language identifier to an lbx file (doc p.223)
 % - http://tex.stackexchange.com/questions/312091/citations-in-small-caps-using-biblatex-in-french-apa-style 
-\ifthenelse{\equal{\package@bibStyle}{apa}}{
-	\DeclareLanguageMapping{\package@langue}{\package@langue-apa}
-	%\DeclareCaseLangs{french} 
+% - http://latex-community.org/forum/viewtopic.php?f=5&t=20343 
+\ifthenelse{\equal{\package@bybstyle}{apa}}{
+	\DeclareLanguageMapping{\languagename}{\languagename-apa}
+	% \DeclareCaseLangs
 }
 
-
-\usepackage[babel=true]{csquotes} % pour la gestion des guillemets français.
+% define the list of languages for the sentence case text 
+% - first word capitalized, the rest to lower case (alter the text) 
+% - default command replace the current setting 
+% - * appends its arguments to the current setting 
+\DeclareCaseLangs*{\package@languages} 	
 
 % (1) biblio in toc by default (exept when passing arguments : heading=bibintoc) 
 % - http://tex.stackexchange.com/questions/89884/bibliography-and-headers-with-titleps-and-biblatex 
 % (2) afficher toute la bibliographie même celle non utilisées
 % (3) modifier header bibliographie (avant \leftmark = \rightmark = name)
+% - http://tex.stackexchange.com/questions/113014/removing-section-name-in-heading-of-reference-page 
 \let\oldPrintbibliography\printbibliography
 \renewcommand*{\printbibliography}[1][heading=bibintoc]{
 	\nocite{*}	% affiche les références non utilisées également 
+
+	\markboth{\leftmark}{} 	% modifier header bibliographie (References)
+
 	\oldPrintbibliography[#1]
 
-	\markboth{\leftmark}{}	% modifier header bibliographie 
+	\markboth{\leftmark}{}	% modifier header bibliographie (Bibliography)
 }
+
+% pour la gestion des guillemets français.
+% - https://cs.sharelatex.com/learn/Typesetting_quotations 
+\usepackage[babel=true]{csquotes} 
 
 
 
@@ -420,10 +450,8 @@
 % pour ajouter d'autres "literates" en plus de ceux déjà existant (sans les effacer)
 % attention, ne prend pas l'étoile '*'
 % voir : http://tex.stackexchange.com/questions/149056/how-can-i-define-additional-literate-replacements-without-deleting-existing-ones
-\makeatletter
 \def\addToLiterate#1{\edef\lst@literate{\unexpanded\expandafter{\lst@literate}\unexpanded{#1}}}
 \lst@Key{moreliterate}{}{\addToLiterate{#1}}
-\makeatother
 
 % utilisé pour bloquer la commande \textcolor
 \newcommand{\textcolordummy}[2]{#2}
@@ -586,6 +614,11 @@
 	\renewcommand{\listoflistingscaption}{Liste des listings} 
 }
 
+\addto\captionsenglish{ 
+	\renewcommand{\listoflistingscaption}{List of Listings} 
+}
+
+
 % compteur comme ceux des tableaux / figures 
 \ifundef{\chapter}{}{
 	\renewcommand{\thelisting}{\ifnum\value{chapter}>0\relax\thechapter.\fi\arabic{listing}}
@@ -715,16 +748,11 @@
 %
 % - http://tex.stackexchange.com/questions/287947/figure-as-name-of-listings-in-listoflistings-with-minted-and-newfloat 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\AtBeginEnvironment{listing}{\setcounter{listing}{\value{lstlisting}}}
-%\AtEndEnvironment{listing}{\stepcounter{lstlisting}}
+% avoir le même compteur
+\AtBeginDocument{\let\c@listing\c@lstlisting} 
 
-\makeatletter
-	% avoir le même compteur
-	\AtBeginDocument{\let\c@listing\c@lstlisting} 
-
-	% résoudre problème avec tocbibind (listing devient la même chose que lstlisting) 
-	\let\l@listing\l@lstlisting 
-\makeatother
+% résoudre problème avec tocbibind (listing devient la même chose que lstlisting) 
+\let\l@listing\l@lstlisting 
 
 
 
@@ -741,6 +769,7 @@
 
 % ********************************************************************
 % Hyperreferences
+% - hyperfootnotes <- easily broken 
 % - http://www.tex.ac.uk/FAQ-pdfpagelabels.html 
 %
 % - package à mettre après hyperref :  		http://texblog.net/hyperref/
@@ -750,24 +779,22 @@
 % geometry (avec mag <> 1000), footnotebackref
 % ********************************************************************
 \usepackage[
-	% dvips, % commented for pdflatex
-	plainpages = false, 	% make page anchor using the formatted form of the page number
-	pdfpagelabels, 			% write the value of \thepage to the PDF file (say ‘ii (4 of 40)’)
-	% hyperfootnotes=false, 
-	% pdftitle = {},
-	% pdfborder = {0 0 0}, % lance un warning 
+	linktoc = all, 		% links on title and page number in toc 
+	plainpages = false, % make page anchor using the formatted form of the page number
+	pdfpagelabels, 		% write the value of \thepage to the PDF file (say ‘ii (4 of 40)’)
 	bookmarks, 
-	colorlinks = \ifbool{package@colorLinks}{true}{false},  
+	% 
+	colorlinks = \ifbool{package@colorlinks}{true}{false},  
 	linkcolor = blue,	%red 
-	%anchorcolor = black, 
 	citecolor = red, %green
+	%anchorcolor = black, 
 	%filecolor = cyan,
 	%menucolor = red, 
 	%runcolor = cyan, 
 	%urlcolor = magenta, 
 	pdfauthor = {Maxime PINEAU}, 
-]{hyperref} % liens dans le PDF
-%\hypersetup{...} 
+	% pdftitle = {}, 
+]{hyperref} 
 
 
 % packages après hyperref
@@ -777,8 +804,10 @@
 \usepackage{cleveref}	% \cref{...} : eq. 1, fig. 1, tab. 1
 
 
-\usepackage[symbol=${}^{\scriptscriptstyle\uparrow}\,\,\,$]{footnotebackref} % ne marche pas bien avec Babel
+\usepackage[symbol=${}^{\scriptscriptstyle\uparrow}\,\,\,$]{footnotebackref} 
+% sans redéfinir symbol, ne marche pas bien avec Babel (car babel redéfinie le numéro de note)
 % $\mkern-3\thinmuskip{}^{\scriptscriptstyle\uparrow}\,\,\,$
+
 
 % résoudre les problèmes d'indentation dans toc 
 % - \bookmarksetup{startatroot} 
@@ -793,6 +822,8 @@
 % ********************************************************************
 \ifbool{package@minitoc} {
 	\usepackage{minitoc}
+	% \dominitoc 	% avant \tableofcontents 
+	% \dominilof 	% avant \listoffigures
 }
 
  
@@ -818,19 +849,16 @@
 % En-têtes et Pieds de page
 % ********************************************************************
 \usepackage{fancyhdr}	% ajoute les styles pour les header / footer
-\usepackage{pageslts}	% pour compter le nombre de pages 	% packages/
+\usepackage{pageslts}	% pour compter le nombre de pages 	
 
 \fancyhf{} 			% to clear all predefined fields (compatibilité package nag, chercheur d'erreur)
 \pagestyle{fancy}	% utiliser style "fancy" (header/footer)
 %\pagenumbering{arabic}
 
-
 % obtenir le schema de numérotation actuel et sa dernière page 
-\makeatletter 
-	\def \currentNumberingScheme {\expandafter\string\pagesLTS@pnc}
-	\def \lastPageCurrentNumberingScheme {pagesLTS.\currentNumberingScheme} 
-	\def \thecurrentlastpage {\lastpageref{\lastPageCurrentNumberingScheme}}
-\makeatother
+\newcommand{\currentNumberingScheme}{\expandafter\string\pagesLTS@pnc}
+\newcommand{\lastPageCurrentNumberingScheme}{pagesLTS.\currentNumberingScheme}
+\newcommand{\thecurrentlastpage}{\lastpageref{\lastPageCurrentNumberingScheme}}
 
 % \leftmark : top level structure (chapter for report)
 % \rightmark : next top level structure (section for report) 
@@ -893,10 +921,25 @@
 
 \ifbool{package@debug}{
 	
-	\overfullrule=2cm 		% met une barre noire lors d'un warning "Overfull \hbox"
+	% met une barre noire lors d'un warning "Overfull \hbox" 
+	\overfullrule=2cm 		
+
+	% afficher le layout d'une page avec \layout 
+	\usepackage{layout}
+
+	% afficher les labels 
+	% - http://tex.stackexchange.com/questions/148579/tweak-showlabels-showkeys-wrap-the-label 
+	\usepackage[inline]{showlabels} 
+	\showlabels{cite}
+	\showlabels{ref}
+	%\showlabels{pageref}
+
+	\renewcommand{\showlabelfont}{\raggedright\normalfont\small\ttfamily\color{gray}}
+	\renewcommand{\showlabelsetlabel}[1]{{\showlabelfont \{#1\}}} 	% ajouter {}
+	\renewcommand{\showlabelrefline}{\hrule width 0pt height 1.6ex depth 0pt} 	% supprimer |
 
 	%\usepackage[color]{showkeys}	% afficher les noms des références à coté du lien 
-	%\usepackage{showidx}	% afficher les index dnas la marge où ils sont utilisés
+	%\usepackage{showidx}	% afficher les index dans la marge où ils sont utilisés
 }
 
 
