@@ -54,3 +54,10 @@ commit;
 insert into AnnotatedObjects(tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight)
 values('ROCK', 1, 1, 1, 1, 1, 1, 1, 1, 1);
 */
+
+
+select * 
+from AnnotatedObjects 
+order by compactness, bendingEnergy, curvature, circularity, perimeter, area, ratioWidthHeight, width, height;
+
+
