@@ -1,9 +1,16 @@
 package features;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import geometry.Point;
 import geometry.Polygon;
+import geometry.Utils;
 import geometry.Vector;
 
 /**
@@ -16,7 +23,7 @@ import geometry.Vector;
  * @see features.ChainCode 
  * @author Maxime PINEAU
  */
-public class Feature {
+public class Feature implements Comparable<Feature> {
 	
 	// https://books.google.co.in/books?id=M_Lr8NTfAHcC&pg=PA226&lpg=PA226&dq=curvature+with+chain+code&source=bl&ots=hNHF5hTbuM&sig=S4scMfCxCVUUHFms09hFjCMt7RU&hl=fr&sa=X&redir_esc=y#v=onepage&q=curvature%20with%20chain%20code&f=false 
 	// https://www.uio.no/studier/emner/matnat/ifi/INF4300/h15/undervisningsmateriale/inf4300-2015-f06-description.pdf (page 9) 
@@ -225,6 +232,93 @@ public class Feature {
 	
 	
 
+
+	@Override
+	public int compareTo(Feature other) {
+				
+		Comparators[] comparators = new Comparators[] {Comparators.COMPACTNESS, Comparators.BENDING_GENERGY, Comparators.CURVATURE, 
+														Comparators.CIRCULARITY, Comparators.PERIMETER, Comparators.AREA, 
+														Comparators.RATIO, Comparators.WIDTH, Comparators.HEIGHT};
+		int result;
+		for(Comparator<Feature> comparator : comparators) {
+			// while they are equal, we compare them with the next comparator 
+			result = comparator.compare(this, other); 
+			if(result != 0) return result;
+		}
+		
+		return 0;
+	}
+	
+	
+	
+	// http://stackoverflow.com/questions/19979432/is-there-a-nice-way-to-implement-multiple-comparators-via-an-enum 
+	public enum Comparators implements Comparator<Feature> {
+		COMPACTNESS {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.compactness, feature2.compactness);
+	        }
+		},
+		BENDING_GENERGY {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.bendingEnergy, feature2.bendingEnergy);
+	        }
+		},
+		CURVATURE {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.curvature, feature2.curvature);
+	        }
+		},
+		CIRCULARITY {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.circularity, feature2.circularity);
+	        }
+		},
+		PERIMETER {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.perimeter, feature2.perimeter);
+	        }
+		},
+		AREA {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.area, feature2.area);
+	        }
+		},
+		RATIO {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.ratioWidthHeight, feature2.ratioWidthHeight);
+	        }
+		},
+		WIDTH {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.width, feature2.width);
+	        }
+		},
+		HEIGHT {
+			@Override
+	        public final int compare(final Feature feature1, final Feature feature2) {
+	            return Comparators.compare(feature1.height, feature2.height);
+	        }
+		};
+				
+		public static int compare(double d1, double d2) {
+			return (int) (Utils.round(d1 - d2, 2) * 100);
+		}
+		
+		public static int compare(int i1, int i2) {
+			return i1 - i2;
+		}
+		
+	}
+	
+
 	
 	public static class Test {
 		public static void main(String[] args) {
@@ -244,7 +338,15 @@ public class Feature {
 			Feature feature = new Feature(polygon);
 			System.out.println(feature.getArea());
 			System.out.println(feature.getWidth() + " " + feature.getHeight());
+			
+			
+			Feature f1 = new Feature(1, 1, 1, 1, 1, 1, 1, 1, 1);
+			Feature f2 = new Feature(1, 1, 1, 1, 1, 1, 1, 1, 0.2);
+			System.out.println(f1.compareTo(f2));
+			
 		}
 	}
+
+
 		
 }
