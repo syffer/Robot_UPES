@@ -1,5 +1,7 @@
 package geometry;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,6 +10,16 @@ import java.util.Set;
  * @author Maxime PINEAU
  */
 public class Utils {
+	
+	
+	public static double round(double value, int precision) {
+		// http://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places 
+		if (precision < 0) throw new IllegalArgumentException();
+		
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(precision, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
 	
 	/**
 	 * Returns the smallest representative of a value modulo n 
