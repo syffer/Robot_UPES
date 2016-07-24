@@ -17,7 +17,7 @@ import classification.NumberOfVariablesException;
 
 import features.Feature;
 import features.FeatureExtractor;
-import features.SomeObject;
+import features.PositionnedObject;
 import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
 import gui.model.GeneralModel;
@@ -272,12 +272,12 @@ public class GeneralController {
 			ImageModel imageModel = (ImageModel) model.getSelectedModel();
 			MonoImage image = (MonoImage) imageModel.getImage();
 		
-			List<SomeObject> features = FeatureExtractor.extract(image);
+			List<PositionnedObject> features = FeatureExtractor.extract(image);
 			
 			try {
 			
 				Cluster cluster = new Cluster(5);
-				for(SomeObject someObject : features) {
+				for(PositionnedObject someObject : features) {
 					Feature feature = someObject.getFeature();
 					Individual individual = new Individual(feature.getWidth(), feature.getHeight(), feature.getArea(), feature.getBendingEnergy(), feature.getCircularity());
 					cluster.add(individual);

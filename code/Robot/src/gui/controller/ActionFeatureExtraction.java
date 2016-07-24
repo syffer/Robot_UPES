@@ -10,7 +10,7 @@ import java.util.Observer;
 import javax.swing.AbstractAction;
 
 import features.FeatureExtractor;
-import features.SomeObject;
+import features.PositionnedObject;
 import gui.model.FeatureExtractionModel;
 import gui.model.ImageModel;
 
@@ -39,7 +39,7 @@ public class ActionFeatureExtraction extends AbstractAction implements Observer 
 		MonoImage image = (MonoImage) imageModel.getImage();
 		
 		long startTime = System.currentTimeMillis();
-		List<SomeObject> someObjects = FeatureExtractor.extract(image);
+		List<PositionnedObject> someObjects = FeatureExtractor.extract(image);
 		long endTime = System.currentTimeMillis();
 		
 		//System.out.println(features);

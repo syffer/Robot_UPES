@@ -1,25 +1,23 @@
 package features;
 
-import geometry.Position;
-
-public class SomeObject {
-
-	private Position origin;
-	private ChainCode chainCode;
-	private Feature feature;
+public abstract class SomeObject implements Comparable<SomeObject> {
 	
-	public SomeObject(Position origin, ChainCode chainCode) {
-		this.origin = origin;
-		this.chainCode = chainCode;
-		this.feature = new Feature(chainCode);
+	protected Feature feature;
+	
+	public SomeObject(Feature feature) {
+		this.feature = feature;
 	}
 	
-	public Position getPosition() {
-		return origin;
+
+	@Override
+	public int compareTo(SomeObject other) { 
+		return this.feature.compareTo(other.feature);
 	}
-	
-	public ChainCode getChainCode() {
-		return chainCode;
+
+
+	@Override
+	public String toString() {
+		return "SomeObject [feature=" + feature + "]";
 	}
 	
 	public Feature getFeature() {

@@ -1,13 +1,13 @@
 package database.bean;
 
 import features.Feature;
+import features.SomeObject;
 import features.Tag;
 
-public class AnnotatedObjectBean {
+public class AnnotatedObjectBean extends SomeObject {
 	
 	public Integer id;
 	public Tag tag;
-	private Feature feature;
 	
 	public AnnotatedObjectBean(String tag, double area, double perimeter, double compactness, double circularity, double curvature, double bendingEnergy, int width, int height, double ratioWidthHeight) {
 		this(-1, tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight);
@@ -22,9 +22,9 @@ public class AnnotatedObjectBean {
 	}
 	
 	public AnnotatedObjectBean(int id, String tag, Feature feature) {
+		super(feature);
 		this.id = id;
 		this.tag = Tag.getTag(tag); 
-		this.feature = feature;
 	}
 	
 	public Tag getTag() {

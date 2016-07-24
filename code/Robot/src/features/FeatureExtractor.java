@@ -16,15 +16,15 @@ public class FeatureExtractor {
 	 * @param image the monochromatic image 
 	 * @return a list of the present features in the image 
 	 */
-	public static List<SomeObject> extract(MonoImage image) {
+	public static List<PositionnedObject> extract(MonoImage image) {
 		
-		List<SomeObject> someObjects = new ArrayList<SomeObject>();
+		List<PositionnedObject> someObjects = new ArrayList<PositionnedObject>();
 		ChainCodeExtractor chainCodeExtractor = new ChainCodeExtractor();
 		
 		Map<Position, ChainCode> chainCodes = chainCodeExtractor.extract(image);
 		for(Position position : chainCodes.keySet()) {
 			ChainCode chainCode = chainCodes.get(position);
-			SomeObject someObject = new SomeObject(position, chainCode);
+			PositionnedObject someObject = new PositionnedObject(position, chainCode);
 			someObjects.add(someObject);
 		}
 				

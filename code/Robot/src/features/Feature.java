@@ -1,12 +1,7 @@
 package features;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 
 import geometry.Point;
 import geometry.Polygon;
@@ -28,7 +23,11 @@ public class Feature implements Comparable<Feature> {
 	// https://books.google.co.in/books?id=M_Lr8NTfAHcC&pg=PA226&lpg=PA226&dq=curvature+with+chain+code&source=bl&ots=hNHF5hTbuM&sig=S4scMfCxCVUUHFms09hFjCMt7RU&hl=fr&sa=X&redir_esc=y#v=onepage&q=curvature%20with%20chain%20code&f=false 
 	// https://www.uio.no/studier/emner/matnat/ifi/INF4300/h15/undervisningsmateriale/inf4300-2015-f06-description.pdf (page 9) 
 	// https://books.google.co.in/books?id=_SPyCAAAQBAJ&pg=PA507&lpg=PA507&dq=area+chain+code&source=bl&ots=N26V9BAEdW&sig=p3kAcg1ag0vbPX7v4IPl-_fz6Rc&hl=fr&sa=X&redir_esc=y#v=onepage&q=area%20chain%20code&f=false 
-		
+	
+	public static final Comparators[] comparators = new Comparators[] {Comparators.COMPACTNESS, Comparators.BENDING_GENERGY, 
+		Comparators.CURVATURE, Comparators.CIRCULARITY, Comparators.PERIMETER, 
+		Comparators.AREA, Comparators.RATIO, Comparators.WIDTH, Comparators.HEIGHT};
+	
 	private double area; 		// number of pixels in the region
 	private double perimeter;
 	
@@ -221,13 +220,13 @@ public class Feature implements Comparable<Feature> {
 	
 	@Override
 	public String toString() {
-		return "Feature [ " 
-				+ "\n\t area=" + area + ", perimeter=" + perimeter
-				+ "\n\t compactness=" + compactness + ", circularity=" + circularity 
-				+ "\n\t curvature=" + curvature + ", bendingenergy=" + bendingEnergy 
-				+ "\n\t width=" + width + ", height=" + height
-				+ "\n\t ratioWidthHeight=" + ratioWidthHeight
-				+ " ]";
+		return "(" 
+				+ "area=" + area + ", perimeter=" + perimeter
+				+ ", compactness=" + compactness + ", circularity=" + circularity 
+				+ ", curvature=" + curvature + ", bendingenergy=" + bendingEnergy 
+				+ ", width=" + width + ", height=" + height
+				+ ", ratioWidthHeight=" + ratioWidthHeight
+				+ ")";
 	}
 	
 	
@@ -236,9 +235,6 @@ public class Feature implements Comparable<Feature> {
 	@Override
 	public int compareTo(Feature other) {
 				
-		Comparators[] comparators = new Comparators[] {Comparators.COMPACTNESS, Comparators.BENDING_GENERGY, Comparators.CURVATURE, 
-														Comparators.CIRCULARITY, Comparators.PERIMETER, Comparators.AREA, 
-														Comparators.RATIO, Comparators.WIDTH, Comparators.HEIGHT};
 		int result;
 		for(Comparator<Feature> comparator : comparators) {
 			// while they are equal, we compare them with the next comparator 
@@ -256,12 +252,12 @@ public class Feature implements Comparable<Feature> {
 		COMPACTNESS {
 			@Override
 	        public final int compare(final Feature feature1, final Feature feature2) {
-	            return Comparators.compare(feature1.compactness, feature2.compactness);
+				return Comparators.compare(feature1.compactness, feature2.compactness);
 	        }
 		},
 		BENDING_GENERGY {
 			@Override
-	        public final int compare(final Feature feature1, final Feature feature2) {
+	        public final int compare(final Feature feature1, final Feature feature2) { 
 	            return Comparators.compare(feature1.bendingEnergy, feature2.bendingEnergy);
 	        }
 		},
@@ -309,6 +305,7 @@ public class Feature implements Comparable<Feature> {
 		};
 				
 		public static int compare(double d1, double d2) {
+			// multiply by 100 to keep 2 decimal digit in the form of an integer 
 			return (int) (Utils.round(d1 - d2, 2) * 100);
 		}
 		

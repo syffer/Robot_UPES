@@ -13,34 +13,39 @@ import database.sessions.SessionOracle;
 
 public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 
-	private static final String insertSQL = "insert " + 
-											"into AnnotatedObjects(tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight) " +
-											"values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String insert = "insert " + 
+										 "into AnnotatedObjects(tag, area, perimeter, compactness, circularity, curvature, bendingEnergy, width, height, ratioWidthHeight) " +
+										 "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-	private static final String updateSQL = "update AnnotatedObjects " + 
-											"set tag = ?, area = ?, perimeter = ?, compactness = ?, circularity = ?, curvature = ?, " +
-											"	 bendingEnergy = ?, width = ?, height = ?, ratioWidthHeight = ?" +
-											"where id = ?";
+	private static final String update = "update AnnotatedObjects " + 
+										 "set tag = ?, area = ?, perimeter = ?, compactness = ?, circularity = ?, curvature = ?, " +
+										 "	 bendingEnergy = ?, width = ?, height = ?, ratioWidthHeight = ?" +
+										 "where id = ?";
 	
-	private static final String deleteByIdSQL = "delete " + 
-												"from AnnotatedObjects " + 
-												"where id = ?";
+	private static final String deleteById = "delete " + 
+											 "from AnnotatedObjects " + 
+											 "where id = ?";
 	
-	private static final String deleteAllSQL = "delete " +
-			   								   "from AnnotatedObjects";
+	private static final String deleteAll = "delete " +
+			   								 "from AnnotatedObjects";
 	
-	private static final String selectByIdSQL = "select * " + 
-												"from AnnotatedObjects " + 
-												"where id = ?";
+	private static final String selectById = "select * " + 
+											 "from AnnotatedObjects " + 
+											 "where id = ?";
 		
-	private static final String selectByTagSQL = "select * " +
-												 "from AnnotatedObjects " +
-												 "where tag = ?";
+	private static final String selectByTag = "select * " +
+											  "from AnnotatedObjects " +
+											  "where tag = ?";
 
-	private static final String selectAllSQL = "select * from AnnotatedObjects";
+	private static final String selectAllOrdered = "select * " +
+												   "from AnnotatedObjects " +
+												   "order by compactness, bendingEnergy, curvature, circularity, " +
+												   "		 perimeter, area, ratioWidthHeight, width, height";
+	
+	private static final String selectAll = "select * from AnnotatedObjects";
 	
 	
-	public AnnotatedObjectDAO(Session session) {
+	protected AnnotatedObjectDAO(Session session) {
 		super(session);	
 	}
 	
@@ -50,7 +55,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	@Override
 	public void insert(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
-			PreparedStatement insertStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.insertSQL); 
+			PreparedStatement insertStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.insert); 
 			
 			insertStatement.setString(1, annotatedObject.tag.toString());
 			
@@ -79,7 +84,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	@Override
 	public void update(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
-			PreparedStatement updateStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.updateSQL); 
+			PreparedStatement updateStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.update); 
 			
 			updateStatement.setInt(11, annotatedObject.id);
 			
@@ -110,7 +115,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	@Override
 	public void delete(AnnotatedObjectBean annotatedObject) throws AccessTableException {
 		try {
-			PreparedStatement deleteByIDStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.deleteByIdSQL); 
+			PreparedStatement deleteByIDStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.deleteById); 
 			deleteByIDStatement.setInt(1, annotatedObject.id);
 			deleteByIDStatement.execute();
 		} catch(SQLException sqlException) {
@@ -124,7 +129,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	@Override
 	public AnnotatedObjectBean selectById(Integer id) throws AccessTableException, NoResultsException {
 		try {
-			PreparedStatement selectByIdStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectByIdSQL); 
+			PreparedStatement selectByIdStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectById); 
 			
 			selectByIdStatement.setInt(1, id);
 			
@@ -145,7 +150,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	
 	public List<AnnotatedObjectBean> selectByTag(String tag) throws AccessTableException {
 		try {
-			PreparedStatement selectByTagStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectByTagSQL); 
+			PreparedStatement selectByTagStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectByTag); 
 			
 			boolean hasResultSet = selectByTagStatement.execute();
 			if(!hasResultSet) return new ArrayList<AnnotatedObjectBean>();
@@ -160,11 +165,29 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 		}
 	}
 
-
+	
+	public List<AnnotatedObjectBean> selectAllOrdered() throws AccessTableException {
+		try {
+			PreparedStatement selectAllStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectAllOrdered);
+			
+			boolean hasResultSet = selectAllStatement.execute();
+			if(!hasResultSet) return new ArrayList<AnnotatedObjectBean>();
+			
+			ResultSet result = selectAllStatement.getResultSet();
+			List<AnnotatedObjectBean> annotatedObjects = this.getObjetcs(result);
+			
+			return annotatedObjects;
+			
+		} catch(SQLException sqlException) {
+			throw new AccessTableException(sqlException);
+		}
+	}
+	
+	
 	@Override
 	public List<AnnotatedObjectBean> selectAll() throws AccessTableException {
 		try {
-			PreparedStatement selectAllStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectAllSQL);
+			PreparedStatement selectAllStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.selectAll);
 			
 			boolean hasResultSet = selectAllStatement.execute();
 			if(!hasResultSet) return new ArrayList<AnnotatedObjectBean>();
@@ -183,7 +206,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 	@Override
 	public void deleteAll() throws AccessTableException {
 		try {
-			PreparedStatement deleteAllStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.deleteAllSQL);
+			PreparedStatement deleteAllStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.deleteAll);
 			deleteAllStatement.execute();
 		} catch(SQLException sqlException) {
 			throw new AccessTableException(sqlException);

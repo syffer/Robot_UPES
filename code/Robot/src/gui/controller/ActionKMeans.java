@@ -16,7 +16,7 @@ import classification.KMeansException;
 import classification.NumberOfVariablesException;
 
 import features.Feature;
-import features.SomeObject;
+import features.PositionnedObject;
 import gui.model.ClassificationModel;
 import gui.model.FeatureExtractionModel;
 import gui.view.ChoiceCanceledException;
@@ -47,14 +47,14 @@ public class ActionKMeans extends AbstractAction implements Observer {
 	@Override
 	public void actionPerformed(ActionEvent event) { 
 		FeatureExtractionModel featureExtractionModel = (FeatureExtractionModel) this.controller.getSelectedInternalModel();
-		List<SomeObject> someObjects = featureExtractionModel.getExtractedObjects();
+		List<PositionnedObject> someObjects = featureExtractionModel.getExtractedObjects();
 		MonoImage image = featureExtractionModel.getOriginalImage();
 		
 		try {
 			
 			// creation on the individual from the features 
 			Cluster cluster = new Cluster(9);
-			for(SomeObject someObject : someObjects) {
+			for(PositionnedObject someObject : someObjects) {
 				Feature feature = someObject.getFeature();
 				Individual individual = new Individual(feature.getArea(), 
 														feature.getPerimeter(), 
