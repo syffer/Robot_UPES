@@ -1,7 +1,11 @@
 package features;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import database.bean.AnnotatedObjectBean;
 import database.dao.AccessTableException;
@@ -13,12 +17,26 @@ import database.sessions.SessionOracle;
 
 public class ObjectRecognition {
 	
-	public static void annotateObjects(List<SomeObject> objects) {
+	public static Map<Tag, Collection<SomeObject>> annotateObjects(List<SomeObject> objects, List<AnnotatedObjectBean> tagged) throws ObjectRecognitionException {
 		
+		Map<Tag, Collection<SomeObject>> map = new HashMap<Tag, Collection<SomeObject>>();
+		
+		for(SomeObject some : objects) {
+			
+			AnnotatedObjectBean nearest = ObjectRecognition.getNearestAnnotated(some, tagged);
+			Tag tag = nearest.getTag();
+			some.setTag(tag);
+			
+			if(!map.containsKey(tag)) map.put(tag, new ArrayList<SomeObject>());
+			Collection<SomeObject> collection = map.get(tag);
+			collection.add(some);
+		}
+		
+		return map;
 	}
 	
-	public static AnnotatedObjectBean getNearestAnnotated(SomeObject object, List<AnnotatedObjectBean> others) {
-		if(others.isEmpty()) return null;
+	public static AnnotatedObjectBean getNearestAnnotated(SomeObject object, List<AnnotatedObjectBean> others) throws ObjectRecognitionException {
+		if(others.isEmpty()) throw new ObjectRecognitionException("the list of annotated object is empty");
 		
 		int lower = 0;
 		int higher = others.size();
@@ -71,11 +89,14 @@ public class ObjectRecognition {
 
 				System.out.println(feature);
 				
-				getNearestAnnotated(some, others);
-								
-				for(AnnotatedObjectBean ano : others) {
-					//System.out.println(ano.getFeature());
+				try {
+					
+					getNearestAnnotated(some, others);
+					
+				} catch (ObjectRecognitionException e) {
+					e.printStackTrace();
 				}
+				
 				
 			} catch (ConnectionException | AccessTableException e) {
 				e.printStackTrace();

@@ -57,7 +57,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 		try {
 			PreparedStatement insertStatement = this.session.getConnection().prepareStatement(AnnotatedObjectDAO.insert); 
 			
-			insertStatement.setString(1, annotatedObject.tag.toString());
+			insertStatement.setString(1, annotatedObject.getTag().toString());
 			
 			insertStatement.setDouble(2, annotatedObject.getArea());
 			insertStatement.setDouble(3, annotatedObject.getPerimeter());
@@ -88,7 +88,7 @@ public class AnnotatedObjectDAO extends DAO<AnnotatedObjectBean, Integer> {
 			
 			updateStatement.setInt(11, annotatedObject.id);
 			
-			updateStatement.setString(1, annotatedObject.tag.toString());
+			updateStatement.setString(1, annotatedObject.getTag().toString());
 			
 			updateStatement.setDouble(2, annotatedObject.getArea());
 			updateStatement.setDouble(3, annotatedObject.getPerimeter());
