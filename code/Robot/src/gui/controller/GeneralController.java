@@ -73,6 +73,7 @@ public class GeneralController {
 	protected ActionTransformation actionDilation;
 	
 	protected ActionFeatureExtraction actionFeatureExtraction;
+	protected ActionObjectRecognition actionObjectRecognition;
 	protected ActionKMeans actionKMeans;
 	
 	/**
@@ -111,6 +112,7 @@ public class GeneralController {
 		this.actionDilation = new ActionTransformation(this, "Dilatation", new Dilation());
 		
 		this.actionFeatureExtraction = new ActionFeatureExtraction(this);
+		this.actionObjectRecognition = new ActionObjectRecognition(this);
 		this.actionKMeans = new ActionKMeans(this);
 		
 		// setting actions 
@@ -140,7 +142,8 @@ public class GeneralController {
 		this.view.menuErosion.setAction(this.actionErosion);
 		this.view.menuDilation.setAction(this.actionDilation);
 		
-		this.view.menuChainCode.setAction(this.actionFeatureExtraction);
+		this.view.menuFeatureExtraction.setAction(this.actionFeatureExtraction);
+		this.view.menuObjectRecognition.setAction(this.actionObjectRecognition);
 		this.view.menuKMeans.setAction(this.actionKMeans);
 		
 		// initialise observers (setting default values)

@@ -109,8 +109,10 @@ public class Feature implements Comparable<Feature> {
 		}
 		
 		this.perimeter = this.perimeter * (1 + Math.sqrt(2)) * (Math.PI / 8); 	// https://www.uio.no/studier/emner/matnat/ifi/INF4300/h15/undervisningsmateriale/inf4300-2015-f06-description.pdf (page 10, 11) 
+		this.area = Math.abs(this.area); 
 		this.compactness = (this.area > 0) ? this.perimeter * this.perimeter / this.area : 0; 
 		this.circularity = 4 * Math.PI * this.area / (this.perimeter * this.perimeter);
+		
 		this.ratioWidthHeight = (double)this.width / (double)this.height;
 		this.bendingEnergy /= differentialChainCode.size() - 1; 
 	}

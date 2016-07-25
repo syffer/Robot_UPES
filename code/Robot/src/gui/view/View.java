@@ -51,7 +51,8 @@ public class View extends JFrame {
 	public JMenuItem menuDilation;
 	public JMenuItem menuClap;
 	
-	public JMenuItem menuChainCode;
+	public JMenuItem menuFeatureExtraction;
+	public JMenuItem menuObjectRecognition;
 	public JMenuItem menuKMeans;
 	
 	// toolbar 
@@ -139,9 +140,11 @@ public class View extends JFrame {
 		menuMorphology.add(this.menuDilation);
 		menuMorphology.add(this.menuClap);
 		
-		JMenu menuFeatureExtraction = new JMenu("Feature Extraction");
-		this.menuChainCode = new JMenuItem("Chain Code");
-		menuFeatureExtraction.add(this.menuChainCode);
+		JMenu menuExtraction = new JMenu("Extraction");
+		this.menuFeatureExtraction = new JMenuItem("Feature Extraction");
+		this.menuObjectRecognition = new JMenuItem("Object Recognition");
+		menuExtraction.add(this.menuFeatureExtraction);
+		menuExtraction.add(this.menuObjectRecognition);
 		
 		JMenu menuClassification = new JMenu("Classification");
 		this.menuKMeans = new JMenuItem("KMeans");
@@ -151,7 +154,7 @@ public class View extends JFrame {
 		menuBar.add(menuNoiseRemoval);
 		menuBar.add(menuEdgeDetection);
 		menuBar.add(menuMorphology);
-		menuBar.add(menuFeatureExtraction);
+		menuBar.add(menuExtraction);
 		menuBar.add(menuClassification);
 		
 		this.setJMenuBar(menuBar);

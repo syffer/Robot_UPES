@@ -1,12 +1,20 @@
 package features;
 
+import java.awt.Color;
+
 public enum Tag {
-	OTHER,
-	ROCK, 
-	TREE, 
-	PERSON, 
-	WALL, 
-	CAR;
+	OTHER(Color.BLUE),
+	ROCK(Color.YELLOW), 
+	TREE(Color.GREEN), 
+	PERSON(Color.PINK), 
+	WALL(Color.WHITE), 
+	CAR(Color.RED);
+	
+	private Color color;
+	
+	private Tag(Color color) {
+		this.color = color;
+	}
 	
 	public static Tag getTag(String label) {
 		try {
@@ -14,6 +22,10 @@ public enum Tag {
 		} catch(IllegalArgumentException ile) {
 			return Tag.OTHER;
 		}
+	}
+	
+	public Color getColor() {
+		return this.color;
 	}
 	
 	

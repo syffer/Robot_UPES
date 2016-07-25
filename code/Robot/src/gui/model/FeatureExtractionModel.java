@@ -34,7 +34,7 @@ public class FeatureExtractionModel extends ImageModel {
 	 * @param executionTime the execution time the feature extraction has taken 
 	 */
 	public FeatureExtractionModel(MonoImage image, List<PositionnedObject> someObjects, double executionTime) { 
-		super(new RGBImage(image), image, "Feature Extraction", executionTime);
+		super(new RGBImage(image.getWidth(), image.getHeight()), image, "Feature Extraction", executionTime);
 		
 		this.original = image;
 		this.someObjects = someObjects;

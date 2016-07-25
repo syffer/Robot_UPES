@@ -17,18 +17,18 @@ import database.sessions.SessionOracle;
 
 public class ObjectRecognition {
 	
-	public static Map<Tag, Collection<SomeObject>> annotateObjects(List<SomeObject> objects, List<AnnotatedObjectBean> tagged) throws ObjectRecognitionException {
+	public static Map<Tag, Collection<PositionnedObject>> annotateObjects(List<PositionnedObject> objects, List<AnnotatedObjectBean> tagged) throws ObjectRecognitionException {
 		
-		Map<Tag, Collection<SomeObject>> map = new HashMap<Tag, Collection<SomeObject>>();
+		Map<Tag, Collection<PositionnedObject>> map = new HashMap<Tag, Collection<PositionnedObject>>();
 		
-		for(SomeObject some : objects) {
+		for(PositionnedObject some : objects) {
 			
 			AnnotatedObjectBean nearest = ObjectRecognition.getNearestAnnotated(some, tagged);
 			Tag tag = nearest.getTag();
 			some.setTag(tag);
 			
-			if(!map.containsKey(tag)) map.put(tag, new ArrayList<SomeObject>());
-			Collection<SomeObject> collection = map.get(tag);
+			if(!map.containsKey(tag)) map.put(tag, new ArrayList<PositionnedObject>());
+			Collection<PositionnedObject> collection = map.get(tag);
 			collection.add(some);
 		}
 		

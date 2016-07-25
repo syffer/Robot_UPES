@@ -27,7 +27,7 @@ public class ActionFeatureExtraction extends AbstractAction implements Observer 
 	private GeneralController controller;
 	
 	public ActionFeatureExtraction(GeneralController controller) {
-		super("Feature Extraction");
+		super("Feature Extraction (Chain Code)");
 		
 		this.controller = controller;
 		this.controller.model.addObserver(this);
@@ -43,6 +43,10 @@ public class ActionFeatureExtraction extends AbstractAction implements Observer 
 		long endTime = System.currentTimeMillis();
 		
 		//System.out.println(features);
+		for(PositionnedObject object : someObjects) {
+			System.out.println(object);
+		}
+		System.out.println();
 		
 		FeatureExtractionModel featureExtractionModel = new FeatureExtractionModel(image, someObjects, endTime - startTime);		
 		this.controller.addInternalModel(featureExtractionModel); 

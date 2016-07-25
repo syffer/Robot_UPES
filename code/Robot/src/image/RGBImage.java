@@ -16,7 +16,7 @@ public class RGBImage extends Image {
 	 * @param width the width of the image 
 	 * @param heigth the height of the image 
 	 */
-	protected RGBImage(int width, int heigth) {
+	public RGBImage(int width, int heigth) {
 		super(width, heigth);
 	}
 
