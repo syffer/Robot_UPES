@@ -2,6 +2,9 @@
 % auteur : Maxime PINEAU
 % version : 2.2
 % 
+% biber build/% 	(avant: biber --output-directory=./build %)
+% makeglossaries -d ./build %  
+%
 % mise à jour 2.2 : 
 % - mathtools 
 % - varioref + hyperref + cleveref + babel (passage de la langue)
@@ -81,9 +84,12 @@
 %\ProcessOptions\relax
 \ProcessKeyvalOptions* 
 
-\PassOptionsToPackage{\package@languages}{babel}
-\PassOptionsToPackage{\package@languages}{varioref}
-\PassOptionsToPackage{\package@languages}{cleveref}
+% passage d'options aux packages 
+% utilisation de '\expendafter' pour pouvoir écrire languages={english, french} (espace) 
+% - http://northstar-www.dartmouth.edu/doc/texmf-dist/doc/latex/oberdiek/example-mycolorsetup.sty 
+\expandafter\PassOptionsToPackage\expandafter{\package@languages}{babel}
+\expandafter\PassOptionsToPackage\expandafter{\package@languages}{varioref}
+\expandafter\PassOptionsToPackage\expandafter{\package@languages}{cleveref}
 
 
 
@@ -98,6 +104,15 @@
 
 
 % ********************************************************************
+% Accents
+% ********************************************************************
+\usepackage[T1]{fontenc}	% "font" utilisé pour afficher les caractères
+\usepackage[utf8]{inputenc} % permet d'écrire les accents au clavier
+% option de "inputenc" doit correspondre au format de sauvegarde du fichier 
+
+
+
+% ********************************************************************
 % Internationnalisation 
 % - langue passée avec kvoptions 
 % - http://tex.stackexchange.com/questions/30013/pass-keyval-string-option-to-babel/30150#30150
@@ -105,6 +120,7 @@
 \usepackage{babel}	% [\package@langue] 
 \usepackage{iflang}	% IfLanguagePatterns{}{then}{else} \IfLanguageName
 
+% IfLanguageFamilyFrench 
 \IfLanguageName{french}{
 	\frenchbsetup{StandardLists=true} 	% evite erreurs de personalisation listes
 }{}
@@ -114,15 +130,6 @@
 % - https://fr.wikibooks.org/wiki/LaTeX/%C3%89crire_de_la_physique 
 \usepackage[autolanguage]{numprint}	% selon la langue (\numprint[unite]), après babel !
 \usepackage[detect-all]{siunitx} 	% unités et format (km-1, 1/km) : \num \SI{10}{\hertz}
-
-
-
-% ********************************************************************
-% Accents
-% ********************************************************************
-\usepackage[T1]{fontenc}	% "font" utilisé pour afficher les caractères
-\usepackage[utf8]{inputenc} % permet d'écrire les accents au clavier
-% option de "inputenc" doit correspondre au format de sauvegarde du fichier 
 
 
 
@@ -158,8 +165,8 @@
 % ********************************************************************
 \usepackage{amsmath}
 \usepackage{amssymb}	% principaux symboles + amsfonts (automatique)
-\usepackage{mathtools}	% améliore amsmath 
-\usepackage{mathrsfs}	% Police calligraphique \mathscr{A} 
+%\usepackage{mathtools}	% améliore amsmath 
+%\usepackage{mathrsfs}	% Police calligraphique \mathscr{A} 
 %\usepackage{amsthm}	% theoremes 
 %\usepackage{theorem}
 \usepackage{calc}	% permet les calcules avec les compteurs latex
@@ -282,7 +289,7 @@
 % ********************************************************************
 \usepackage{graphicx}	% pour inclure les images
 \usepackage{float} 		% placement H pour les figures
-\usepackage{subcaption}	% placer plusieurs figures cote à cote 
+%\usepackage{subcaption}% placer plusieurs figures cote à cote (loaded with caption)
 \usepackage{wrapfig}	% faire flotter une figure dans un paragraphe
 \usepackage{grffile}	% autorise les " " dans les noms 
 %\graphicspath{ {./images/} }   % répertoire des images par défaut
@@ -322,7 +329,8 @@
 % Notes de bas de pages
 % ********************************************************************
 \usepackage{footnote} 			% \begin{savenotes} pour dans tableaux 
-%\makesavenoteenv{tabular} 		% sauvegarder les footnotes des tableaux automatiquement 
+\makesavenoteenv{table}			% sauvegarder les footnotes des tableaux automatiquement
+\makesavenoteenv{tabular} 		
 \usepackage[bottom]{footmisc}	% footnote toujours collé en bas de page 
 \usepackage[multiple]{fnpct}	% multiple footnotes '1, 2' avec \footnote{1;2}
 % - fnpct incompatible avec footnote : \makesavenoteenv 
@@ -398,17 +406,27 @@
 % (1) biblio in toc by default (exept when passing arguments : heading=bibintoc) 
 % - http://tex.stackexchange.com/questions/89884/bibliography-and-headers-with-titleps-and-biblatex 
 % (2) afficher toute la bibliographie même celle non utilisées
-% (3) modifier header bibliographie (avant \leftmark = \rightmark = name)
-% - http://tex.stackexchange.com/questions/113014/removing-section-name-in-heading-of-reference-page 
 \let\oldPrintbibliography\printbibliography
 \renewcommand*{\printbibliography}[1][heading=bibintoc]{
 	\nocite{*}	% affiche les références non utilisées également 
-
-	\markboth{\leftmark}{} 	% modifier header bibliographie (References)
-
 	\oldPrintbibliography[#1]
+}
 
-	\markboth{\leftmark}{}	% modifier header bibliographie (Bibliography)
+% modifier header bibliographie 
+% remplacer '\markboth{#1}{#1}' par '\markboth{#1}{}'
+% - http://tex.stackexchange.com/questions/113014/removing-section-name-in-heading-of-reference-page 
+\ifundef{\chapter}{
+	\defbibheading{bibintoc}[\refname]{
+		\section*{#1}
+		\addcontentsline{toc}{section}{#1}
+		\markboth{#1}{}
+	}
+}{
+	\defbibheading{bibintoc}[\bibname]{
+		\chapter*{#1}
+		\addcontentsline{toc}{chapter}{#1}
+		\markboth{#1}{}
+	}
 }
 
 % pour la gestion des guillemets français.
@@ -792,10 +810,12 @@
 	%menucolor = red, 
 	%runcolor = cyan, 
 	%urlcolor = magenta, 
-	pdfauthor = {Maxime PINEAU}, 
-	% pdftitle = {}, 
 ]{hyperref} 
 
+\hypersetup{
+	pdfauthor = {Maxime PINEAU}, 
+	% pdftitle = {}, 
+}
 
 % packages après hyperref
 
@@ -834,13 +854,19 @@
 \usepackage[xindy, footnote, toc]{glossaries}	% footnote (mots dans le footer)
 % toc, section=part => attention, va ajouter une page de partie
 \glstoctrue 
-\setglossarystyle{listgroup} 	% ordonner alphabétiquement, en les séparant (A, B, C, ...)
-\makeglossaries					% permet de générer le glossaire
+\setglossarystyle{listhypergroup} 	% ordonner alphabétiquement, en les séparant (A, B, C, ...) 
+\makeglossaries						% permet de générer le glossaire
 
 % modifier header glossaire (\leftmark seulement)
 % - http://tex.stackexchange.com/questions/78704/make-the-glossary-title-upper-case-in-header 
 \renewcommand{\glossarymark}[1]{ 
 	\markboth{#1}{}
+}
+
+% navigation list à droite 
+% - http://tex.stackexchange.com/questions/296202/list-of-letter-not-folding-in-glossaries 
+\renewcommand{\glossaryheader}{
+	\item \parbox{0.9\textwidth}{\hfill \glsnavigation}
 }
 
 
@@ -921,6 +947,9 @@
 
 \ifbool{package@debug}{
 	
+	% afficher packages et leurs versions dans le fichier .log 
+	%\listfiles 
+	
 	% met une barre noire lors d'un warning "Overfull \hbox" 
 	\overfullrule=2cm 		
 
@@ -929,17 +958,14 @@
 
 	% afficher les labels 
 	% - http://tex.stackexchange.com/questions/148579/tweak-showlabels-showkeys-wrap-the-label 
-	\usepackage[inline]{showlabels} 
-	\showlabels{cite}
-	\showlabels{ref}
+	%\usepackage[inline]{showlabels} 
+	%\showlabels{cite}
+	%\showlabels{ref}
 	%\showlabels{pageref}
+	%\renewcommand{\showlabelfont}{\raggedright\normalfont\small\ttfamily\color{gray}}
+	%\renewcommand{\showlabelsetlabel}[1]{{\showlabelfont \{#1\}}} 	% ajouter {}
+	%\renewcommand{\showlabelrefline}{\hrule width 0pt height 1.6ex depth 0pt} 	% supprimer |
 
-	\renewcommand{\showlabelfont}{\raggedright\normalfont\small\ttfamily\color{gray}}
-	\renewcommand{\showlabelsetlabel}[1]{{\showlabelfont \{#1\}}} 	% ajouter {}
-	\renewcommand{\showlabelrefline}{\hrule width 0pt height 1.6ex depth 0pt} 	% supprimer |
-
-	%\usepackage[color]{showkeys}	% afficher les noms des références à coté du lien 
-	%\usepackage{showidx}	% afficher les index dans la marge où ils sont utilisés
 }
 
 
