@@ -77,7 +77,7 @@ public class Canny extends AbstractFilter {
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = new GreyImage(this.filter(image));
+		this.imageTransformed = new MonoImage(this.filter(image));
 	}
 	
 	
