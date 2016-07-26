@@ -12,8 +12,6 @@ import java.util.Collection;
 import java.util.Map;
 
 public class ObjectRecognitionModel extends ImageModel {
-
-	//private static final Color[] colors = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.RED, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.LIGHT_GRAY, Color.DARK_GRAY};
 	
 	protected MonoImage original;
 	private Map<Tag, Collection<PositionnedObject>> mapObjects; 
@@ -24,14 +22,16 @@ public class ObjectRecognitionModel extends ImageModel {
 		this.original = image;
 		this.mapObjects = mapObjects;
 		
-		int numbersOfKeys = this.mapObjects.entrySet().size();
-		int i = 0;
 		for(Map.Entry<Tag, Collection<PositionnedObject>> entry : this.mapObjects.entrySet()) {
 			
 			Tag tag = entry.getKey();
 			Color color = tag.getColor();
 			
+			System.out.print("-> " + tag + " " + entry.getValue().size() + " : ");
+			
 			for(PositionnedObject someObject : entry.getValue()) {
+				
+				System.out.println(someObject.getCompactness() + " ");
 				
 				Position origin = someObject.getPosition();
 				ChainCode chainCode = someObject.getChainCode();
@@ -41,7 +41,6 @@ public class ObjectRecognitionModel extends ImageModel {
 				}
 			}
 			
-			i++;
 		}
 		
 	}

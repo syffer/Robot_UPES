@@ -47,6 +47,7 @@ public class View extends JFrame {
 	
 	public JMenuItem menuGreyScale;
 	public JMenuItem menuThreshold;
+	public JMenuItem menuNegative;
 	public JMenuItem menuErosion;
 	public JMenuItem menuDilation;
 	public JMenuItem menuClap;
@@ -131,11 +132,13 @@ public class View extends JFrame {
 		JMenu menuMorphology = new JMenu("Morphology");
 		this.menuGreyScale = new JMenuItem("Grey Scale");
 		this.menuThreshold = new JMenuItem("Threshold");
+		this.menuNegative = new JMenuItem("Negative");
 		this.menuErosion = new JMenuItem("Erosion");
 		this.menuDilation = new JMenuItem("Dilation");
 		this.menuClap = new JMenuItem("CLAP");
 		menuMorphology.add(this.menuGreyScale);
 		menuMorphology.add(this.menuThreshold);
+		menuMorphology.add(this.menuNegative);
 		menuMorphology.add(this.menuErosion);
 		menuMorphology.add(this.menuDilation);
 		menuMorphology.add(this.menuClap);

@@ -26,6 +26,9 @@ public class MonoImage extends GreyImage {
 		super(data);
 	}
 	
+	public MonoImage(int width, int height) {
+		super(width, height);
+	}
 	
 	/**
 	 * Creates a monochromatic image from a grey image by using the threshold value.

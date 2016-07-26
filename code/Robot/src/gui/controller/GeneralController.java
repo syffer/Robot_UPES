@@ -28,6 +28,7 @@ import gui.model.StatisticAnalysisInfo;
 import gui.view.InternalView;
 import gui.view.View;
 
+import transform.Negative;
 import transform.cellularAutomata.CellularAutomataAlgoII;
 import transform.filter.Canny;
 import transform.filter.GaussianBlur;
@@ -52,29 +53,31 @@ public class GeneralController {
 	protected ActionLoad actionLoad;
 	protected ActionSaveAs actionSaveAs;
 	protected ActionCloseAll actionCloseAll;
-	
-	protected ActionGreyScale actionGreyScale;
-	protected ActionThreshold actionThreshold;
-	protected ActionStatisticAnalysis actionStatisticAnalysis;
-	protected ActionHistogram actionHistogram;
-	protected ActionTest actionTest;
-	
+		
 	protected ActionTransformation actionSobelFilter;
 	protected ActionTransformation actionLaplacianFilter;
 	protected ActionTransformation actionCanny;
+	
 	protected ActionClap actionClap;
 	protected ActionTransformation actionWeightedAverageFilter;
 	protected ActionTransformation actionMedianFilter;
 	protected ActionTransformation actionGaussianFilter;
-	
 	protected ActionTransformation actionCellularAutomataII;
 	
+	protected ActionGreyScale actionGreyScale;
+	protected ActionThreshold actionThreshold;
+	protected ActionTransformation actionNegative;
 	protected ActionTransformation actionErosion;
 	protected ActionTransformation actionDilation;
 	
 	protected ActionFeatureExtraction actionFeatureExtraction;
 	protected ActionObjectRecognition actionObjectRecognition;
 	protected ActionKMeans actionKMeans;
+	
+	protected ActionStatisticAnalysis actionStatisticAnalysis;
+	protected ActionHistogram actionHistogram;
+	protected ActionTest actionTest;
+	
 	
 	/**
 	 * Creates a new GeneralController using the given model.
@@ -90,13 +93,7 @@ public class GeneralController {
 		this.actionLoad = new ActionLoad(this);
 		this.actionSaveAs = new ActionSaveAs(this);
 		this.actionCloseAll = new ActionCloseAll(this);
-		
-		this.actionGreyScale = new ActionGreyScale(this);
-		this.actionThreshold = new ActionThreshold(this);
-		this.actionStatisticAnalysis = new ActionStatisticAnalysis(this);
-		this.actionHistogram = new ActionHistogram(this);
-		this.actionTest = new ActionTest();
-		
+				
 		this.actionSobelFilter = new ActionTransformation(this, "Sobel", new Sobel());
 		this.actionLaplacianFilter = new ActionTransformation(this, "Laplacian", new Laplacian());
 		this.actionCanny = new ActionTransformation(this, "Canny", new Canny());
@@ -105,15 +102,21 @@ public class GeneralController {
 		this.actionWeightedAverageFilter = new ActionTransformation(this, "Weighted Average", new WeightedAverageFilter());
 		this.actionMedianFilter = new ActionTransformation(this, "Median", new MedianFilter());
 		this.actionGaussianFilter = new ActionTransformation(this, "Gaussian Blur", new GaussianBlur());
-		
 		this.actionCellularAutomataII = new ActionTransformation(this, "Cellular Automata II", new CellularAutomataAlgoII());
 		
+		this.actionGreyScale = new ActionGreyScale(this);
+		this.actionThreshold = new ActionThreshold(this);
+		this.actionNegative = new ActionTransformation(this, "Negative", new Negative());
 		this.actionErosion = new ActionTransformation(this, "Erosion", new Erosion());
 		this.actionDilation = new ActionTransformation(this, "Dilatation", new Dilation());
 		
 		this.actionFeatureExtraction = new ActionFeatureExtraction(this);
 		this.actionObjectRecognition = new ActionObjectRecognition(this);
 		this.actionKMeans = new ActionKMeans(this);
+		
+		this.actionStatisticAnalysis = new ActionStatisticAnalysis(this);
+		this.actionHistogram = new ActionHistogram(this);
+		this.actionTest = new ActionTest();
 		
 		// setting actions 
 		this.view.menuLoad.setAction(this.actionLoad);
@@ -139,6 +142,7 @@ public class GeneralController {
 		
 		this.view.menuGreyScale.setAction(this.actionGreyScale);
 		this.view.menuThreshold.setAction(this.actionThreshold);
+		this.view.menuNegative.setAction(this.actionNegative);
 		this.view.menuErosion.setAction(this.actionErosion);
 		this.view.menuDilation.setAction(this.actionDilation);
 		
