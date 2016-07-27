@@ -122,7 +122,7 @@ public class Laplacian extends AbstractFilter {
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.filter(image));
+		this.imageTransformed = new MonoImage(this.filter(image), image.getThresholdValue());
 	}
 	
 	

@@ -70,7 +70,7 @@ public class MedianFilter extends AbstractFilter {
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.filterWithOneDimension(image));
+		this.imageTransformed = new MonoImage(this.filterWithOneDimension(image), image.getThresholdValue());
 	}
 
 	private int[][] filterWithOneDimension(Image image) {

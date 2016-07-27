@@ -38,6 +38,7 @@ import transform.filter.WeightedAverageFilter;
 import transform.filter.Sobel;
 import transform.morphology.Dilation;
 import transform.morphology.Erosion;
+import transform.morphology.GreyScale;
 
 
 
@@ -64,7 +65,7 @@ public class GeneralController {
 	protected ActionTransformation actionGaussianFilter;
 	protected ActionTransformation actionCellularAutomataII;
 	
-	protected ActionGreyScale actionGreyScale;
+	protected ActionTransformation actionGreyScale;
 	protected ActionThreshold actionThreshold;
 	protected ActionTransformation actionNegative;
 	protected ActionTransformation actionErosion;
@@ -104,7 +105,7 @@ public class GeneralController {
 		this.actionGaussianFilter = new ActionTransformation(this, "Gaussian Blur", new GaussianBlur());
 		this.actionCellularAutomataII = new ActionTransformation(this, "Cellular Automata II", new CellularAutomataAlgoII());
 		
-		this.actionGreyScale = new ActionGreyScale(this);
+		this.actionGreyScale = new ActionTransformation(this, "Grey Scale", new GreyScale());
 		this.actionThreshold = new ActionThreshold(this);
 		this.actionNegative = new ActionTransformation(this, "Negative", new Negative());
 		this.actionErosion = new ActionTransformation(this, "Erosion", new Erosion());

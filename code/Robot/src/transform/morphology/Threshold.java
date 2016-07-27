@@ -1,5 +1,6 @@
-package transform;
+package transform.morphology;
 
+import transform.Transformation;
 import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
@@ -44,7 +45,7 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImage(matrix);
+		this.imageTransformed = new MonoImage(matrix, this.threshold);
 	}
 
 	@Override
@@ -59,12 +60,12 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImage(matrix);
+		this.imageTransformed = new MonoImage(matrix, this.threshold);
 	}
 
 	@Override
 	public void apply(MonoImage image) {
-		
+		this.imageTransformed = image;
 	}
 
 	

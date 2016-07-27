@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
  */
 public class MonoImage extends GreyImage {
 	
+	private int threshold;
+	
 	/**
 	 * Creates a monochromatic image based on the given data.
 	 * The data must have only 2 possible values : 
@@ -22,12 +24,14 @@ public class MonoImage extends GreyImage {
 	 * - white : 255
 	 * @param data the matrix used to create the monochromatic image. The only posible values have to be 0 and 255 (no verification). 
 	 */
-	public MonoImage(int[][] data) {
+	public MonoImage(int[][] data, int threshold) {
 		super(data);
+		this.threshold = threshold;
 	}
 	
-	public MonoImage(int width, int height) {
+	public MonoImage(int width, int height, int threshold) {
 		super(width, height);
+		this.threshold = threshold;
 	}
 	
 	/**
@@ -38,12 +42,12 @@ public class MonoImage extends GreyImage {
 	 * @param threshold the threshold value, a pixel will be represented in black if its value is strictly under the threshold, and in white otherwise. 
 	 */
 	public MonoImage(GreyImage greyImage, int threshold) {
-		super(greyImage.getWidth(), greyImage.getHeight());
+		this(greyImage.getWidth(), greyImage.getHeight(), threshold);
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
 				int grey = greyImage.get(i, j);				
-				this.matrix[i][j] = (grey >= threshold) ? 255 : 0;
+				this.matrix[i][j] = (grey >= this.threshold) ? 255 : 0;
 			}
 		}
 	}
@@ -91,6 +95,11 @@ public class MonoImage extends GreyImage {
 	@Override
 	public void accept(VisitorImage visitorImage) {
 		visitorImage.apply(this);
+	}
+	
+	
+	public int getThresholdValue() {
+		return this.threshold;
 	}
 	
 }
