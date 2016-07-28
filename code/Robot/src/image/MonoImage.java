@@ -52,9 +52,6 @@ public class MonoImage extends GreyImage {
 		}
 	}
 	
-	public MonoImage(Image image, int threshold) {
-		this(image.getBufferedImage(), threshold);
-	}
 	
 	/**
 	 * Creates a monochromatic image from a buffered image and given a threshold
@@ -63,7 +60,7 @@ public class MonoImage extends GreyImage {
 	 * @see MonoImage#MonoImage(GreyImage, int)
 	 */
 	public MonoImage(BufferedImage bufferedImage, int threshold) {
-		super(bufferedImage.getWidth(), bufferedImage.getHeight());
+		this(bufferedImage.getWidth(), bufferedImage.getHeight(), threshold);
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {

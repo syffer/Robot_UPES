@@ -2,7 +2,6 @@ package transform.symbolic;
 
 import geometry.Position;
 import image.GreyImage;
-import image.Image;
 import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
@@ -52,7 +51,7 @@ public class Clap extends Transformation {
 				
 				
 				for(Position p : neighborsIndex) {
-					Pixel neighbor = new Pixel(image.get(p.i, p.j));
+					Pixel neighbor = image.getPixel(p.i, p.j);
 					
 					maxRed = Math.max(maxRed, neighbor.getRed());
 					maxGreen = Math.max(maxGreen, neighbor.getGreen());
@@ -68,12 +67,12 @@ public class Clap extends Transformation {
 				int blueD = maxBlue - minBlue;
 				
 				if(redD > this.treashold && greenD > this.treashold && blueD > this.treashold) {
-					newData[i][j] = image.get(i, j);
+					newData[i][j] = image.getRGB(i, j);
 				}
 				else {
 					for(Position p : neighborsIndex) {
 						
-						Pixel neighbor = new Pixel(image.get(p.i, p.j));
+						Pixel neighbor = image.getPixel(p.i, p.j);
 						
 						if(redD <= this.treashold) neighbor.setRed(0);
 						if(greenD <= this.treashold) neighbor.setGreen(0);
@@ -97,11 +96,11 @@ public class Clap extends Transformation {
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = new GreyImage(this.process(image));
+		this.imageTransformed = new MonoImage(this.process(image), image.getThresholdValue());
 	}
 
 	
-	private int[][] process(Image image) {
+	private int[][] process(GreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

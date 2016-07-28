@@ -53,7 +53,7 @@ public class ChainCodeExtractor {
 	 */
 	public Map<Position, ChainCode> extract(MonoImage image) {
 				
-		int[][] matrix = image.getCloneMatrix();
+		int[][] matrix = image.clone().getMatrix();
 		
 		ChainCode chain = new ChainCode();
 		Map<Position, ChainCode> chains = new HashMap<Position, ChainCode>();

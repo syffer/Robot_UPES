@@ -1,5 +1,6 @@
-package transform;
+package transform.morphology;
 
+import transform.Transformation;
 import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
@@ -12,9 +13,9 @@ public class Negative extends Transformation {
 		RGBImage negativeImage = new RGBImage(image.getWidth(), image.getHeight());
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				Pixel pixel = new Pixel(image.get(i,  j));
+				Pixel pixel = image.getPixel(i,  j);
 				Pixel negative = new Pixel(255 - pixel.getRed(), 255 - pixel.getGreen(), 255 - pixel.getBlue());
-				negativeImage.set(i, j, negative.getRGB());
+				negativeImage.set(i, j, negative);
 			}
 		}
 		

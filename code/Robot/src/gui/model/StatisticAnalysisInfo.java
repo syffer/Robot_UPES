@@ -28,10 +28,10 @@ public class StatisticAnalysisInfo extends InternalModel {
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
 				
-				int difference = original.get(i, j) - image.get(i, j);
+				int difference = original.getRGB(i, j) - image.getRGB(i, j);
 				this.mse += difference * difference;
 				
-				this.mean += image.get(i, j);
+				this.mean += image.getRGB(i, j);
 			}
 		}
 		
@@ -49,7 +49,7 @@ public class StatisticAnalysisInfo extends InternalModel {
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				double difference = image.get(i, j) - this.mean;
+				double difference = image.getRGB(i, j) - this.mean;
 				this.variance += difference * difference;
 			}
 		}
@@ -69,7 +69,7 @@ public class StatisticAnalysisInfo extends InternalModel {
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				this.mean += image.get(i, j);
+				this.mean += image.getRGB(i, j);
 			}
 		}
 		
@@ -81,7 +81,7 @@ public class StatisticAnalysisInfo extends InternalModel {
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				double difference = image.get(i, j) - this.mean;
+				double difference = image.getRGB(i, j) - this.mean;
 				this.variance += difference * difference;
 			}
 		}

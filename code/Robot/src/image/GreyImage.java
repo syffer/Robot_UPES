@@ -13,8 +13,16 @@ import java.awt.image.BufferedImage;
  */
 public class GreyImage extends Image {
 	
+	protected int[][] matrix;
+	
+	
+	private GreyImage(int width, int height, int[][] matrix) {
+		super(width, height);
+		this.matrix = matrix;
+	}
+	
 	public GreyImage(int[][] data) {
-		super(data);
+		this(data.length, data[0].length, data);
 	}
 	
 	/**
@@ -23,13 +31,9 @@ public class GreyImage extends Image {
 	 * @param height the height of the image 
 	 */
 	public GreyImage(int width, int height) {
-		super(width, height);
+		this(width, height, new int[width][height]);
 	}
-	
-	public GreyImage(Image image) {
-		this(image.getBufferedImage());
-	}
-	
+		
 	/**
 	 * Creates a grey image using a buffered image 
 	 * @param bufferedImage the buffered image used to create the grey image 
@@ -54,38 +58,66 @@ public class GreyImage extends Image {
 	}
 	
 	public GreyImage(RGBImage rgbImageModel) {
-		super(rgbImageModel.getWidth(), rgbImageModel.getHeight());
+		this(rgbImageModel.getWidth(), rgbImageModel.getHeight());
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
-				
-				Color color = new Color(rgbImageModel.get(i, j));
-				int grey = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
-				
-				this.matrix[i][j] = grey;
+				Pixel pixel = rgbImageModel.getPixel(i, j);
+				this.set(i, j, pixel);
 			}
 		}
 	}
 	
+	
 	@Override
-	public BufferedImage getBufferedImage() {
-		
-		BufferedImage bufferedImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_BYTE_GRAY);
-		
-		for(int i = 0; i < this.width; i++) {
-			for(int j = 0; j < this.height; j++) {
-				int grey = this.matrix[i][j];
-				Color c = new Color(grey, grey, grey);
-				bufferedImage.setRGB(i, j, c.getRGB());
-			}
-		}
-		
-		return bufferedImage;
+	public Pixel getPixel(int i, int j) {
+		int grey = this.get(i, j);
+		return new Pixel(grey, grey, grey);
 	}
+	
+	public int get(int i, int j) {
+		return this.matrix[i][j];
+	}
+	
+
+	@Override
+	public void set(int i, int j, Pixel pixel) {
+		this.matrix[i][j] = pixel.getGrey();
+	}
+	
+	public void set(int i, int j, int greyValue) {
+		this.matrix[i][j] = greyValue;
+	}
+
+	@Override
+	public GreyImage clone() {
+		
+		try {
+			GreyImage clone = (GreyImage) super.clone();
+			
+			clone.matrix = new int[this.getWidth()][];
+			for(int i = 0; i < this.getWidth(); i++) {
+				clone.matrix[i] = this.matrix[i].clone();
+			}
+			
+			return clone;
+		}
+		catch(CloneNotSupportedException e) {
+			throw new InternalError("clonage impossible");
+		}
+	}
+	
+	public int[][] getMatrix() {
+		return this.matrix;
+	}
+	
 
 	@Override
 	public void accept(VisitorImage visitorImage) {
 		visitorImage.apply(this);
 	}
+	
+
+	
 	
 }

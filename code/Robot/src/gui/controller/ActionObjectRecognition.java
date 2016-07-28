@@ -3,7 +3,6 @@ package gui.controller;
 import features.ObjectRecognition;
 import features.ObjectRecognitionException;
 import features.PositionnedObject;
-import features.SomeObject;
 import features.Tag;
 import gui.model.FeatureExtractionModel;
 import gui.model.ObjectRecognitionModel;

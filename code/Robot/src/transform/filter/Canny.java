@@ -1,7 +1,6 @@
 package transform.filter;
 
 import image.GreyImage;
-import image.Image;
 import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
@@ -36,13 +35,13 @@ public class Canny extends AbstractFilter {
 		for(int i = 1; i < image.getWidth() - 1; i++) {
 			for(int j = 1; j < image.getHeight() - 1; j++) {
 				
-				Pixel pixelTop = new Pixel(image.get(i,  j-1));
-				Pixel pixelBottom = new Pixel(image.get(i,  j+1));
+				Pixel pixelTop = image.getPixel(i,  j-1);
+				Pixel pixelBottom = image.getPixel(i,  j+1);
 				
-				Pixel pixelMiddle = new Pixel(image.get(i,  j));
+				Pixel pixelMiddle = image.getPixel(i,  j);
 				
-				Pixel pixelLeft = new Pixel(image.get(i-1,  j));
-				Pixel pixelRigth = new Pixel(image.get(i+1,  j));
+				Pixel pixelLeft = image.getPixel(i-1,  j);
+				Pixel pixelRigth = image.getPixel(i+1,  j);
 				
 				// applies masks for the red channel 
 				int gradiantX = maskX[0] * pixelTop.getRed() + maskX[1] * pixelMiddle.getRed() + maskX[2] * pixelBottom.getRed();
@@ -81,7 +80,7 @@ public class Canny extends AbstractFilter {
 	}
 	
 	
-	private int[][] filter(Image image) {
+	private int[][] filter(GreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

@@ -28,7 +28,6 @@ import gui.model.StatisticAnalysisInfo;
 import gui.view.InternalView;
 import gui.view.View;
 
-import transform.Negative;
 import transform.cellularAutomata.CellularAutomataAlgoII;
 import transform.filter.Canny;
 import transform.filter.GaussianBlur;
@@ -39,6 +38,7 @@ import transform.filter.Sobel;
 import transform.morphology.Dilation;
 import transform.morphology.Erosion;
 import transform.morphology.GreyScale;
+import transform.morphology.Negative;
 
 
 

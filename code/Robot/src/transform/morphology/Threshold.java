@@ -39,7 +39,7 @@ public class Threshold extends Transformation {
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				Pixel pixel = new Pixel(image.get(i, j));
+				Pixel pixel = image.getPixel(i, j);
 				int grey = pixel.getGrey();
 				matrix[i][j] = (grey >= this.threshold) ? 255 : 0;
 			}

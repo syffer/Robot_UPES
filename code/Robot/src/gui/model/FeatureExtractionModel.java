@@ -49,7 +49,7 @@ public class FeatureExtractionModel extends ImageModel {
 			ChainCode chainCode = someObject.getChainCode();
 			
 			for(Position position : chainCode.getPositions(origin)) {
-				this.image.set(position.getI(), position.getJ(), color.getRGB());
+				this.image.setRGB(position.getI(), position.getJ(), color.getRGB());
 			}
 			
 		}

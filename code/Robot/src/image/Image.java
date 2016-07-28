@@ -25,27 +25,10 @@ import javax.imageio.ImageIO;
  * @author Maxime PINEAU
  * @see image.VisitorImage 
  */
-public abstract class Image {
+public abstract class Image implements Cloneable {
 	
 	protected int height;
 	protected int width;
-	protected int[][] matrix;
-	
-	protected Image(int width, int heigth, int[][] data) {
-		this.height = heigth;
-		this.width = width;
-		this.matrix = data;
-	}
-	
-	
-	/**
-	 * Creates an image using the data provided.
-	 * The data will contain the pixel values as integer.
-	 * @param data the matrix containing the pixel values
-	 */
-	public Image(int[][] data) {
-		this(data.length, data[0].length, data);
-	}
 	
 	/**
 	 * Creates an empty image (i.e all black).
@@ -53,7 +36,8 @@ public abstract class Image {
 	 * @param height the height of the image 
 	 */
 	public Image(int width, int height) {
-		this(width, height, new int[width][height]);
+		this.height = height;
+		this.width = width;
 	}
 	
 	/**
@@ -64,10 +48,48 @@ public abstract class Image {
 	/**
 	 * @return the corresponding buffered image  
 	 */
-	public abstract BufferedImage getBufferedImage();
-			
+	public BufferedImage getBufferedImage() {
+			BufferedImage bufferedImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_3BYTE_BGR);
+		
+		for(int i = 0; i < this.width; i++) {
+			for(int j = 0; j < this.height; j++) {
+				Pixel pixel = this.getPixel(i, j);
+				bufferedImage.setRGB(i, j, pixel.getRGB());
+			}
+		}
+		
+		return bufferedImage;
+		
+	}
+	
 	
 
+	
+	/**
+	 * Returns the pixel value of the image at a certain position (i, j).
+	 * @param i the i coordinate (width)
+	 * @param j the j coordinate (height)
+	 * @return the pixel value at the position (i, j) 
+	 */
+	public int getRGB(int i, int j) {
+		return this.getPixel(i, j).getRGB();
+	}
+	
+	public abstract Pixel getPixel(int i, int j);
+	
+	
+	/**
+	 * Sets the pixel value at the position (i, j) of the image. 
+	 * @param i the i coordinate (width)
+	 * @param j the j coordinate (height) 
+	 * @param pixelValue the new pixel value of the position (i, j) 
+	 */
+	public void setRGB(int i, int j, int pixelValue) {
+		this.set(i, j, new Pixel(pixelValue));
+	}
+	
+	public abstract void set(int i, int j, Pixel pixel);
+		
 	/**
 	 * @return the height of the image
 	 */
@@ -92,7 +114,9 @@ public abstract class Image {
 	
 	/**
 	 * @return a clone of the matrix containing the pixel values of the image. 
+	 * @throws CloneNotSupportedException 
 	 */
+	/*
 	public int[][] getCloneMatrix() {
 		int[][] clone = new int[this.width][this.height];
 		
@@ -102,6 +126,15 @@ public abstract class Image {
 		
 		return clone;
 	}
+	*/
+	
+	/*
+	@Override
+	public Image clone() throws CloneNotSupportedException {
+		Image clone = (Image) super.clone();
+		return clone;
+    }
+    */
 	
 	/** 
 	 * Returns true if the coordinates i and j are in the image, false otherwise. 
@@ -120,26 +153,6 @@ public abstract class Image {
 	 */
 	public boolean isInBound(Position position) {
 		return this.isInBound(position.i, position.j);
-	}
-	
-	/**
-	 * Returns the pixel value of the image at a certain position (i, j).
-	 * @param i the i coordinate (width)
-	 * @param j the j coordinate (height)
-	 * @return the pixel value at the position (i, j) 
-	 */
-	public int get(int i, int j) {
-		return this.matrix[i][j];
-	}
-	
-	/**
-	 * Sets the pixel value at the position (i, j) of the image. 
-	 * @param i the i coordinate (width)
-	 * @param j the j coordinate (height) 
-	 * @param pixelValue the new pixel value of the position (i, j) 
-	 */
-	public void set(int i, int j, int pixelValue) {
-		this.matrix[i][j] = pixelValue;
 	}
 	
 	

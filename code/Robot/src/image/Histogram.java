@@ -68,7 +68,7 @@ public class Histogram implements VisitorImage {
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				Pixel pixel = new Pixel(image.get(i, j));
+				Pixel pixel = image.getPixel(i, j);
 				
 				int red = pixel.getRed();
 				int green = pixel.getGreen();

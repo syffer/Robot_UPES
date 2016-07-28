@@ -34,13 +34,13 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 		
 		// the update rule is only applied to nonboundary cells 
 		for(int i = 0; i < image.getWidth(); i++) {
-			newData[i][0] = image.get(i, 0);
-			newData[i][image.getHeight() - 1] = image.get(i, image.getHeight() - 1);
+			newData[i][0] = image.getRGB(i, 0);
+			newData[i][image.getHeight() - 1] = image.getRGB(i, image.getHeight() - 1);
 		}
 		
 		for(int j = 0; j < image.getHeight(); j++) {
-			newData[0][j] = image.get(0, j);
-			newData[image.getHeight() - 1][j] = image.get(image.getHeight() - 1, j);
+			newData[0][j] = image.getRGB(0, j);
+			newData[image.getHeight() - 1][j] = image.getRGB(image.getHeight() - 1, j);
 		}
 		
 		// apply 
@@ -51,7 +51,7 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 				List<Integer> values = new ArrayList<Integer>();
 				
 				for(Position pair : neighbors) {
-					values.add(image.get(pair.i, pair.j));
+					values.add(image.getRGB(pair.i, pair.j));
 				}
 				
 				Collections.sort(values);

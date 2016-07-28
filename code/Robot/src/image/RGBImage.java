@@ -11,13 +11,20 @@ import java.awt.image.BufferedImage;
  */
 public class RGBImage extends Image {
 
+	private int[][] matrix;
+	
+	private RGBImage(int width, int height, int[][] matrix) {
+		super(width, height);
+		this.matrix = matrix;
+	}
+	
 	/**
 	 * Creates an empty RGB image (i.e all black)
 	 * @param width the width of the image 
 	 * @param heigth the height of the image 
 	 */
-	public RGBImage(int width, int heigth) {
-		super(width, heigth);
+	public RGBImage(int width, int height) {
+		this(width, height, new int[width][height]);
 	}
 
 	/**
@@ -25,7 +32,7 @@ public class RGBImage extends Image {
 	 * @param data the matrix containing the pixel values. Each value is an interger which contain the alpha, red, green and blue value
 	 */
 	public RGBImage(int[][] data) { 
-		super(data);
+		this(data.length, data[0].length, data);
 	}
 	
 	/**
@@ -33,13 +40,11 @@ public class RGBImage extends Image {
 	 * @param image the monochromatic image 
 	 */
 	public RGBImage(MonoImage image) {
-		super(image.getWidth(), image.getHeight());
+		this(image.getWidth(), image.getHeight());
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
-				int grey = image.get(i, j);
-				Pixel pixel = new Pixel(grey, grey, grey);
-				this.matrix[i][j] = pixel.getRGB();
+				this.setRGB(i, j, image.getRGB(i, j));
 			}
 		}
 		
@@ -54,24 +59,71 @@ public class RGBImage extends Image {
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
-				this.matrix[i][j] = bufferedImage.getRGB(i, j);
+				this.setRGB(i, j, bufferedImage.getRGB(i, j));
 			}
 		}
 	}
 	
+
 	@Override
-	public BufferedImage getBufferedImage() {
-		BufferedImage bufferedImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_RGB);
-		
-		for(int i = 0; i < this.width; i++) {
-			for(int j = 0; j < this.height; j++) {
-				bufferedImage.setRGB(i, j, this.matrix[i][j]);
-			}
-		}
-		
-		return bufferedImage;
+	public Pixel getPixel(int i, int j) {
+		return new Pixel(this.matrix[i][j]);
+	}
+	
+	public int getRed(int i, int j) {
+		return this.getPixel(i, j).getRed();
+	}
+	
+	public int getGreen(int i, int j) {
+		return this.getPixel(i, j).getGreen();
+	}
+	
+	public int getBlue(int i, int j) {
+		return this.getPixel(i, j).getBlue();
 	}
 
+	public void setRed(int i, int j, int red) {
+		Pixel pixel = this.getPixel(i, j);
+		pixel.setRed(red);
+		this.matrix[i][j] = pixel.getRGB();
+	}
+	
+	
+
+	@Override
+	public void set(int i, int j, Pixel pixel) {
+		this.matrix[i][j] = pixel.getRGB();
+	}
+	
+	public void setGreen(int i, int j, int green) {
+		Pixel pixel = this.getPixel(i, j);
+		pixel.setGreen(green);
+		this.matrix[i][j] = pixel.getRGB();
+	}
+	
+	public void setBlue(int i, int j, int blue) {
+		Pixel pixel = this.getPixel(i, j);
+		pixel.setBlue(blue);
+		this.matrix[i][j] = pixel.getRGB();
+	}
+	
+	@Override
+	public RGBImage clone() {
+		
+		try {
+			RGBImage clone = (RGBImage) super.clone();
+			
+			clone.matrix = new int[this.getWidth()][];
+			for(int i = 0; i < this.getWidth(); i++) {
+				clone.matrix[i] = this.matrix[i].clone();
+			}
+			
+			return clone;
+		}
+		catch(CloneNotSupportedException e) {
+			throw new InternalError("clonage impossible");
+		}
+	}
 	
 	@Override
 	public void accept(VisitorImage visitorImage) {

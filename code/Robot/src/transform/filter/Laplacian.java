@@ -1,7 +1,6 @@
 package transform.filter;
 
 import image.GreyImage;
-import image.Image;
 import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
@@ -77,17 +76,17 @@ public class Laplacian extends AbstractFilter {
 			for(int j = 1; j < image.getHeight() - 2; j++) {
 				
 				// get the surrounding pixels 
-				Pixel pixelTopLeft = new Pixel(image.get(i-1,  j-1));
-				Pixel pixelTop = new Pixel(image.get(i,  j-1));
-				Pixel pixelTopRight = new Pixel(image.get(i+1,  j-1));
+				Pixel pixelTopLeft = image.getPixel(i-1,  j-1);
+				Pixel pixelTop = image.getPixel(i,  j-1);
+				Pixel pixelTopRight = image.getPixel(i+1,  j-1);
 				
-				Pixel pixelLeft = new Pixel(image.get(i-1,  j));
-				Pixel pixelMiddle = new Pixel(image.get(i,  j));
-				Pixel pixelRight = new Pixel(image.get(i+1,  j));
+				Pixel pixelLeft = image.getPixel(i-1,  j);
+				Pixel pixelMiddle = image.getPixel(i,  j);
+				Pixel pixelRight = image.getPixel(i+1,  j);
 				
-				Pixel pixelBottomLeft = new Pixel(image.get(i-1,  j+1));
-				Pixel pixelBottom = new Pixel(image.get(i,  j+1));
-				Pixel pixelBottomRight = new Pixel(image.get(i+1,  j+1));
+				Pixel pixelBottomLeft = image.getPixel(i-1,  j+1);
+				Pixel pixelBottom = image.getPixel(i,  j+1);
+				Pixel pixelBottomRight = image.getPixel(i+1,  j+1);
 				
 				// apply the convolution 
 				
@@ -126,7 +125,7 @@ public class Laplacian extends AbstractFilter {
 	}
 	
 	
-	private int[][] filter(Image image) {
+	private int[][] filter(GreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

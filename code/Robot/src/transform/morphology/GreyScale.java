@@ -19,7 +19,7 @@ public class GreyScale extends Transformation {
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = (GreyImage) image;
+		this.imageTransformed = image;
 	}
 
 }

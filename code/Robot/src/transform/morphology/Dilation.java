@@ -1,7 +1,6 @@
 package transform.morphology;
 
 import image.GreyImage;
-import image.Image;
 import image.MonoImage;
 import image.RGBImage;
 
@@ -24,11 +23,11 @@ public class Dilation extends Morphology {
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = new GreyImage(this.dilate(image));
+		this.imageTransformed = new MonoImage(this.dilate(image), image.getThresholdValue());
 	}
 	
 
-	private int[][] dilate(Image image) {
+	private int[][] dilate(GreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
