@@ -7,6 +7,7 @@ import features.ChainCode;
 import features.PositionnedObject;
 import geometry.Position;
 
+import image.Image;
 import image.MonoImage;
 import image.RGBImage;
 
@@ -23,7 +24,7 @@ public class FeatureExtractionModel extends ImageModel {
 	
 	private static final Color[] colors = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.DARK_GRAY};
 	
-	protected MonoImage original;
+	protected MonoImage previous;
 	private List<PositionnedObject> someObjects;
 	
 	/**
@@ -33,10 +34,10 @@ public class FeatureExtractionModel extends ImageModel {
 	 * @param features the result of the feature extraction 
 	 * @param executionTime the execution time the feature extraction has taken 
 	 */
-	public FeatureExtractionModel(MonoImage image, List<PositionnedObject> someObjects, double executionTime) { 
-		super(new RGBImage(image.getWidth(), image.getHeight()), image, "Feature Extraction", executionTime);
+	public FeatureExtractionModel(MonoImage image, Image original, List<PositionnedObject> someObjects, double executionTime) { 
+		super(new RGBImage(original), image, original, "Feature Extraction", executionTime);
 		
-		this.original = image;
+		this.previous = image;
 		this.someObjects = someObjects;
 		
 		int i = 0;
@@ -56,8 +57,8 @@ public class FeatureExtractionModel extends ImageModel {
 		
 	}
 	
-	public MonoImage getOriginalImage() {
-		return this.original;
+	public MonoImage getPreviousImage() {
+		return this.previous;
 	}
 	
 	/**

@@ -45,7 +45,7 @@ public class ActionTransformation extends AbstractAction implements Observer {
 		long endTime = System.currentTimeMillis();
 		
 		Image transformedImage = this.transformation.getTransformedImage();
-		this.controller.addInternalModel(new ImageModel(transformedImage, image, this.name, endTime - startTime));
+		this.controller.addInternalModel(new ImageModel(transformedImage, image, imageModel.getOriginalImage(), this.name, endTime - startTime));
 	}
 
 	@Override

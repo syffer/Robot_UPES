@@ -45,7 +45,7 @@ public class ActionClap extends AbstractAction implements Observer {
 			long endTime = System.currentTimeMillis();
 			
 			Image imageFiltered = clap.getTransformedImage();
-			this.controller.addInternalModel(new ImageModel(imageFiltered, image, "CLAP (" + threshold + ")", endTime - startTime));	
+			this.controller.addInternalModel(new ImageModel(imageFiltered, image, imageModel.getOriginalImage(), "CLAP (" + threshold + ")", endTime - startTime));	
 			
 		} catch (ChoiceCanceledException e) {
 			

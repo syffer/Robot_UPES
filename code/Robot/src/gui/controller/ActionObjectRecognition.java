@@ -42,7 +42,7 @@ public class ActionObjectRecognition  extends AbstractAction implements Observer
 	public void actionPerformed(ActionEvent event) { 
 		FeatureExtractionModel featureExtractionModel = (FeatureExtractionModel) this.controller.getSelectedInternalModel();
 		List<PositionnedObject> someObjects = featureExtractionModel.getExtractedObjects();
-		MonoImage image = featureExtractionModel.getOriginalImage();
+		MonoImage image = featureExtractionModel.getPreviousImage();
 		
 		try {
 			
@@ -54,7 +54,7 @@ public class ActionObjectRecognition  extends AbstractAction implements Observer
 			Map<Tag, Collection<PositionnedObject>> map = ObjectRecognition.annotateObjects(someObjects, others);
 			long endTime = System.currentTimeMillis();
 			
-			ObjectRecognitionModel model = new ObjectRecognitionModel(image, map, endTime - startTime);
+			ObjectRecognitionModel model = new ObjectRecognitionModel(image, featureExtractionModel.getOriginalImage(), map, endTime - startTime);
 			this.controller.addInternalModel(new ObjectRecognitionController(model));
 			
 		} catch (ConnectionException e) {

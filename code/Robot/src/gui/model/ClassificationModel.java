@@ -3,6 +3,7 @@ package gui.model;
 import features.ChainCode;
 import features.PositionnedObject;
 import geometry.Position;
+import image.Image;
 import image.MonoImage;
 import image.RGBImage;
 
@@ -22,7 +23,7 @@ public class ClassificationModel extends ImageModel {
 	
 	private static final Color[] colors = {Color.BLUE, Color.YELLOW, Color.GREEN, Color.RED, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.LIGHT_GRAY, Color.DARK_GRAY};
 	
-	protected MonoImage original;
+	protected MonoImage previous;
 	private List<PositionnedObject> someObjects; 
 	//private int nbClasses;
 	private int[] classes;
@@ -36,10 +37,10 @@ public class ClassificationModel extends ImageModel {
 	 * @param classes an array that gives for each feature her corresponding class
 	 * @param executionTime the execution time the classification has taken 
 	 */
-	public ClassificationModel(MonoImage image, List<PositionnedObject> someObjects, int nbClasses, int[] classes, double executionTime) { 
-		super(new RGBImage(image), image, "Classification (" + nbClasses + ")", executionTime);
+	public ClassificationModel(MonoImage image, Image original, List<PositionnedObject> someObjects, int nbClasses, int[] classes, double executionTime) { 
+		super(new RGBImage(original), image, original, "Classification (" + nbClasses + ")", executionTime);
 		
-		this.original = image;
+		this.previous = image;
 		this.someObjects = someObjects;
 		//this.nbClasses = nbClasses;
 		this.classes = classes;

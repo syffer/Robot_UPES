@@ -21,6 +21,7 @@ public class ImageModel extends InternalModel {
 	
 	protected Image image;
 	protected Image original;
+	protected Image previousImage;
 	protected String operationName;
 	protected double executionTime;
 	
@@ -32,7 +33,7 @@ public class ImageModel extends InternalModel {
 	 * @param executionTime the execution time that the operation has taken (in milliseconds)
 	 */
 	public ImageModel(Image image, String operationName, double executionTime) {
-		this(image, null, operationName, executionTime);
+		this(image, null, image, operationName, executionTime);
 	}
 	
 	/**
@@ -43,9 +44,11 @@ public class ImageModel extends InternalModel {
 	 * @param operationName the operation name 
 	 * @param executionTime the execution time that the operation has taken (in milliseconds)
 	 */
-	public ImageModel(Image image, Image original, String operationName, double executionTime) {
+	public ImageModel(Image image, Image previous, Image original, String operationName, double executionTime) {
 		this.image = image;
 		this.original = original;
+		this.previousImage = previous;
+		
 		this.operationName = operationName;
 		this.executionTime = executionTime;
 	}
@@ -55,7 +58,7 @@ public class ImageModel extends InternalModel {
 	 * @return the buffered image 
 	 */
 	public BufferedImage getBufferedImage() {
-		return this.image.getBufferedImage();
+		return this.image.getBufferedImageToShow();
 	}
 	
 	/**
@@ -96,6 +99,15 @@ public class ImageModel extends InternalModel {
 	 */
 	public Image getOriginalImage() {
 		return this.original;
+	}
+	
+	
+	public boolean hasPreviousImage() {
+		return this.previousImage != null;
+	}
+	
+	public Image getPreviousImage() {
+		return this.previousImage;
 	}
 	
 	/**

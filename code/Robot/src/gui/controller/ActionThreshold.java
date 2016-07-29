@@ -47,7 +47,7 @@ public class ActionThreshold extends AbstractAction implements Observer {
 			long endTime = System.currentTimeMillis();
 			
 			Image monoImage = threshold.getTransformedImage();
-			this.controller.addInternalModel(new ImageModel(monoImage, image, "Monochromatic (" + value + ")", endTime - startTime));
+			this.controller.addInternalModel(new ImageModel(monoImage, image, imageModel.getOriginalImage(), "Monochromatic (" + value + ")", endTime - startTime));
 			
 		} catch (ChoiceCanceledException e) {
 			// don't do anything

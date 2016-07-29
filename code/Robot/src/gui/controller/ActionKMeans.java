@@ -48,7 +48,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 	public void actionPerformed(ActionEvent event) { 
 		FeatureExtractionModel featureExtractionModel = (FeatureExtractionModel) this.controller.getSelectedInternalModel();
 		List<PositionnedObject> someObjects = featureExtractionModel.getExtractedObjects();
-		MonoImage image = featureExtractionModel.getOriginalImage();
+		MonoImage image = featureExtractionModel.getPreviousImage();
 		
 		try {
 			
@@ -77,7 +77,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 			kmeans.clustering(cluster, nbClasses);
 			long endTime = System.currentTimeMillis();
 			
-			ClassificationModel classificationModel = new ClassificationModel(image, someObjects, nbClasses, kmeans.getClasses(), endTime - startTime);
+			ClassificationModel classificationModel = new ClassificationModel(image, featureExtractionModel.getOriginalImage(), someObjects, nbClasses, kmeans.getClasses(), endTime - startTime);
 			this.controller.addInternalModel(classificationModel); 
 			
 			

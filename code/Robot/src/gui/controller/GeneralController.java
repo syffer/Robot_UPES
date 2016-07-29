@@ -28,6 +28,7 @@ import gui.model.StatisticAnalysisInfo;
 import gui.view.InternalView;
 import gui.view.View;
 
+import transform.Segmentation;
 import transform.cellularAutomata.CellularAutomataAlgoII;
 import transform.filter.Canny;
 import transform.filter.GaussianBlur;
@@ -77,6 +78,7 @@ public class GeneralController {
 	
 	protected ActionStatisticAnalysis actionStatisticAnalysis;
 	protected ActionHistogram actionHistogram;
+	protected ActionTransformation actionSegmentation;
 	protected ActionTest actionTest;
 	
 	
@@ -117,6 +119,7 @@ public class GeneralController {
 		
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis(this);
 		this.actionHistogram = new ActionHistogram(this);
+		this.actionSegmentation = new ActionTransformation(this, "Segmentation", new Segmentation(100));
 		this.actionTest = new ActionTest();
 		
 		// setting actions 
@@ -128,6 +131,7 @@ public class GeneralController {
 		this.view.buttonMonochrome.setAction(this.actionThreshold);
 		this.view.buttonStatisticAnalysis.setAction(this.actionStatisticAnalysis);
 		this.view.buttonHistogram.setAction(this.actionHistogram);
+		this.view.buttonSegmentation.setAction(this.actionSegmentation);
 		this.view.buttonTest.setAction(this.actionTest);
 		
 		this.view.menuSobel.setAction(this.actionSobelFilter);
