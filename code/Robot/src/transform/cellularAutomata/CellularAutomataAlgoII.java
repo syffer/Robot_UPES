@@ -2,8 +2,8 @@ package transform.cellularAutomata;
 
 import geometry.Position;
 import image.GreyImage;
-import image.Image;
 import image.MonoImage;
+import image.Pixel;
 import image.RGBImage;
 
 import java.util.ArrayList;
@@ -16,32 +16,66 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 
 	@Override
 	public void apply(RGBImage image) {
-		this.imageTransformed = new RGBImage(this.process(image));
+		RGBImage newImage = image.clone();
+				
+		// apply 
+		for(int i = 1; i < image.getWidth() - 1; i++) {
+			for(int j = 1; j < image.getHeight() - 1; j++) {
+				
+				Set<Position> neighbors = image.getMooreNeighborhoods(1, i, j);
+				
+				List<Integer> reds = new ArrayList<Integer>();
+				List<Integer> greens = new ArrayList<Integer>();
+				List<Integer> blues = new ArrayList<Integer>();
+				
+				for(Position pair : neighbors) {
+					Pixel pixel = image.getPixel(pair.i, pair.j);
+					reds.add(pixel.getRed());
+					greens.add(pixel.getGreen());
+					blues.add(pixel.getBlue());
+				}
+				
+				Collections.sort(reds);
+				Collections.sort(greens);
+				Collections.sort(blues);
+				
+				// between 1 and size - 1 to eliminate the first and last values 
+				double avgRed = 0;
+				double avgGreen = 0;
+				double avgBlue = 0;
+				
+				for(int k = 1; k < reds.size() - 1; k++) {
+					avgRed += reds.get(k);
+					avgGreen += greens.get(k);
+					avgBlue += blues.get(k);
+				}
+				avgRed /= reds.size() - 2;	// -2 because we eliminated 2 values 
+				avgGreen /= reds.size() - 2;
+				avgBlue /= reds.size() - 2;	
+				
+				
+				// apply rule 511 (?) 
+				newImage.set(i, j, new Pixel((int)avgRed, (int)avgGreen, (int)avgBlue));
+			}
+		}
+		
+		this.setTransformedImage(newImage);
 	}
 
 	@Override
 	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.process(image));
+		this.setTransformedImage(this.process(image));
 	}
 
 	@Override
 	public void apply(MonoImage image) {
-		this.imageTransformed = new GreyImage(this.process(image));
+		this.setTransformedImage(this.process(image));
 	}
 	
-	private int[][] process(Image image) {
-		int[][] newData = new int[image.getWidth()][image.getHeight()];
+	private GreyImage process(GreyImage image) { 
 		
+		GreyImage greyImage = image.clone();
 		// the update rule is only applied to nonboundary cells 
-		for(int i = 0; i < image.getWidth(); i++) {
-			newData[i][0] = image.getRGB(i, 0);
-			newData[i][image.getHeight() - 1] = image.getRGB(i, image.getHeight() - 1);
-		}
-		
-		for(int j = 0; j < image.getHeight(); j++) {
-			newData[0][j] = image.getRGB(0, j);
-			newData[image.getHeight() - 1][j] = image.getRGB(image.getHeight() - 1, j);
-		}
 		
 		// apply 
 		for(int i = 1; i < image.getWidth() - 1; i++) {
@@ -51,7 +85,7 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 				List<Integer> values = new ArrayList<Integer>();
 				
 				for(Position pair : neighbors) {
-					values.add(image.getRGB(pair.i, pair.j));
+					values.add(image.get(pair.i, pair.j));
 				}
 				
 				Collections.sort(values);
@@ -64,11 +98,11 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 				avg /= values.size() - 2;	// -2 because we eliminated 2 values 
 				
 				// apply rule 511 (?) 
-				newData[i][j] = (int) avg;
+				greyImage.set(i, j, (int) avg);
 			}
 		}
 		
-		return newData;
+		return greyImage;
 	}
 
 }
