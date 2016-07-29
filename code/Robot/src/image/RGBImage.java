@@ -39,7 +39,7 @@ public class RGBImage extends Image {
 	 * Creates a RGB image from a monochromatic image 
 	 * @param image the monochromatic image 
 	 */
-	public RGBImage(MonoImage image) {
+	public RGBImage(Image image) {
 		this(image.getWidth(), image.getHeight());
 		
 		for(int i = 0; i < image.getWidth(); i++) {
@@ -109,25 +109,31 @@ public class RGBImage extends Image {
 	
 	@Override
 	public RGBImage clone() {
+		RGBImage clone = (RGBImage) super.clone();
 		
-		try {
-			RGBImage clone = (RGBImage) super.clone();
-			
-			clone.matrix = new int[this.getWidth()][];
-			for(int i = 0; i < this.getWidth(); i++) {
-				clone.matrix[i] = this.matrix[i].clone();
-			}
-			
-			return clone;
+		clone.matrix = new int[this.getWidth()][];
+		for(int i = 0; i < this.getWidth(); i++) {
+			clone.matrix[i] = this.matrix[i].clone();
 		}
-		catch(CloneNotSupportedException e) {
-			throw new InternalError("clonage impossible");
-		}
+		
+		return clone;
 	}
 	
 	@Override
 	public void accept(VisitorImage visitorImage) {
-		visitorImage.apply(this);
+		visitorImage.visit(this);
 	}
-	
+
+	@Override
+	public RGBImage getSubImage(int iStart, int jStart, int width, int height) {
+		// exceptions !
+		
+		int[][] data = new int[width][height];
+		
+		for(int i = 0; i < width; i++) {
+			System.arraycopy(this.matrix[i + iStart], jStart, data[i], 0, height);
+		}
+		return new RGBImage(data);
+		
+	}
 }

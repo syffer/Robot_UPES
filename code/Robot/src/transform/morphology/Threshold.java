@@ -33,7 +33,7 @@ public class Threshold extends Transformation {
 	}
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		
 		int[][] matrix = new int[image.getWidth()][image.getHeight()];
 		
@@ -45,11 +45,11 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImage(matrix, this.threshold);
+		this.setTransformedImage(new MonoImage(matrix, this.threshold));
 	}
 
 	@Override
-	public void apply(GreyImage image) {
+	public void visit(GreyImage image) {
 		
 		int[][] matrix = new int[image.getWidth()][image.getHeight()];
 		
@@ -60,17 +60,18 @@ public class Threshold extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = new MonoImage(matrix, this.threshold);
+		this.setTransformedImage(new MonoImage(matrix, this.threshold));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = image;
+	public void visit(MonoImage image) {
+		this.setTransformedImage(image);
 	}
 
-	
+	/*
 	public MonoImage getTransformedImage() {
-		return (MonoImage) this.imageTransformed;
+		return (MonoImage) super.getTransformedImage();
 	}
+	*/
 	
 }

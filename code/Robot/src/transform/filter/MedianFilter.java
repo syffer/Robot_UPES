@@ -19,7 +19,7 @@ import java.util.List;
 public class MedianFilter extends AbstractFilter {
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -57,19 +57,19 @@ public class MedianFilter extends AbstractFilter {
 			}
 		}
 		
-		this.imageTransformed = new RGBImage(newData);	
+		this.setTransformedImage(new RGBImage(newData));	
 		
 		
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.filterWithOneDimension(image));		
+	public void visit(GreyImage image) {
+		this.setTransformedImage(new GreyImage(this.filterWithOneDimension(image)));		
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.filterWithOneDimension(image), image.getThresholdValue());
+	public void visit(MonoImage image) {
+		this.setTransformedImage(new MonoImage(this.filterWithOneDimension(image), image.getThresholdValue()));
 	}
 
 	private int[][] filterWithOneDimension(GreyImage image) {

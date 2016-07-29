@@ -9,19 +9,19 @@ public class WienerFilter extends AbstractFilter {
 	// https://www.researchgate.net/publication/3334143_An_effective_subband_OSF-based_VAD_with_noise_reduction_for_robust_speech_recognition 
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void apply(GreyImage image) {
+	public void visit(GreyImage image) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void apply(MonoImage image) {
+	public void visit(MonoImage image) {
 		// TODO Auto-generated method stub
 		
 	}

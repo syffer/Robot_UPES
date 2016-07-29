@@ -45,11 +45,14 @@ public abstract class Image implements Cloneable {
 	 */
 	public abstract void accept(VisitorImage visitorImage);
 	
+	
+	public abstract Image getSubImage(int iStart, int jStart, int width, int height);
+	
 	/**
 	 * @return the corresponding buffered image  
 	 */
 	public BufferedImage getBufferedImage() {
-			BufferedImage bufferedImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_3BYTE_BGR);
+		BufferedImage bufferedImage = new BufferedImage(this.width, this.height, BufferedImage.TYPE_3BYTE_BGR);
 		
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
@@ -62,7 +65,11 @@ public abstract class Image implements Cloneable {
 		
 	}
 	
+
 	
+	public BufferedImage getBufferedImageToShow() {
+		return this.getBufferedImage();
+	}
 
 	
 	/**
@@ -116,6 +123,16 @@ public abstract class Image implements Cloneable {
 	 * @return a clone of the matrix containing the pixel values of the image. 
 	 * @throws CloneNotSupportedException 
 	 */
+	public Image clone() {
+		Image clone;
+		try {
+			clone = (Image) super.clone();
+			return clone;
+		} catch (CloneNotSupportedException e) {
+			throw new InternalError("clonnage impossible");
+		}
+		
+	}
 	/*
 	public int[][] getCloneMatrix() {
 		int[][] clone = new int[this.width][this.height];

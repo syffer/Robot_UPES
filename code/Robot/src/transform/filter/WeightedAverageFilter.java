@@ -41,7 +41,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 	
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
 		for(int i = 1; i < image.getWidth() - 2; i++) {
@@ -90,17 +90,17 @@ public class WeightedAverageFilter extends AbstractFilter {
 			}
 		}
 		
-		this.imageTransformed = new RGBImage(newData);
+		this.setTransformedImage(new RGBImage(newData));
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.filter(image));
+	public void visit(GreyImage image) {
+		this.setTransformedImage(new GreyImage(this.filter(image)));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = new GreyImage(this.filter(image));
+	public void visit(MonoImage image) {
+		this.setTransformedImage(new GreyImage(this.filter(image)));
 	}
 	
 	

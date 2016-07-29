@@ -12,18 +12,18 @@ import image.RGBImage;
 public class Dilation extends Morphology {
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.dilate(image));
+	public void visit(GreyImage image) {
+		this.setTransformedImage(new GreyImage(this.dilate(image)));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.dilate(image), image.getThresholdValue());
+	public void visit(MonoImage image) {
+		this.setTransformedImage(new MonoImage(this.dilate(image), image.getThresholdValue()));
 	}
 	
 

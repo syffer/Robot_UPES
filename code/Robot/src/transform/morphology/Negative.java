@@ -9,7 +9,7 @@ import image.RGBImage;
 public class Negative extends Transformation {
 
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		RGBImage negativeImage = new RGBImage(image.getWidth(), image.getHeight());
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
@@ -19,11 +19,11 @@ public class Negative extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = negativeImage;
+		this.setTransformedImage(negativeImage);
 	}
 
 	@Override
-	public void apply(GreyImage image) {		
+	public void visit(GreyImage image) {		
 		GreyImage negativeImage = new GreyImage(image.getWidth(), image.getHeight());
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
@@ -32,11 +32,11 @@ public class Negative extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = negativeImage;
+		this.setTransformedImage(negativeImage);
 	}
 
 	@Override
-	public void apply(MonoImage image) {
+	public void visit(MonoImage image) {
 		MonoImage negativeImage = new MonoImage(image.getWidth(), image.getHeight(), image.getThresholdValue());
 		
 		for(int i = 0; i < image.getWidth(); i++) {
@@ -46,9 +46,10 @@ public class Negative extends Transformation {
 			}
 		}
 		
-		this.imageTransformed = negativeImage;
+		this.setTransformedImage(negativeImage);
 	}
 	
+	/*
 	private int[][] apply(int[][] channel, int width, int height) {
 		int[][] negativeChannel = new int[width][height];
 		
@@ -60,4 +61,5 @@ public class Negative extends Transformation {
 		
 		return negativeChannel;
 	}
+	*/
 }

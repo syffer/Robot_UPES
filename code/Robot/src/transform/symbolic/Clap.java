@@ -28,7 +28,7 @@ public class Clap extends Transformation {
 	}
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -86,17 +86,17 @@ public class Clap extends Transformation {
 		}
 		
 		
-		this.imageTransformed = new RGBImage(newData);
+		this.setTransformedImage(new RGBImage(newData));
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.process(image));
+	public void visit(GreyImage image) {
+		this.setTransformedImage(new GreyImage(this.process(image)));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.process(image), image.getThresholdValue());
+	public void visit(MonoImage image) {
+		this.setTransformedImage(new MonoImage(this.process(image), image.getThresholdValue()));
 	}
 
 	

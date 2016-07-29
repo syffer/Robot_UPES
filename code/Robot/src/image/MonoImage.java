@@ -91,12 +91,26 @@ public class MonoImage extends GreyImage {
 	
 	@Override
 	public void accept(VisitorImage visitorImage) {
-		visitorImage.apply(this);
+		visitorImage.visit(this);
 	}
 	
 	
 	public int getThresholdValue() {
 		return this.threshold;
+	}
+	
+	
+	@Override
+	public MonoImage getSubImage(int iStart, int jStart, int width, int height) {
+
+		int[][] data = new int[width][height];
+		
+		for(int i = 0; i < width; i++) {
+			System.arraycopy(this.matrix[i + iStart], jStart, data[i], 0, height);
+		}
+				
+		
+		return new MonoImage(data, this.threshold);
 	}
 	
 }

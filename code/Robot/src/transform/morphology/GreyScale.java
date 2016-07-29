@@ -8,18 +8,18 @@ import transform.Transformation;
 public class GreyScale extends Transformation {
 
 	@Override
-	public void apply(RGBImage image) {
-		this.imageTransformed = new GreyImage(image);
+	public void visit(RGBImage image) {
+		this.setTransformedImage(new GreyImage(image));
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = image;
+	public void visit(GreyImage image) {
+		this.setTransformedImage(image);
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = image;
+	public void visit(MonoImage image) {
+		this.setTransformedImage(image);
 	}
 
 }

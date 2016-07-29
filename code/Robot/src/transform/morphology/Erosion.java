@@ -12,18 +12,18 @@ import image.RGBImage;
 public class Erosion extends Morphology {
 		
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 				
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.erode(image));
+	public void visit(GreyImage image) {
+		this.setTransformedImage(new GreyImage(this.erode(image)));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.erode(image), image.getThresholdValue());
+	public void visit(MonoImage image) {
+		this.setTransformedImage(new MonoImage(this.erode(image), image.getThresholdValue()));
 	}
 	
 

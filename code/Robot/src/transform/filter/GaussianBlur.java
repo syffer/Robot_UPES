@@ -31,27 +31,27 @@ public class GaussianBlur extends AbstractFilter {
 	
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		// TODO Auto-generated method stub
-		this.imageTransformed = null;
+		this.setTransformedImage(null);
 	}
 
 	@Override
-	public void apply(GreyImage image) {
+	public void visit(GreyImage image) {
 		int[][] source = image.clone().getMatrix(); 	 
 		int[][] target = new int[image.getWidth()][image.getHeight()];
 		
 		this.gaussBlur_4(source, target, image.getWidth(), image.getHeight(), this.radius);		
-		this.imageTransformed = new GreyImage(target); 
+		this.setTransformedImage(new GreyImage(target)); 
 	}
 
 	@Override
-	public void apply(MonoImage image) {
+	public void visit(MonoImage image) {
 		int[][] source = image.clone().getMatrix(); 	 
 		int[][] target = new int[image.getWidth()][image.getHeight()];
 		
 		this.gaussBlur_4(source, target, image.getWidth(), image.getHeight(), this.radius);		
-		this.imageTransformed = new GreyImage(target); 
+		this.setTransformedImage(new GreyImage(target)); 
 	}
 
 	

@@ -68,7 +68,7 @@ public class Laplacian extends AbstractFilter {
 	
 	
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
@@ -111,17 +111,17 @@ public class Laplacian extends AbstractFilter {
 			}
 		}
 				
-		this.imageTransformed = new RGBImage(newData);
+		this.setTransformedImage(new RGBImage(newData));
 	}
 
 	@Override
-	public void apply(GreyImage image) {
-		this.imageTransformed = new GreyImage(this.filter(image));
+	public void visit(GreyImage image) {
+		this.setTransformedImage(new GreyImage(this.filter(image)));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
-		this.imageTransformed = new MonoImage(this.filter(image), image.getThresholdValue());
+	public void visit(MonoImage image) {
+		this.setTransformedImage(new MonoImage(this.filter(image), image.getThresholdValue()));
 	}
 	
 	

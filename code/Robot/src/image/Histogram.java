@@ -61,10 +61,22 @@ public class Histogram implements VisitorImage {
 	}
 	
 	@Override
-	public void apply(RGBImage image) {
-		Map<Integer, Integer> redFrequencies = new TreeMap<Integer, Integer>();
-		Map<Integer, Integer> greenFrequencies = new TreeMap<Integer, Integer>();
-		Map<Integer, Integer> blueFrequencies = new TreeMap<Integer, Integer>();
+	public void visit(RGBImage image) {
+		if(this.frequenciesMap.isEmpty()) {
+			this.frequenciesMap.add(new TreeMap<Integer, Integer>());
+			this.frequenciesMap.add(new TreeMap<Integer, Integer>());
+			this.frequenciesMap.add(new TreeMap<Integer, Integer>());
+		}
+		
+		Map<Integer, Integer> redFrequencies = this.frequenciesMap.get(0);
+		Map<Integer, Integer> greenFrequencies = this.frequenciesMap.get(1);
+		Map<Integer, Integer> blueFrequencies = this.frequenciesMap.get(2);
+		
+		if(this.colors.isEmpty()) {
+			this.colors.add(Color.RED);
+			this.colors.add(Color.GREEN);
+			this.colors.add(Color.BLUE);
+		}
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
@@ -84,19 +96,15 @@ public class Histogram implements VisitorImage {
 				blueFrequencies.put(blue, blueFrequencies.get(blue) + 1);
 			}
 		}
-		
-		this.frequenciesMap.add(redFrequencies);
-		this.frequenciesMap.add(greenFrequencies);
-		this.frequenciesMap.add(blueFrequencies);
-		
-		this.colors.add(Color.RED);
-		this.colors.add(Color.GREEN);
-		this.colors.add(Color.BLUE);
 	}
 
 	@Override
-	public void apply(GreyImage greyImage) { 
-		Map<Integer, Integer> frequencies = new TreeMap<Integer, Integer>();
+	public void visit(GreyImage greyImage) { 
+		if(this.frequenciesMap.isEmpty()) this.frequenciesMap.add(new TreeMap<Integer, Integer>());
+		Map<Integer, Integer> frequencies = this.frequenciesMap.get(0);
+		
+		if(this.colors.isEmpty()) this.colors.add(Color.GRAY);
+		
 		for(int i = 0; i < greyImage.getWidth(); i++) {
 			for(int j = 0; j < greyImage.getHeight(); j++) {
 				int greyValue = greyImage.get(i, j);
@@ -108,13 +116,17 @@ public class Histogram implements VisitorImage {
 			}
 		}
 		
-		this.frequenciesMap.add(frequencies);
-		this.colors.add(Color.GRAY);
+		//this.frequenciesMap.add(frequencies);
+		//this.colors.add(Color.GRAY);
 	}
 
 	@Override
-	public void apply(MonoImage image) {		
-		Map<Integer, Integer> frequencies = new TreeMap<Integer, Integer>();
+	public void visit(MonoImage image) {		
+		if(this.frequenciesMap.isEmpty()) this.frequenciesMap.add(new TreeMap<Integer, Integer>());
+		Map<Integer, Integer> frequencies = this.frequenciesMap.get(0);
+		
+		if(this.colors.isEmpty()) this.colors.add(Color.GRAY);
+		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {
 				int greyValue = image.get(i, j);
@@ -125,9 +137,19 @@ public class Histogram implements VisitorImage {
 				frequencies.put(greyValue, amount);
 			}
 		}
+	}
+
+	@Override
+	public void visit(SegmentedImage image) {
 		
-		this.frequenciesMap.add(frequencies);
-		this.colors.add(Color.GRAY);
+		for(int u = 0; u < image.getNbImagesWidth(); u++) {
+			for(int v = 0; v < image.getNbImagesHeight(); v++) {
+				System.out.println(u + " " + v);
+				Image subImage = image.getImage(u, v);
+				subImage.accept(this);
+			}
+		}
+		
 	}
 	
 }

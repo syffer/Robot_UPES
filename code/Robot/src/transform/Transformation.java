@@ -4,6 +4,7 @@ import image.GreyImage;
 import image.Image;
 import image.MonoImage;
 import image.RGBImage;
+import image.SegmentedImage;
 import image.VisitorImage;
 
 /**
@@ -13,11 +14,7 @@ import image.VisitorImage;
  */
 public abstract class Transformation implements VisitorImage {
 
-	protected Image imageTransformed;
-	
-	public abstract void apply(RGBImage image);
-	public abstract void apply(GreyImage image);
-	public abstract void apply(MonoImage image);
+	private Image imageTransformed;
 	
 	/**
 	 * Returns the transformed image (i.e. the obtained image after applying the transformation) 
@@ -25,6 +22,29 @@ public abstract class Transformation implements VisitorImage {
 	 */
 	public Image getTransformedImage() {
 		return this.imageTransformed;
+	}
+	
+	public void setTransformedImage(Image image) {
+		this.imageTransformed = image;
+	}
+	
+	public abstract void visit(RGBImage image);
+	public abstract void visit(GreyImage image);
+	public abstract void visit(MonoImage image);
+	
+	
+	public void visit(SegmentedImage image) {
+		Image[][] subImages = new Image[image.getNbImagesWidth()][image.getNbImagesHeight()];
+
+		for(int u = 0; u < image.getNbImagesWidth(); u++) {
+			for(int v = 0; v < image.getNbImagesHeight(); v++) {
+				Image subImage = image.getImage(u, v);
+				subImage.accept(this);
+				subImages[u][v] = this.getTransformedImage();
+			}
+		}
+		
+		this.setTransformedImage(new SegmentedImage(image.getWidth(), image.getHeight(), subImages, image.getBlockSize()));	
 	}
 	
 }

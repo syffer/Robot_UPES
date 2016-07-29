@@ -15,7 +15,7 @@ import java.util.Set;
 public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 
 	@Override
-	public void apply(RGBImage image) {
+	public void visit(RGBImage image) {
 		RGBImage newImage = image.clone();
 				
 		// apply 
@@ -63,12 +63,12 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 	}
 
 	@Override
-	public void apply(GreyImage image) {
+	public void visit(GreyImage image) {
 		this.setTransformedImage(this.process(image));
 	}
 
 	@Override
-	public void apply(MonoImage image) {
+	public void visit(MonoImage image) {
 		this.setTransformedImage(this.process(image));
 	}
 	
