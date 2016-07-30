@@ -136,13 +136,14 @@ Moreover, in order to support more complexe shapes, the pixel neibors of the cur
 ~~
 
 For example, the chain code "6011445" can be produced with the shape given on the \vref{fig:chain code:course order}. The \vref{fig:chain code:example} explains the procedure. 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/chain_code/example}
 	\caption{Example of a chain code}
 	\label{fig:chain code:example}	
 \end{figure}
 
+~~
 
 Chain codes are translation invariant but depend on rotation, which mean that differents chain codes will be produced for the shape and it's rotation. It is possible to make the chain code invariant to rotation by using the fisrt difference of the chain code instead, i.e. each code will be substracted with the previous code modulo 8 (as we are in 8-connexity). The new chain will be named differential chain code \cite{bib:chain:RepresentationAndDescription}. The calculation of the differential chain code of the shape of the \vref{fig:chain code:course order} is given with the \vref{tab:chain code:differential chain code}.
 \begin{equation} \label{eq:chain code:differential chain code}
@@ -159,7 +160,7 @@ d_i = code_i - code_{(i-1) \bmod N} \bmod 8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{table}[H]
+\begin{table}[h]
 	\centering
 	\caption{Example of a differential chain code}
 	\label{tab:chain code:differential chain code}
