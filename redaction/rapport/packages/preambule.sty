@@ -52,7 +52,6 @@
 
 \RequirePackage{atveryend}  % chargé pour éviter erreurs entre pagelst et etoolbox
 \RequirePackage{etoolbox}	% \newtoggle, \toggletrue, \ifbool, \iftoggle 
-\RequirePackage{ifthen}		% \ifthenelse 
 \RequirePackage{keyval}		% key=val options
 \RequirePackage{kvoptions}	% utilisation d'option key=val pour les packages 
 
@@ -70,7 +69,7 @@
 \DeclareBoolOption[false]{colorlinks}	% affiche la couleur des hyperrefs (défaut: faux) 
 \DeclareBoolOption[false]{debug}		% affiche informations de debug (défaut: false) 
 \DeclareBoolOption[false]{minitoc}		% utiliser minitoc entre les chapitres (non fini)
-\DeclareStringOption[alphabetic]{bybstyle}[alphabetic] 
+\DeclareStringOption[alphabetic]{bibstyle}[alphabetic] 
 \DeclareStringOption[english,french]{languages}[french] % languages={english,french} 
 
 % autres options 
@@ -98,8 +97,10 @@
 % ********************************************************************
 
 % Marges de la page
-% - 'headheight' augmenté afin d'éviter des warnings
+% - 'headheight' augmenté afin d'éviter des warnings 
+% - fullpage : tout en 1in 
 \usepackage[top=0.7in, bottom=0.7in, left=0.8in, right=0.8in, headheight=27.06pt]{geometry} 
+
 
 
 
@@ -386,13 +387,13 @@
 	backref = true, 	% back reference to the citation (index like)
 	backend = biber,
 	sorting = none, 	% "none" pour ranger par ordre d'apparition
-	style = \package@bybstyle, 
+	style = \package@bibstyle, 
 ]{biblatex}
 
 % for APA-style, maps a babel/polyglossia language identifier to an lbx file (doc p.223)
 % - http://tex.stackexchange.com/questions/312091/citations-in-small-caps-using-biblatex-in-french-apa-style 
 % - http://latex-community.org/forum/viewtopic.php?f=5&t=20343 
-\ifthenelse{\equal{\package@bybstyle}{apa}}{
+\expandafter\ifstrequal\expandafter{\package@bibstyle}{apa}{
 	\DeclareLanguageMapping{\languagename}{\languagename-apa}
 	% \DeclareCaseLangs
 }
@@ -866,7 +867,7 @@
 % navigation list à droite 
 % - http://tex.stackexchange.com/questions/296202/list-of-letter-not-folding-in-glossaries 
 \renewcommand{\glossaryheader}{
-	\item \parbox{0.9\textwidth}{\hfill \glsnavigation}
+	\item \parbox{0.9\textwidth}{\begin{flushright} \glsnavigation \end{flushright}}
 }
 
 
@@ -948,7 +949,7 @@
 \ifbool{package@debug}{
 	
 	% afficher packages et leurs versions dans le fichier .log 
-	%\listfiles 
+	\listfiles 
 	
 	% met une barre noire lors d'un warning "Overfull \hbox" 
 	\overfullrule=2cm 		
