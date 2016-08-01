@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 
 
 public class SegmentedImage extends Image {
+
+	public static final int BLOCK_SIZE = 805;
 	
 	protected Color gridColor = Color.MAGENTA;
 	

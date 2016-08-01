@@ -1,6 +1,7 @@
 package gui.controller;
 
 import image.MonoImage;
+import image.SegmentedImage;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -48,7 +49,7 @@ import transform.morphology.Negative;
  * @author Maxime PINEAU
  */
 public class GeneralController {
-
+	
 	protected GeneralModel model;
 	protected View view;
 	
@@ -119,7 +120,7 @@ public class GeneralController {
 		
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis(this);
 		this.actionHistogram = new ActionHistogram(this);
-		this.actionSegmentation = new ActionTransformation(this, "Segmentation", new Segmentation(805));
+		this.actionSegmentation = new ActionTransformation(this, "Segmentation", new Segmentation(SegmentedImage.BLOCK_SIZE));
 		this.actionTest = new ActionTest();
 		
 		// setting actions 

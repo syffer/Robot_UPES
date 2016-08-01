@@ -20,10 +20,10 @@ import transform.Transformation;
 public class ActionTransformation extends AbstractAction implements Observer {
 	private static final long serialVersionUID = 1L;
 	
-	private GeneralController controller;
+	protected GeneralController controller;
 	
-	private String name;
-	private Transformation transformation;
+	protected String name;
+	protected Transformation transformation;
 	
 	public ActionTransformation(GeneralController controller, String name, Transformation transformation) {
 		super(name);

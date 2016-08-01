@@ -39,8 +39,7 @@ public abstract class Transformation extends VisitorImage {
 	
 	public void visit(SegmentedImage image) {
 		
-		int nbThreadsMax = 20;
-		int nbThreads = Math.min(image.getNbSubImages(), nbThreadsMax);
+		int nbThreads = Math.min(image.getNbSubImages(), ThreadSegmentedImage.nbThreadsMax);
 		List<Thread> threads = new ArrayList<Thread>(nbThreads);
 		
 		SegmentedImage segmentedImage = new SegmentedImage(image.getWidth(),  image.getHeight(), image.getBlockSize());
@@ -58,6 +57,7 @@ public abstract class Transformation extends VisitorImage {
 			
 			Transformation clone = this.clone();
 			
+			// determinate the sub images of for this thread 
 			List<Position> positions = new ArrayList<Position>();
 			for(int i = previousImagesNumer; i < previousImagesNumer + nbImagesForThisThread; i++) { 
 				int u = i % image.getNbImagesWidth();
@@ -111,6 +111,8 @@ public abstract class Transformation extends VisitorImage {
 	
 	
 	public static class ThreadSegmentedImage extends Thread {
+		
+		public static final int nbThreadsMax = 20;
 		
 		private int numero;
 		private Transformation transformation;
