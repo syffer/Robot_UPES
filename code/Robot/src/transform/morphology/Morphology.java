@@ -24,5 +24,5 @@ public abstract class Morphology extends Transformation {
 	public Morphology() {
 		this(Morphology.defaultStructuredElement);
 	}
-		
+	
 }

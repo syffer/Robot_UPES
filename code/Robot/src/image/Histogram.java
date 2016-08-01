@@ -25,7 +25,7 @@ import java.util.TreeMap;
  * @see image.Image
  * @see image.VisitorImage 
  */
-public class Histogram implements VisitorImage {
+public class Histogram extends VisitorImage {
 
 	/**
 	 * Contains the pixel frequencies of each channel

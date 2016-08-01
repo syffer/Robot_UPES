@@ -137,5 +137,10 @@ public class Clap extends Transformation {
 	}
 	
 		
-	
+	/*
+	@Override
+	public Clap clone() {
+		return (Clap) super.clone();
+	}
+	*/
 }

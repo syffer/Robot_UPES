@@ -32,5 +32,13 @@ public class Segmentation extends Transformation {
 	public void visit(MonoImage image) {
 		this.setTransformedImage(new SegmentedImage(image, this.blockSize));
 	}
+	
+	
+	/*
+	@Override
+	public Segmentation clone() {
+		return (Segmentation) super.clone();
+	}
+	*/
 
 }

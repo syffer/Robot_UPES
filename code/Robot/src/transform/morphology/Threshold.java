@@ -69,9 +69,9 @@ public class Threshold extends Transformation {
 	}
 
 	/*
-	public MonoImage getTransformedImage() {
-		return (MonoImage) super.getTransformedImage();
+	@Override
+	public Threshold clone() {
+		return (Threshold) super.clone();
 	}
 	*/
-	
 }

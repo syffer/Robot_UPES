@@ -15,13 +15,17 @@ public class SegmentedImage extends Image {
 	protected int nbImagesWidth;
 	protected int nbImagesHeight;
 	
-	public SegmentedImage(int width, int height, Image[][] image, int blockSize) {
+	public SegmentedImage(int width, int height, Image[][] images, int blockSize) {
 		super(width, height);
 		
 		this.blockSize = blockSize;
 		this.nbImagesWidth = (int) Math.ceil((double)width / (double)blockSize);
 		this.nbImagesHeight = (int) Math.ceil((double)height / (double)blockSize);
-		this.subImages = image;
+		this.subImages = images;
+	}
+	
+	public SegmentedImage(int width, int height, int blockSize) {
+		this(width, height, new Image[width][height], blockSize);
 	}
 	
 	public SegmentedImage(Image image, int blockSize) {
@@ -93,6 +97,8 @@ public class SegmentedImage extends Image {
 			for(int v = 0; v < this.nbImagesHeight; v++) {
 				Image image = this.getImage(u, v);
 				
+				if(image == null) System.out.println(u + " " + v + " " + image);
+				
 				for(int i = 0; i < image.getWidth(); i++) {
 					for(int j = 0; j < image.getHeight(); j++) {
 						Pixel pixel = image.getPixel(i, j); 
@@ -122,6 +128,10 @@ public class SegmentedImage extends Image {
 		return nbImagesHeight;
 	}
 
+	public int getNbSubImages() {
+		return this.nbImagesHeight * this.nbImagesWidth;
+	}
+	
 	@Override
 	public void accept(VisitorImage visitorImage) {
 		visitorImage.visit(this);		

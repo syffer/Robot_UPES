@@ -62,4 +62,11 @@ public class Negative extends Transformation {
 		return negativeChannel;
 	}
 	*/
+	
+	/*
+	@Override
+	public Negative clone() {
+		return (Negative) super.clone();
+	}
+	*/
 }
