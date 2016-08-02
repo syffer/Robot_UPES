@@ -854,9 +854,7 @@
 % ********************************************************************
 \usepackage[xindy, toc]{glossaries} 
 % toc, section=part => attention, va ajouter une page de partie
-\glstoctrue 
-\setglossarystyle{listhypergroup} 	% ordonner alphabétiquement, en les séparant (A, B, C, ...) 
-\makeglossaries						% permet de générer le glossaire
+\makeglossaries		% permet de générer le glossaire
 
 % modifier header glossaire (\leftmark seulement)
 % - http://tex.stackexchange.com/questions/78704/make-the-glossary-title-upper-case-in-header 
@@ -864,11 +862,36 @@
 	\markboth{#1}{}
 }
 
-% navigation list à droite 
-% - http://tex.stackexchange.com/questions/296202/list-of-letter-not-folding-in-glossaries 
-\renewcommand{\glossaryheader}{
-	\item \parbox{0.9\textwidth}{\begin{flushright} \glsnavigation \end{flushright}}
+% new glossary style 
+% - ordonner alphabétiquement, en les séparant (A, B, C, ...) 
+% - navigation list at the right 
+\newglossarystyle{rightlisthypergroup}{ 
+	\setglossarystyle{listhypergroup} 
+
+	% navigation list à droite 
+	% - http://tex.stackexchange.com/questions/296202/list-of-letter-not-folding-in-glossaries 
+	\renewcommand{\glossaryheader}{
+		\item \parbox{0.9\textwidth}{\begin{flushright} \glsnavigation \end{flushright}}
+	}
+
 }
+
+\setglossarystyle{rightlisthypergroup} 	
+
+% new entry style, display entries description in footnote at the first time (except accronym)
+% - /!\ do not remove the '%'
+\let\OLDglsentryfirst\glsentryfirst
+\newacronymstyle{long-short-fn}{%
+	\GlsUseAcrEntryDispStyle{long-short}%
+}{%
+	\GlsUseAcrStyleDefs{long-short}%
+	\renewcommand*{\glsentryfirst}[1]{% \ifglshaslong check if accronym 
+		\OLDglsentryfirst{##1}\ifglshaslong{##1}{}{\footnote{ \glsentrydesc{##1}}}%
+	}%
+}
+
+\setacronymstyle{long-short-fn}
+
 
 
 
