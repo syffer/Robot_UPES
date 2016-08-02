@@ -329,10 +329,10 @@
 % ********************************************************************
 % Notes de bas de pages
 % ********************************************************************
-\usepackage{footnote} 			% \begin{savenotes} pour dans tableaux 
+\usepackage{footnotehyper} 		% \begin{savenotes} pour dans tableaux 
 \makesavenoteenv{table}			% sauvegarder les footnotes des tableaux automatiquement
 \makesavenoteenv{tabular} 		
-\usepackage[bottom]{footmisc}	% footnote toujours collé en bas de page 
+\usepackage[bottom, perpage]{footmisc}  
 \usepackage[multiple]{fnpct}	% multiple footnotes '1, 2' avec \footnote{1;2}
 % - fnpct incompatible avec footnote : \makesavenoteenv 
 

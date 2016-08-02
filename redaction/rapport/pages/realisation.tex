@@ -27,11 +27,11 @@ An image is represented by a width, an heigth, colors (stocked in pixel values, 
 
 ~~
 
-We focused of three types of images : RGB, Grey and Monochromatic images. A grey image is an image where the pixels are represented in a grey scale by only one value, the grey value (which can have any integer values between 0 and 255 included). In other words, there is 256 possible colors in a grey images, which are all shade of grey. In a monochromatic image, only two colors are represented, black (with the value 0) and white (with the value 255).
+This project is dealing with three types of images : RGB, Grey and Monochromatic images. A grey image is an image where the pixels are represented in a grey scale by only one value, the grey value (which can have any integer values between 0 and 255 included). In other words, there is 256 possible colors in a grey images, which are all shade of grey. In a monochromatic image, only two colors are represented, black (with the value 0) and white (with the value 255).
 
 ~~
 
-Once we loaded an image in the RGB color model, we converted it into a grey image in order to reduce the number of information present in the image and lower the complexity. The monochromatic image were used in order to determinate edges and extract the objects in the image.
+Once an image is loaded in the RGB color model, we converted it into a grey image in order to reduce the number of information present in the image and lower the complexity. The monochromatic image were used in order to determinate edges and extract the objects in the image.
 
 ~~
 
@@ -92,7 +92,7 @@ The axis we used to represent an image are illustrated on the \vref{fig:axis rep
 \subsection{Feature Extraction and Freeman Chain Code}
 
 
-We defined a feature as something in the image that have a certain shape and edges. 
+A feature is defined as something in the image that have a certain shape and edges. 
 
 %As we said before, in order to detect the different edges in th eimage, we used a filter edge detection, like sobel or canny. 
 
