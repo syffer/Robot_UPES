@@ -26,7 +26,7 @@ public interface SegmentedImage<I extends Image> {
 			this.j = j;
 			
 			this.u = i / blockSize;
-			this.v = i / blockSize;
+			this.v = j / blockSize;
 			
 			this.x = i % blockSize;
 			this.y = j % blockSize;
@@ -41,6 +41,11 @@ public interface SegmentedImage<I extends Image> {
 			
 			this.x = x;
 			this.y = y;
+		}
+		
+		@Override
+		public String toString() {
+			return "(" + i + "," + j + ") [" + u + "," + v + "] " + "{" + x + "," + y + "}";
 		}
 		
 		public static IndexImage getSubImageIndexFromIndex(int i, int j, int blockSize) {

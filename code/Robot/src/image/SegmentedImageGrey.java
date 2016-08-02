@@ -113,6 +113,18 @@ public class SegmentedImageGrey extends AbstractGreyImage implements SegmentedIm
 		return null;
 	}
 	
+	@Override
+	public SegmentedImageGrey clone() {
+		SegmentedImageGrey clone = (SegmentedImageGrey) super.clone();
+		
+		for(int u = 0; u < this.getNbImagesWidth(); u++) {
+			for(int v = 0; v < this.getNbImagesHeight(); v++) {
+				clone.setImage(u, v, this.getImage(u, v).clone());
+			}
+		}
+		
+		return clone;
+	}
 	
 
 	@Override

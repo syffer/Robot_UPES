@@ -98,7 +98,19 @@ public class SegmentedImageRGB extends AbstractRGBImage implements SegmentedImag
 		return null;
 	}
 	
-	
+
+	@Override
+	public SegmentedImageRGB clone() {
+		SegmentedImageRGB clone = (SegmentedImageRGB) super.clone();
+		
+		for(int u = 0; u < this.getNbImagesWidth(); u++) {
+			for(int v = 0; v < this.getNbImagesHeight(); v++) {
+				clone.setImage(u, v, this.getImage(u, v).clone());
+			}
+		}
+		
+		return clone;
+	}
 	
 
 

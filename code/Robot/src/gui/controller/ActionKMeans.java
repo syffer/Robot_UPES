@@ -1,6 +1,6 @@
 package gui.controller;
 
-import image.MonoImage;
+import image.AbstractMonoImage;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -48,7 +48,7 @@ public class ActionKMeans extends AbstractAction implements Observer {
 	public void actionPerformed(ActionEvent event) { 
 		FeatureExtractionModel featureExtractionModel = (FeatureExtractionModel) this.controller.getSelectedInternalModel();
 		List<PositionnedObject> someObjects = featureExtractionModel.getExtractedObjects();
-		MonoImage image = featureExtractionModel.getPreviousImage();
+		AbstractMonoImage image = featureExtractionModel.getPreviousImage();
 		
 		try {
 			

@@ -114,7 +114,23 @@ public class SegmentedImageMono extends AbstractMonoImage implements SegmentedIm
 	}
 	
 	
-	
+
+	@Override
+	public SegmentedImageMono clone() {
+		SegmentedImageMono clone = (SegmentedImageMono) super.clone();
+		
+		clone.images = new MonoImage[clone.nbImagesWidth][clone.nbImagesHeight];
+		
+		for(int u = 0; u < this.getNbImagesWidth(); u++) {
+			for(int v = 0; v < this.getNbImagesHeight(); v++) {
+				MonoImage image = this.getImage(u, v);
+				MonoImage cloneImage = image.clone();
+				clone.setImage(u, v, cloneImage);
+			}
+		}
+		
+		return clone;
+	}
 
 
 	@Override

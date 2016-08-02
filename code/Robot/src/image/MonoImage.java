@@ -128,8 +128,15 @@ public class MonoImage extends AbstractMonoImage {
 	}
 	
 	@Override 
-	public MonoImage clone() {
-		return (MonoImage) super.clone();
+	public MonoImage clone() { 
+		MonoImage clone = (MonoImage) super.clone();
+		
+		clone.matrix = new int[clone.getWidth()][];
+		for(int i = 0; i < clone.getWidth(); i++) {
+			clone.matrix[i] = this.matrix[i].clone();
+		}
+		
+		return clone;
 	}
 	
 	@Override

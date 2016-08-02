@@ -1,6 +1,6 @@
 package gui.controller;
 
-import image.MonoImage;
+import image.AbstractMonoImage;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ActionFeatureExtraction extends AbstractAction implements Observer 
 	@Override
 	public void actionPerformed(ActionEvent event) { 
 		ImageModel imageModel = (ImageModel) this.controller.getSelectedInternalModel();
-		MonoImage image = (MonoImage) imageModel.getImage();
+		AbstractMonoImage image = (AbstractMonoImage) imageModel.getImage();
 		
 		long startTime = System.currentTimeMillis();
 		List<PositionnedObject> someObjects = FeatureExtractor.extract(image);
@@ -56,6 +56,6 @@ public class ActionFeatureExtraction extends AbstractAction implements Observer 
 
 	@Override
 	public void update(Observable observable, Object params) { 
-		this.setEnabled(this.controller.hasImageModelSelected() && ((ImageModel) this.controller.getSelectedInternalModel()).getImage() instanceof MonoImage);
+		this.setEnabled(this.controller.hasImageModelSelected() && ((ImageModel) this.controller.getSelectedInternalModel()).getImage() instanceof AbstractMonoImage);
 	} 
 }

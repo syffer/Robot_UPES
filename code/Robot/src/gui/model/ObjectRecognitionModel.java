@@ -4,8 +4,8 @@ import features.ChainCode;
 import features.PositionnedObject;
 import features.Tag;
 import geometry.Position;
+import image.AbstractMonoImage;
 import image.Image;
-import image.MonoImage;
 import image.RGBImage;
 
 import java.awt.Color;
@@ -14,10 +14,10 @@ import java.util.Map;
 
 public class ObjectRecognitionModel extends ImageModel {
 	
-	protected MonoImage previous;
+	protected AbstractMonoImage previous;
 	private Map<Tag, Collection<PositionnedObject>> mapObjects; 
 	
-	public ObjectRecognitionModel(MonoImage image, Image original, Map<Tag, Collection<PositionnedObject>> mapObjects, double executionTime) { 
+	public ObjectRecognitionModel(AbstractMonoImage image, Image original, Map<Tag, Collection<PositionnedObject>> mapObjects, double executionTime) { 
 		super(new RGBImage(original), image, original, "Object Recognition", executionTime);
 		
 		this.previous = image;

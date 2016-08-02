@@ -22,7 +22,7 @@ public class GreyScale extends Transformation {
 
 	@Override
 	public void visit(MonoImage image) {
-		this.setTransformedImage(image);
+		this.setTransformedImage(new GreyImage(image.getMatrix()));
 	}
 
 	

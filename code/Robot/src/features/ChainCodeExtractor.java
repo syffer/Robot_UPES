@@ -2,7 +2,7 @@ package features;
 
 import geometry.Position;
 import geometry.Utils;
-import image.MonoImage;
+import image.AbstractMonoImage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,10 +51,11 @@ public class ChainCodeExtractor {
 	 * @param image the monochromatic image from where the chain codes must be extracted 
 	 * @return a list of the extracted chain codes
 	 */
-	public Map<Position, ChainCode> extract(MonoImage image) {
+	public Map<Position, ChainCode> extract(AbstractMonoImage image) {
 		
-		int[][] matrix = image.clone().getMatrix();
-		
+		//int[][] matrix = image.clone().getMatrix();
+		AbstractMonoImage clone = image.clone();
+				
 		ChainCode chain = new ChainCode();
 		Map<Position, ChainCode> chains = new HashMap<Position, ChainCode>();
 		
@@ -63,7 +64,7 @@ public class ChainCodeExtractor {
 			for(int j = 0; j < image.getHeight(); j++) {
 				
 				// skip if it's not an edge/wall
-				if(!this.isPixelAnEdge(matrix[i][j])) continue; 
+				if(!this.isPixelAnEdge(clone.get(i, j))) continue; 
 				
 				// save the starting position of the possible chain code 
 				Position origin = new Position(i, j);
@@ -86,8 +87,9 @@ public class ChainCodeExtractor {
 						
 						// calculate the next position 
 						Position nextPosition = new Position(position.getI() + ChainCode.horizontalMove[code], position.getJ() + ChainCode.verticalMove[code]); 					
-						if(!image.isInBound(nextPosition)) continue;	// stay in the image 
-						if(!this.isPixelAnEdge(matrix[nextPosition.getI()][nextPosition.getJ()])) continue;  
+						
+						if(!clone.isInBound(nextPosition)) continue;	// stay in the image 
+						if(!this.isPixelAnEdge(clone.get(nextPosition.getI(),nextPosition.getJ()))) continue;  
 						if(nextPosition.equals(previous)) continue; 	// don't go back (as the start position is never seen) 
 						
 						chain.add(code);
@@ -95,7 +97,7 @@ public class ChainCodeExtractor {
 						position = nextPosition;
 						
 						// we just have visited the next position, it's not an edge anymore  
-						matrix[position.getI()][position.getJ()] = this.seen; 
+						clone.set(position.getI(), position.getJ(), this.seen);
 						
 						hasMoved = true;
 						codePrec = code;

@@ -12,5 +12,10 @@ public abstract class AbstractMonoImage extends AbstractGreyImage {
 	public int getThreshold() {
 		return this.threshold;
 	}
-
+	
+	@Override
+	public AbstractMonoImage clone() {
+		return (AbstractMonoImage) super.clone();
+	}
+	
 }

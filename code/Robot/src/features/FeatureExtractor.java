@@ -1,7 +1,7 @@
 package features;
 
 import geometry.Position;
-import image.MonoImage;
+import image.AbstractMonoImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class FeatureExtractor {
 	 * @param image the monochromatic image 
 	 * @return a list of the present features in the image 
 	 */
-	public static List<PositionnedObject> extract(MonoImage image) {
+	public static List<PositionnedObject> extract(AbstractMonoImage image) {
 		
 		List<PositionnedObject> someObjects = new ArrayList<PositionnedObject>();
 		ChainCodeExtractor chainCodeExtractor = new ChainCodeExtractor();
