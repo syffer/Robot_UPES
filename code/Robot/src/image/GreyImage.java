@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * @author Maxime PINEAU
  * @see image.Image 
  */
-public class GreyImage extends Image {
+public class GreyImage extends AbstractGreyImage {
 	
 	protected int[][] matrix;
 	
@@ -75,6 +75,7 @@ public class GreyImage extends Image {
 		return new Pixel(grey, grey, grey);
 	}
 	
+	@Override
 	public int get(int i, int j) {
 		return this.matrix[i][j];
 	}
@@ -85,6 +86,7 @@ public class GreyImage extends Image {
 		this.matrix[i][j] = pixel.getGrey();
 	}
 	
+	@Override
 	public void set(int i, int j, int greyValue) {
 		this.matrix[i][j] = greyValue;
 	}

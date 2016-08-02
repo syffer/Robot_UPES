@@ -138,10 +138,26 @@ public class Histogram extends VisitorImage {
 			}
 		}
 	}
+	
+	
 
 	@Override
-	public void visit(SegmentedImage image) {
-		
+	public void visit(SegmentedImageRGB image) {
+		this.visit((SegmentedImage<RGBImage>) image);
+	}
+
+	@Override
+	public void visit(SegmentedImageGrey image) {
+		this.visit((SegmentedImage<GreyImage>) image);
+	}
+
+	@Override
+	public void visit(SegmentedImageMono image) {
+		this.visit((SegmentedImage<MonoImage>) image);
+	}
+	
+	
+	private <I extends Image> void visit(SegmentedImage<I> image) {
 		for(int u = 0; u < image.getNbImagesWidth(); u++) {
 			for(int v = 0; v < image.getNbImagesHeight(); v++) {
 				System.out.println(u + " " + v);
@@ -149,7 +165,6 @@ public class Histogram extends VisitorImage {
 				subImage.accept(this);
 			}
 		}
-		
 	}
 	
 }

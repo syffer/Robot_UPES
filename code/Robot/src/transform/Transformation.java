@@ -9,6 +9,9 @@ import image.Image;
 import image.MonoImage;
 import image.RGBImage;
 import image.SegmentedImage;
+import image.SegmentedImageGrey;
+import image.SegmentedImageMono;
+import image.SegmentedImageRGB;
 import image.VisitorImage;
 
 /**
@@ -36,15 +39,38 @@ public abstract class Transformation extends VisitorImage {
 	public abstract void visit(GreyImage image);
 	public abstract void visit(MonoImage image);
 	
+
+
+	@Override
+	public void visit(SegmentedImageRGB image) { 
+		SegmentedImageRGB segmentedImage = new SegmentedImageRGB(image.getWidth(), image.getHeight(), image.getBlockSize());
+		this.visit(image, segmentedImage);
+		this.setTransformedImage(segmentedImage);
+	}
+
+	@Override
+	public void visit(SegmentedImageGrey image) {
+		SegmentedImageGrey segmentedImage = new SegmentedImageGrey(image.getWidth(), image.getHeight(), image.getBlockSize());
+		this.visit(image, segmentedImage);
+		this.setTransformedImage(segmentedImage);
+	}
+
+	@Override
+	public void visit(SegmentedImageMono image) {
+		SegmentedImageMono segmentedImage = new SegmentedImageMono(image.getWidth(), image.getHeight(), image.getThreshold(), image.getBlockSize());
+		this.visit(image, segmentedImage);
+		this.setTransformedImage(segmentedImage);
+	}
 	
-	public void visit(SegmentedImage image) {
+	
+	public <I extends Image, J extends Image> SegmentedImage<J> visit(SegmentedImage<I> image, SegmentedImage<J> segmentedImage) {
 		
-		int nbThreads = Math.min(image.getNbSubImages(), ThreadSegmentedImage.nbThreadsMax);
+		int nbThreads = Math.min(image.getNbImages(), ThreadSegmentedImage.nbThreadsMax);
 		List<Thread> threads = new ArrayList<Thread>(nbThreads);
 		
-		SegmentedImage segmentedImage = new SegmentedImage(image.getWidth(),  image.getHeight(), image.getBlockSize());
-		int nbImagesPerThreads = image.getNbSubImages() / nbThreads;
-		int remainingImages = image.getNbSubImages() % nbThreads;
+		//SegmentedImage<I> segmentedImage = new SegmentedImage<I>(image.getWidth(),  image.getHeight(), image.getBlockSize());
+		int nbImagesPerThreads = image.getNbImages() / nbThreads;
+		int remainingImages = image.getNbImages() % nbThreads;
 		int previousImagesNumer = 0;
 		
 		// run each threads 
@@ -66,7 +92,7 @@ public abstract class Transformation extends VisitorImage {
 			}
 			previousImagesNumer += nbImagesForThisThread;
 			
-			ThreadSegmentedImage thread = new ThreadSegmentedImage(numThread, clone, image, positions, segmentedImage);
+			ThreadSegmentedImage<I, J> thread = new ThreadSegmentedImage<I, J>(numThread, clone, image, positions, segmentedImage);
 			thread.start();
 			threads.add(thread);
 		}
@@ -78,7 +104,7 @@ public abstract class Transformation extends VisitorImage {
 			int v = i / image.getNbImagesWidth();
 			positions.add(new Position(u, v));
 		}
-		processSegmentedImage(this.clone(), image, positions, segmentedImage);
+		Transformation.processSegmentedImage(this.clone(), image, positions, segmentedImage);
 		
 		// wait for the other threads 
 		for(Thread thread : threads) {
@@ -89,7 +115,7 @@ public abstract class Transformation extends VisitorImage {
 			}
 		}
 		
-		this.setTransformedImage(segmentedImage);	
+		return segmentedImage;
 	}
 		
 	
@@ -101,26 +127,27 @@ public abstract class Transformation extends VisitorImage {
 	}
 	
 	
-	private static void processSegmentedImage(Transformation transformation, SegmentedImage imageOrigin, List<Position> positions, SegmentedImage imageTransformed) {
+	@SuppressWarnings("unchecked")
+	private static <I extends Image, J extends Image> void processSegmentedImage(Transformation transformation, SegmentedImage<I> imageOrigin, List<Position> positions, SegmentedImage<J> imageTransformed) {
 		for(Position p : positions) {
-			Image image = imageOrigin.getImage(p.i, p.j);
+			I image = imageOrigin.getImage(p.i, p.j);
 			image.accept(transformation);
-			imageTransformed.setImage(p.i, p.j, transformation.getTransformedImage());
+			imageTransformed.setImage(p.i, p.j, (J) transformation.getTransformedImage()); 	// unchecked because of (J) 
 		}
 	}
 	
 	
-	public static class ThreadSegmentedImage extends Thread {
+	public static class ThreadSegmentedImage<I extends Image, J extends Image> extends Thread {
 		
-		public static final int nbThreadsMax = 20;
+		public static final int nbThreadsMax = 30;
 		
 		private int numero;
 		private Transformation transformation;
-		private SegmentedImage imageOrigin;
-		private SegmentedImage imageTransformed;
+		private SegmentedImage<I> imageOrigin;
+		private SegmentedImage<J> imageTransformed;
 		private List<Position> positions;
 		
-		public ThreadSegmentedImage(int numero, Transformation transformation, SegmentedImage imageOrigin, List<Position> positions, SegmentedImage imageTransformed) {
+		public ThreadSegmentedImage(int numero, Transformation transformation, SegmentedImage<I> imageOrigin, List<Position> positions, SegmentedImage<J> imageTransformed) {
 			this.numero = numero;
 			this.transformation = transformation;
 			this.imageOrigin = imageOrigin;
@@ -129,7 +156,7 @@ public abstract class Transformation extends VisitorImage {
 		}
 		
 		public void run() {
-			processSegmentedImage(this.transformation, this.imageOrigin, this.positions, this.imageTransformed);
+			Transformation.processSegmentedImage(this.transformation, this.imageOrigin, this.positions, this.imageTransformed);
 		}
 		
 		@Override 
@@ -137,5 +164,6 @@ public abstract class Transformation extends VisitorImage {
 			return "[" + this.numero + "] ";
 		}
 	}
+
 	
 }

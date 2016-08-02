@@ -120,7 +120,7 @@ public class GeneralController {
 		
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis(this);
 		this.actionHistogram = new ActionHistogram(this);
-		this.actionSegmentation = new ActionTransformation(this, "Segmentation", new Segmentation(SegmentedImage.BLOCK_SIZE));
+		this.actionSegmentation = new ActionTransformation(this, "Segmentation", new Segmentation(SegmentedImage.DEFAULT_BLOCK_SIZE));
 		this.actionTest = new ActionTest();
 		
 		// setting actions 

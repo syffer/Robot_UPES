@@ -37,7 +37,7 @@ public class Negative extends Transformation {
 
 	@Override
 	public void visit(MonoImage image) {
-		MonoImage negativeImage = new MonoImage(image.getWidth(), image.getHeight(), image.getThresholdValue());
+		MonoImage negativeImage = new MonoImage(image.getWidth(), image.getHeight(), image.getThreshold());
 		
 		for(int i = 0; i < image.getWidth(); i++) {
 			for(int j = 0; j < image.getHeight(); j++) {

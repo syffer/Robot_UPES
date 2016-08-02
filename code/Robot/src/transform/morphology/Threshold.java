@@ -5,6 +5,9 @@ import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
 import image.RGBImage;
+import image.SegmentedImageGrey;
+import image.SegmentedImageMono;
+import image.SegmentedImageRGB;
 
 /**
  * Applies a threshold to an image 
@@ -68,6 +71,30 @@ public class Threshold extends Transformation {
 		this.setTransformedImage(image);
 	}
 
+	
+	
+
+
+	@Override
+	public void visit(SegmentedImageRGB image) { 
+		SegmentedImageMono segmentedImage = new SegmentedImageMono(image.getWidth(), image.getHeight(), this.threshold, image.getBlockSize());
+		this.visit(image, segmentedImage);
+		this.setTransformedImage(segmentedImage);
+	}
+
+	@Override
+	public void visit(SegmentedImageGrey image) {
+		SegmentedImageMono segmentedImage = new SegmentedImageMono(image.getWidth(), image.getHeight(), this.threshold, image.getBlockSize());
+		this.visit(image, segmentedImage);
+		this.setTransformedImage(segmentedImage);
+	}
+
+	@Override
+	public void visit(SegmentedImageMono image) {
+		this.setTransformedImage(image);
+	}
+	
+	
 	/*
 	@Override
 	public Threshold clone() {

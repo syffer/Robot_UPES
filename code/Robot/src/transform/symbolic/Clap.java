@@ -1,6 +1,7 @@
 package transform.symbolic;
 
 import geometry.Position;
+import image.AbstractGreyImage;
 import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
@@ -96,11 +97,11 @@ public class Clap extends Transformation {
 
 	@Override
 	public void visit(MonoImage image) {
-		this.setTransformedImage(new MonoImage(this.process(image), image.getThresholdValue()));
+		this.setTransformedImage(new MonoImage(this.process(image), image.getThreshold()));
 	}
 
 	
-	private int[][] process(GreyImage image) {
+	private int[][] process(AbstractGreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

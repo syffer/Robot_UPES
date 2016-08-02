@@ -1,5 +1,6 @@
 package transform.filter;
 
+import image.AbstractGreyImage;
 import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
@@ -121,11 +122,11 @@ public class Laplacian extends AbstractFilter {
 
 	@Override
 	public void visit(MonoImage image) {
-		this.setTransformedImage(new MonoImage(this.filter(image), image.getThresholdValue()));
+		this.setTransformedImage(new MonoImage(this.filter(image), image.getThreshold()));
 	}
 	
 	
-	private int[][] filter(GreyImage image) {
+	private int[][] filter(AbstractGreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

@@ -1,6 +1,7 @@
 package transform.cellularAutomata;
 
 import geometry.Position;
+import image.AbstractGreyImage;
 import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
@@ -72,9 +73,9 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 		this.setTransformedImage(this.process(image));
 	}
 	
-	private GreyImage process(GreyImage image) { 
+	private AbstractGreyImage process(AbstractGreyImage image) { 
 		
-		GreyImage greyImage = image.clone();
+		AbstractGreyImage greyImage = image.clone();
 		// the update rule is only applied to nonboundary cells 
 		
 		// apply 
@@ -96,7 +97,7 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 					avg += values.get(k);
 				}
 				avg /= values.size() - 2;	// -2 because we eliminated 2 values 
-				
+								
 				// apply rule 511 (?) 
 				greyImage.set(i, j, (int) avg);
 			}

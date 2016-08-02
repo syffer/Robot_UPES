@@ -3,7 +3,9 @@ package transform;
 import image.GreyImage;
 import image.MonoImage;
 import image.RGBImage;
-import image.SegmentedImage;
+import image.SegmentedImageGrey;
+import image.SegmentedImageMono;
+import image.SegmentedImageRGB;
 
 public class Segmentation extends Transformation {
 
@@ -20,17 +22,33 @@ public class Segmentation extends Transformation {
 	
 	@Override
 	public void visit(RGBImage image) {
-		this.setTransformedImage(new SegmentedImage(image, this.blockSize));
+		this.setTransformedImage(new SegmentedImageRGB(image, this.blockSize));
 	}
 
 	@Override
 	public void visit(GreyImage image) {
-		this.setTransformedImage(new SegmentedImage(image, this.blockSize));
+		this.setTransformedImage(new SegmentedImageGrey(image, this.blockSize));
 	}
 
 	@Override
 	public void visit(MonoImage image) {
-		this.setTransformedImage(new SegmentedImage(image, this.blockSize));
+		this.setTransformedImage(new SegmentedImageMono(image, this.blockSize));
+	}
+
+	
+	@Override
+	public void visit(SegmentedImageRGB image) {
+		this.setTransformedImage(image);
+	}
+
+	@Override
+	public void visit(SegmentedImageGrey image) {
+		this.setTransformedImage(image);
+	}
+
+	@Override
+	public void visit(SegmentedImageMono image) {
+		this.setTransformedImage(image);
 	}
 	
 	

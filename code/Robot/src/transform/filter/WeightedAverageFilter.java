@@ -1,5 +1,6 @@
 package transform.filter;
 
+import image.AbstractGreyImage;
 import image.GreyImage;
 import image.MonoImage;
 import image.Pixel;
@@ -104,7 +105,7 @@ public class WeightedAverageFilter extends AbstractFilter {
 	}
 	
 	
-	private int[][] filter(GreyImage image) {
+	private int[][] filter(AbstractGreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		

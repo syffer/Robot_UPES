@@ -13,9 +13,15 @@ import java.awt.image.BufferedImage;
  * @author Maxime PINEAU
  * @see Image 
  */
-public class MonoImage extends GreyImage {
+public class MonoImage extends AbstractMonoImage {
 	
-	private int threshold;
+	protected int[][] matrix;
+	
+	
+	private MonoImage(int width, int height, int threshold, int[][] data) {
+		super(width, height, threshold);
+		this.matrix = data;
+	}
 	
 	/**
 	 * Creates a monochromatic image based on the given data.
@@ -25,13 +31,11 @@ public class MonoImage extends GreyImage {
 	 * @param data the matrix used to create the monochromatic image. The only posible values have to be 0 and 255 (no verification). 
 	 */
 	public MonoImage(int[][] data, int threshold) {
-		super(data);
-		this.threshold = threshold;
+		this(data.length, data[0].length, threshold, data);
 	}
 	
 	public MonoImage(int width, int height, int threshold) {
-		super(width, height);
-		this.threshold = threshold;
+		this(width, height, threshold, new int[width][height]);
 	}
 	
 	/**
@@ -47,7 +51,8 @@ public class MonoImage extends GreyImage {
 		for(int i = 0; i < this.width; i++) {
 			for(int j = 0; j < this.height; j++) {
 				int grey = greyImage.get(i, j);				
-				this.matrix[i][j] = (grey >= this.threshold) ? 255 : 0;
+				int mono = (grey >= this.threshold) ? 255 : 0;
+				this.set(i, j, mono);
 			}
 		}
 	}
@@ -68,7 +73,8 @@ public class MonoImage extends GreyImage {
 				Color color = new Color(bufferedImage.getRGB(i, j));
 				int grey = (color.getRed() + color.getGreen() + color.getBlue()) / 3;
 				
-				this.matrix[i][j] = (grey >= threshold) ? 255 : 0;
+				int mono = (grey >= this.threshold) ? 255 : 0;
+				this.set(i, j, mono);
 			}
 		}
 	}
@@ -89,16 +95,42 @@ public class MonoImage extends GreyImage {
 	}
 	
 	
+	
+	@Override
+	public int get(int i, int j) {
+		return this.matrix[i][j];
+	}
+
+	@Override
+	public void set(int i, int j, int grey) {
+		this.matrix[i][j] = grey;
+	}
+
+	@Override
+	public Pixel getPixel(int i, int j) {
+		int grey = this.get(i, j);
+		return new Pixel(grey, grey, grey);
+	}
+
+	@Override
+	public void set(int i, int j, Pixel pixel) {
+		this.set(i, j, pixel.getGrey());
+	}
+	
+	
 	@Override
 	public void accept(VisitorImage visitorImage) {
 		visitorImage.visit(this);
 	}
 	
-	
-	public int getThresholdValue() {
-		return this.threshold;
+	public int[][] getMatrix() {
+		return this.matrix;
 	}
 	
+	@Override 
+	public MonoImage clone() {
+		return (MonoImage) super.clone();
+	}
 	
 	@Override
 	public MonoImage getSubImage(int iStart, int jStart, int width, int height) {
@@ -112,5 +144,7 @@ public class MonoImage extends GreyImage {
 		
 		return new MonoImage(data, this.threshold);
 	}
+
+	
 	
 }

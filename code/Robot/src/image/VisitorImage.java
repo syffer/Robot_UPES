@@ -29,7 +29,12 @@ public abstract class VisitorImage implements Cloneable {
 	public abstract void visit(MonoImage image);
 	
 	
-	public abstract void visit(SegmentedImage image);
+	public abstract void visit(SegmentedImageRGB image);
+	public abstract void visit(SegmentedImageGrey image);
+	public abstract void visit(SegmentedImageMono image);
+	
+	
+	//public abstract void visit(SegmentedImage image);
 	
 	@Override
 	public VisitorImage clone() {

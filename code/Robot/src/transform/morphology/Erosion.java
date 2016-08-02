@@ -1,5 +1,6 @@
 package transform.morphology;
 
+import image.AbstractGreyImage;
 import image.GreyImage;
 import image.MonoImage;
 import image.RGBImage;
@@ -23,11 +24,11 @@ public class Erosion extends Morphology {
 
 	@Override
 	public void visit(MonoImage image) {
-		this.setTransformedImage(new MonoImage(this.erode(image), image.getThresholdValue()));
+		this.setTransformedImage(new MonoImage(this.erode(image), image.getThreshold()));
 	}
 	
 
-	private int[][] erode(GreyImage image) {
+	private int[][] erode(AbstractGreyImage image) {
 		
 		int[][] newData = new int[image.getWidth()][image.getHeight()];
 		
