@@ -89,12 +89,12 @@ The morphologic operations which are to be implemented are the followings :
 ~~
 
 
-Moreover, a \gls{GUI} is required in order to see the results of each operations described previously. This \gls{GUI} must allow a user to load, transform and save multiple images. An \gls{histogram} is also expected.
+Moreover, a \gls{GUI} is required in order to see the results of each operations described previously. This \gls{GUI} must allow a user to load, transform and save multiple images. The display of the image \gls{histogram} on the \gls{GUI} is also expected. 
 
 
 \subsubsection{The second module}
 
-The second module involves the recognition of object on 2-dimensional images. The implementation of the K-Means \gls{algorithm} is also required in this module. In order to recognize objetcs on an image the following operations must be done. 
+The second module involves the recognition of object on 2-dimensional images. The implementation of the K-Means classification \gls{algorithm} is also required in this module. \Glspl{algorithm} of this module must also be integrated in the \gls{GUI}. Futhermore, the extracted objects must be displayed on the image from which they were extracted (tagged or not). Objects with the same tag must be displayed with the same color, a random color will be used for untagged objects. In order to recognize objetcs on an image the following operations must be done. 
 
 ~~
 
@@ -106,12 +106,9 @@ Then, a database containing existing tagged objects and their features must be c
 
 ~~
 
-Finally, an \gls{algorithm} that will tag an object will be implemented. This \gls{algorithm} will return the nearest tagged object in the database from the object to be tagged by comparing the features. 
-
-
+Finally, an \gls{algorithm} that will tag an object will be implemented. This \gls{algorithm} will return the tag of the nearest tagged object in the database from the object to be tagged by comparing their features. 
 
  
-
 
 
 \section{Constraints and expectations}
@@ -120,9 +117,20 @@ Finally, an \gls{algorithm} that will tag an object will be implemented. This \g
 % - contraintes 
 % langage laissé à mon choix 
 
+The only given constraint is not to use the programming language Matlab for the image processing part. Exept for Matlab, the programmer is free to use any other programming languages. 
+
+~~
+
 % - attentes 
 % réunion régulière, à chaque fois qu'une tâche a été terminé
 % documentation 
 % rapport 
 % code source 
+
+Regular meetings are expected, and at each time a task has been done. At the end of the internship, the following documents must be given in english to the supervisor : 
+\begin{itemize}
+	\item the commented source code 
+	\item the documentation of the source code  
+	\item a report on the internship 
+\end{itemize}
 
