@@ -1,8 +1,10 @@
 \chapter{The project and my mission}
+% cahier des charges
 
 This chapter will introduce the project I was assigned, and the mission I was given.
 
 \section{The project}
+% introduction
 
 This new project involves designing an autonomus navigation algorithm for a robot, which will be moving in an unknown environment. 
 
@@ -32,7 +34,6 @@ So as to navigate correctly, a 3-Dimension map will be generated using at least 
 
 Autonomous navigation means that the robot will have to navigate from it's own, without help and automatically. \gls{AI} will be an essential part of this process. Multiples \gls{AI} algorithms exist, like A$^*$, D$^*$, Swarm Intelligence, \gls{PSO}, Hill Climbing, and Genetic Algorithm. As the robot will navigate in an unknown environment, it is necessary that the robot learn from his previous decisions. In order to do that, a reinforcement learning will be used, which will allow the robot to self-learning through his experiences and a reward policy.  
 
-
 ~~
 
 The \vref{fig:general functionning} shows the general functionning of the robot. This project will be devided into three parts : 
@@ -51,7 +52,6 @@ The \vref{fig:general functionning} shows the general functionning of the robot.
 \end{figure}
 
 
-
 ~~
 
 In other words, the objective of the reseach is "To design and develop a self-learning algorithm for an autonomous moving system equipped with 3D vision technique" \cite{bib:niharika}.
@@ -59,10 +59,70 @@ In other words, the objective of the reseach is "To design and develop a self-le
 
 
 \section{My mission in this project}
+% objectif 
 
-objectif 
-contrainte 
-attente 
+My mission in this project involves a little part of the the 3D map generation, and was separated into two modules, which are related to : 
+\begin{enumerate}
+	\item basic \gls{image processing} operations
+	\item object recognition on 2-dimensional images
+\end{enumerate}
 
-\gls{GUI}
+
+\subsubsection{The first module}
+
+The first module involves implementing \gls{image processing} operations on 2-dimensional images. The operations will have to be performed on raster images (i.e. bitmapped images), of type "JPG" and "PNG". Those operations are either morphologic operations, edge detection filters, or noise removal filters. 
+
+~~
+
+The expected edge detection filters are the Sobel filter, the Laplacian filter, and the Canny filter. As for the noise removal filters, the median filter, the weighted average filter and the second \gls{CA} algorithm described in \cite{bib:filter:CA} have to be implemented.
+
+
+The morphologic operations which are to be implemented are the followings : 
+\begin{itemize}
+	\item negativity
+	\item erosion and expansion
+	\item grey scale, transform an image into a grey image
+	\item threshold, transform an image into a black and white image 
+	\item the \gls{CLAP} \gls{algorithm} described in \cite{bib:filter:EdgeWithCLAP}
+\end{itemize}
+
+~~
+
+
+Moreover, a \gls{GUI} is required in order to see the results of each operations described previously. This \gls{GUI} must allow a user to load, transform and save multiple images. An \gls{histogram} is also expected.
+
+
+\subsubsection{The second module}
+
+The second module involves the recognition of object on 2-dimensional images. The implementation of the K-Means \gls{algorithm} is also required in this module. In order to recognize objetcs on an image the following operations must be done. 
+
+~~
+
+First, objects have to be extracted from the image using edges, chain codes could be used for that part. Each extracted object should also have some features that can be determinated (e.g. the width of the object). 
+
+~~
+
+Then, a database containing existing tagged objects and their features must be created. A dataset containing those existing tagged objects must be found on the internet, and must be stored in the database. 
+
+~~
+
+Finally, an \gls{algorithm} that will tag an object will be implemented. This \gls{algorithm} will return the nearest tagged object in the database from the object to be tagged by comparing the features. 
+
+
+
+ 
+
+
+
+\section{Constraints and expectations}
+% contrainte + attente 
+
+% - contraintes 
+% langage laissé à mon choix 
+
+% - attentes 
+% réunion régulière, à chaque fois qu'une tâche a été terminé
+% documentation 
+% rapport 
+% code source 
 
