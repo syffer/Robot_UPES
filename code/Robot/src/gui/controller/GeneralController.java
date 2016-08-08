@@ -77,6 +77,9 @@ public class GeneralController {
 	protected ActionObjectRecognition actionObjectRecognition;
 	protected ActionKMeans actionKMeans;
 	
+	protected ActionDisparityMap actionDisparity;
+	protected ActionDepthEstimation actionDepthEstimation;
+	
 	protected ActionStatisticAnalysis actionStatisticAnalysis;
 	protected ActionHistogram actionHistogram;
 	protected ActionTransformation actionSegmentation;
@@ -118,6 +121,9 @@ public class GeneralController {
 		this.actionObjectRecognition = new ActionObjectRecognition(this);
 		this.actionKMeans = new ActionKMeans(this);
 		
+		this.actionDisparity = new ActionDisparityMap(this);
+		this.actionDepthEstimation = new ActionDepthEstimation(this);
+		
 		this.actionStatisticAnalysis = new ActionStatisticAnalysis(this);
 		this.actionHistogram = new ActionHistogram(this);
 		this.actionSegmentation = new ActionTransformation(this, "Segmentation", new Segmentation(SegmentedImage.DEFAULT_BLOCK_SIZE));
@@ -143,7 +149,6 @@ public class GeneralController {
 		this.view.menuWeightedAverage.setAction(this.actionWeightedAverageFilter);
 		this.view.menuMedianFilter.setAction(this.actionMedianFilter);
 		this.view.menuGaussianFilter.setAction(this.actionGaussianFilter);
-		
 		this.view.menuCellularAutomataII.setAction(this.actionCellularAutomataII);
 		
 		this.view.menuGreyScale.setAction(this.actionGreyScale);
@@ -155,6 +160,9 @@ public class GeneralController {
 		this.view.menuFeatureExtraction.setAction(this.actionFeatureExtraction);
 		this.view.menuObjectRecognition.setAction(this.actionObjectRecognition);
 		this.view.menuKMeans.setAction(this.actionKMeans);
+		
+		this.view.menuDisparityMap.setAction(this.actionDisparity);
+		this.view.menuDepthEstimationMap.setAction(this.actionDepthEstimation);
 		
 		// initialise observers (setting default values)
 		this.model.initialise();

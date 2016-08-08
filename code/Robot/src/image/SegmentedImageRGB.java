@@ -94,8 +94,14 @@ public class SegmentedImageRGB extends AbstractRGBImage implements SegmentedImag
 
 	@Override
 	public Image getSubImage(int iStart, int jStart, int width, int height) {
-		// TODO Auto-generated method stub
-		return null;
+		int[][] data = new int[width][height];
+		
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height; j++) {
+				data[i][j] = this.getRGB(i + iStart, j + jStart);
+			}
+		}
+		return new RGBImage(data);
 	}
 	
 

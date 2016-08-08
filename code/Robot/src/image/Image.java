@@ -62,7 +62,6 @@ public abstract class Image implements Cloneable {
 		}
 		
 		return bufferedImage;
-		
 	}
 	
 

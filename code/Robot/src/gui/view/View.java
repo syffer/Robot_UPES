@@ -29,7 +29,7 @@ public class View extends JFrame {
 
 	//private Container container;
 	
-	// menu 
+	// menus 
 	public JMenuItem menuLoad;
 	public JMenuItem menuSaveAs;
 	public JMenuItem menuCloseAll;
@@ -55,6 +55,9 @@ public class View extends JFrame {
 	public JMenuItem menuFeatureExtraction;
 	public JMenuItem menuObjectRecognition;
 	public JMenuItem menuKMeans;
+	
+	public JMenuItem menuDisparityMap;
+	public JMenuItem menuDepthEstimationMap;
 	
 	// toolbar 
 	public JToolBar toolBar;
@@ -154,12 +157,19 @@ public class View extends JFrame {
 		this.menuKMeans = new JMenuItem("KMeans");
 		menuClassification.add(this.menuKMeans);
 		
+		JMenu menuDimension3D = new JMenu("3D");
+		this.menuDisparityMap = new JMenuItem("Disparity map");
+		this.menuDepthEstimationMap = new JMenuItem("Depth estimation");
+		menuDimension3D.add(this.menuDisparityMap);
+		menuDimension3D.add(this.menuDepthEstimationMap);
+				
 		menuBar.add(menuFile);
 		menuBar.add(menuNoiseRemoval);
 		menuBar.add(menuEdgeDetection);
 		menuBar.add(menuMorphology);
 		menuBar.add(menuExtraction);
 		menuBar.add(menuClassification);
+		menuBar.add(menuDimension3D);
 		
 		this.setJMenuBar(menuBar);
 	}

@@ -1,5 +1,6 @@
 package transform.morphology;
 
+import image.AbstractGreyImage;
 import image.GreyImage;
 import image.MonoImage;
 import image.RGBImage;
@@ -45,6 +46,12 @@ public class GreyScale extends Transformation {
 		SegmentedImageGrey segmentedImage = new SegmentedImageGrey(image.getWidth(), image.getHeight(), image.getBlockSize());
 		this.visit(image, segmentedImage);
 		this.setTransformedImage(segmentedImage);
+	}
+	
+	
+	@Override
+	public AbstractGreyImage getTransformedImage() {
+		return (AbstractGreyImage) super.getTransformedImage();
 	}
 	
 }

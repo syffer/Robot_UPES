@@ -127,19 +127,19 @@ public abstract class Transformation extends VisitorImage {
 	}
 	
 	
-	//@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static <I extends Image, J extends Image> void processSegmentedImage(Transformation transformation, SegmentedImage<I> imageOrigin, List<Position> positions, SegmentedImage imageTransformed) {
+	@SuppressWarnings("unchecked")
+	private static <I extends Image, J extends Image> void processSegmentedImage(Transformation transformation, SegmentedImage<I> imageOrigin, List<Position> positions, SegmentedImage<J> imageTransformed) {
 		for(Position p : positions) {
 			I image = imageOrigin.getImage(p.i, p.j);
 			image.accept(transformation);
-			imageTransformed.setImage(p.i, p.j, transformation.getTransformedImage()); 	
+			imageTransformed.setImage(p.i, p.j, (J) transformation.getTransformedImage()); 	
 		}
 	}
 	
 	
 	public static class ThreadSegmentedImage<I extends Image, J extends Image> extends Thread {
 		
-		public static final int nbThreadsMax = 30;
+		public static final int nbThreadsMax = 300;
 		
 		private int numero;
 		private Transformation transformation;

@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public interface SegmentedImage<I extends Image> {
 
-	public static final int DEFAULT_BLOCK_SIZE = 200; //805
+	public static final int DEFAULT_BLOCK_SIZE = 8; //805, 200
 	public static final Color DEFAULT_GRID_COLOR = Color.MAGENTA;
 	
 	public I getImage(int u, int v);
