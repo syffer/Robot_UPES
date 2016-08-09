@@ -58,11 +58,42 @@
 
 \newacronym{CLAP}{CLAP}{Cellular Logic Array Processing}
 
+\newglossaryentry{classification}{
+	name = {classification},
+	description = {the problem of identifying to which of set of categories (sub-population, cluster) a new observation belongs. The goal is to found the best data partition},
+	see = {individual,cluster,population},
+}
+
+\newglossaryentry{cluster}{
+	name = {cluster},
+	description = {a set of similar individuals. The individuals inside a cluster are more similar to each other than to individials in other clusters},
+	see = {individual,classification},
+}
+
+\newglossaryentry{cluster analysis}{
+	name = {cluster analysis},
+	description = {the task of grouping a set of individuals by their similarities},
+	see = {cluster},
+}
+
+
+\newglossaryentry{data analysis}{
+	name = {data analysis},
+	description = {a process applied on a set of observed data, which is called the population. The goal is to study the dataset in a global manner, and discover useful information},
+	see = {individual,population},
+}
+
+
+\newacronym{DAO}{DAO}{Data Access Object}
 
 \newacronym{DB}{DB}{database}
 
+\newacronym{DBMS}{DBMS}{Database Management System}
+
 \newacronym{DIP}{DIP}{Digital Image Processing}
 
+
+\newacronym{EM}{EM}{Expectation-Maximization algorithm}
 
 \newglossaryentry{ENSEM}{
 	name = ENSEM,
@@ -90,6 +121,12 @@
 	description = {In image science, it is the processing of images using mathematocal operations, by using any form of signal processing and where the input could be an image or a video},
 }
 
+\newglossaryentry{individual}{
+	name = {individual},
+	description = {also called an observation, it is described by a set of variables (i.e. values)},
+	see = {data analysis,classification,population},
+}
+
 \newacronym{IT}{IT}{Information Technologie}
 
 
@@ -99,6 +136,12 @@
 
 
 \newacronym{PSO}{PSO}{Particle Swarm Optimization}
+
+\newglossaryentry{population}{
+	name = {population},
+	description = {a set of individuals that where observed and collected through diverse sources},
+	see = {individual,classification,data analysis},
+}
 
 \newglossaryentry{process}{
 	name = {process},
@@ -118,6 +161,9 @@
 \newacronym{UGC}{UGC}{University Grants Commission}
 
 \newacronym{UPES}{UPES}{University of Petroleum and Energy Studies}
+
+
+
 
 
 

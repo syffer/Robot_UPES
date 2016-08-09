@@ -1,11 +1,14 @@
 \chapter{Realised work}
 
+
+This chapter describes ...
+
 general procedure 
 
 <diagram flowchart>
 
 
-\section{First module : 3D map generation}
+\section{First module : image processing operations}
 
 
 \subsection{Procedure}
@@ -85,6 +88,20 @@ The axis we used to represent an image are illustrated on the \vref{fig:axis rep
 \subsection{Cellular Automata algorithm}
 
 \subsection{Morphology}
+
+
+
+\subsection{GUI}
+
+A Graphic User Interface has been developped during the project in order to see the results.... 
+
+
+
+
+
+
+
+\section{Second module : object recognition on 2D images}
 
 
 
@@ -257,16 +274,78 @@ bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
 
 
 
-\subsection{Classification}
-
-kmean > EM because show better results 
-but - quand même (choisir nb classes + random with gravity center initialisation)
 
 
-\subsection{GUI}
-
-A Graphic User Interface has been developped during the project in order to see the results.... 
 
 
-\section{Second module}
+
+
+\subsection{The database creation}
+
+The database purposes is to store the known tagged objects. It has been decided that those objects will be stores through their features. The database was created with Oracle Database, which contains only one table named "AnnotatedObjects". This table stores the information regarding the tagged objects, which is an id and the tagged object's features (as shown in the previous section).
+
+~~
+
+The \gls{DAO} pattern is used in order to facilitate the access to the database. The \gls{DAO} pattern allows to differentiate the data to be accessed, and the way they are stored. To do so, it separate the business object (in a bean package), how the data are recovered (in a dao package, i.e. the requests), and the storage system (in a session package). For each table in the database, there must be one bean class to store the values and one dao class to access it, nammed after the table's name. Moreover, as it is not necessary to have more than one instance of each dao classes per sessions, a factory pattern is used to store singleton instances of each created dao per session, and to return it when needed.
+
+%diagramme de classe à expliquer 
+~~
+
+
+The \vref{fig:diagram:class:database} displays the class diagram of the database package. An abstract Session class provides a general way of connecting to a database, regarding of the user's id, the database's url, and the \gls{DBMS} used (e.g. Oracle, MySQL). A general abstract DAO class also provide basis requests to be implemented. When a new table is added into the database, it is necessary to create a new bean class, a new dao class by extending the abstract class "DAO", and add a method in the factory in order to be able to access the new dao class.
+
+
+
+
+
+
+\begin{figure}[h]
+	\centering 
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_database}
+	\caption{Database package}
+	\label{fig:diagram:class:database}
+\end{figure}
+
+
+\subsection{The selected dataset}
+
+
+
+\subsection{Tagging}
+
+
+
+
+
+\subsection{Classification with K-means algorithm}
+
+Some definitions related to \gls{data analysis} and \gls{classification} area can be found in the glossary section. The K-means \gls{algorithm} is a non-hierarchical \gls{classification} \gls{algorithm} (i.e. during the \gls{classification}, no hierarchy between \glspl{individual} is used). For this project, it has been decided to implement the K-means \gls{algorithm} instead of the \gls{EM} because K-means shows better results. 
+
+~~ 
+
+The principle of K-means is the following (\cite{bib:clustering:AnalyseDesDonnees}). First, $n$ \glspl{individual} are chosen to be the initial gravity center of each \glspl{cluster} (where $n$ is the number of clusters). Then, each individual is affected (added) to the nearest \gls{cluster} by comparing the \gls{individual} and the \gls{cluster}'s gravity center, the \gls{cluster}'s gravity center is then  updated accordingly. The second step is repeated until the \gls{algorithm} converge (i.e. the iteration when no \gls{individual} changes \gls{cluster}). The gravity center of each \gls{cluster} is updated each time an \gls{individual} is added or removed of the \gls{cluster}.
+
+~~
+
+The \vref{fig:diagram:class:kmeans} shows the class diagram used to implement the K-means \gls{algorithm}. The class Individual contains a certain number of variables. The class Cluster gathers a list of individuals with the same number of variables. After performing the classification, the K-means \gls{algorithm} will return a list of $n$ Clusters. Moreover, an array "classes" in the KMeans class stores the \gls{cluster}'s number (between $[0;n[$) affected to each \gls{individual}.
+
+
+\begin{figure}[h]
+	\centering 
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_kmeans}
+	\caption{K-means class diagram}
+	\label{fig:diagram:class:kmeans}
+\end{figure}
+
+
+
+The K-means \gls{algorithm} has some defaults : 
+\begin{itemize}
+	\item it is necessary to know the number of clusters before the execution of the \gls{algorithm}
+	\item K-means can return different results for the same input (as it chooses random \glspl{individual} for initializing the \glspl{cluster})
+\end{itemize}
+
+
+
+
 

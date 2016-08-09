@@ -881,12 +881,29 @@
 % new entry style, display entries description in footnote at the first time (except accronym)
 % - /!\ do not remove the '%'
 \let\OLDglsentryfirst\glsentryfirst
+\let\OLDGlsentryfirst\Glsentryfirst
+\let\OLDglsentryfirstplural\glsentryfirstplural
+\let\OLDGlsentryfirstplural\Glsentryfirstplural
+
 \newacronymstyle{long-short-fn}{%
 	\GlsUseAcrEntryDispStyle{long-short}%
 }{%
 	\GlsUseAcrStyleDefs{long-short}%
+	%
 	\renewcommand*{\glsentryfirst}[1]{% \ifglshaslong check if accronym 
 		\OLDglsentryfirst{##1}\ifglshaslong{##1}{}{\footnote{ \glsentrydesc{##1}}}%
+	}%
+	%
+	\renewcommand*{\Glsentryfirst}[1]{% 
+		\OLDGlsentryfirst{##1}\ifglshaslong{##1}{}{\footnote{ \glsentrydesc{##1}}}%
+	}%
+	%
+	\renewcommand*{\glsentryfirstplural}[1]{% 
+		\OLDglsentryfirstplural{##1}\ifglshaslong{##1}{}{\footnote{ \glsentrydesc{##1}}}%
+	}%
+	%
+	\renewcommand*{\Glsentryfirstplural}[1]{% 
+		\OLDGlsentryfirstplural{##1}\ifglshaslong{##1}{}{\footnote{ \glsentrydesc{##1}}}%
 	}%
 }
 
