@@ -101,8 +101,8 @@ A Graphic User Interface has been developped during the project in order to see 
 
 
 
-\section{Second module : object recognition on 2D images}
 
+\section{Second module : object recognition on 2D images}
 
 
 
@@ -120,35 +120,42 @@ A feature is defined as something in the image that have a certain shape and edg
 
 \subsubsection{Freeman Chain Code and it's extraction}
 
+
 The Freeman Chain Code is a coding edge algorithm. It allows to represent a shape given in a bimary image (monochromatic) by it's edge. It's first purpose is to compress the data, as we pass from a binary image to a chain (or list) of code representing the shape of the edge \cite{bib:chain:ParametreGeometriqueChaineFreeman}. In other words, it's a data structure for representing the boundary of a feature \cite{bib:chain:DigitalImageProcessing}.
 
 ~~
 
 In order to extract the chain code of a shape in a binary image, it is necessary to start from on of the end edges. For this project, it has been decided to start from the most left upper edge point of the shape, i.e. there isn't any other edge point that is at the left of the starting point. In order to have this starting point, the image has been travelled from up to down, and then from left to right, as it is shown on the \vref{fig:chain code:course order}.
 
+
+%\begin{wrapfigure}{R}{0.5\textwidth}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/chain_code/course_order}
 	\caption{Course order of the binary image \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
 	\label{fig:chain code:course order}	
 \end{figure}
+%\end{wrapfigure}
+
+~~
+
+
 
 Once the starting point is determined, it is then possible to follow the boundary in the anticlockwise direction. Then, depending on the direction, a code is generated according to the following direction scheme illustrated with the \vref{fig:chain code:direction scheme star}, where the central point of the star represent the current boundary pixel. For example, if the next boundary pixel is on the top of the current one, the code 2 will be generated. 
 
 
+
+%\begin{wrapfigure}{R}{0.2\textwidth}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.2\textwidth]{images/chain_code/direction_scheme_star}
 	\caption{Direction scheme star \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
 	\label{fig:chain code:direction scheme star}	
 \end{figure}
+%\end{wrapfigure}
 
+Moreover, in order to support more complexe shapes, the pixel neibors of the current boundary pixel are travelled depending on the last generated code (i.e. on the last direction). In other words, the stating point of the star is changed depending on the last direction. The first pixel neibor that should be visited must be the previous pixel boundary (i.e. the origin of the direction used to get on the current pixel). For example, the chain code "6011445" can be produced with the shape given on the \vref{fig:chain code:course order}. The \vref{fig:chain code:example} explains the procedure. 
 
-Moreover, in order to support more complexe shapes, the pixel neibors of the current boundary pixel are travelled depending on the last generated code (i.e. on the last direction). In other words, the stating point of the star is changed depending on the last direction. The first pixel neibor that should be visited must be the previous pixel boundary (i.e. the origin of the direction used to get on the current pixel). 
-
-~~
-
-For example, the chain code "6011445" can be produced with the shape given on the \vref{fig:chain code:course order}. The \vref{fig:chain code:example} explains the procedure. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/chain_code/example}
@@ -318,7 +325,24 @@ In order to save the annotated objects from the xml files to the database, a xml
 % création d'un parseur xml pour extraire les données
 
 
-\subsection{Tagging}
+\subsection{The tagging algorithm}
+
+An object to be tagged is compared to others objects that has already been tagged, which are the tagged objects stored in the database. The object to be tagged will then take the tag of the nearest tagged object. Two objects are compared by comparing their features in a predefined order. If the first features of the objects are equals, the second features will be compared, and so on. Two objects are considered equals only if all of their features are equals (to two decimals). 
+
+~~
+
+In order to implement this algorithm, the Feature class has been made comparable, and a comparator for each attributes (i.e. the features of the object, the width, the compactness, etc.) has been created. A general comparator is used in order to compare the features in a global manner, it is in this general comparator that the features comparing order is defined. 
+
+~~
+
+As the tagged objects list could be large, instead of crossing the list completely, a "quick sort like" research algorithm is used. For this algorithm to work, it is necessary to sort the list of the tagged objects, which is done with the sql request by ordering every fields (i.e. columns of the table) in ascending order. The algorithm define a pivot (i.e. the middle of the list boundaries), and compare the pivot with the object to be tagged. Depending on the result of the comparison, the nearest tagged object is either before the pivot, or after. The list boundaries are then changed, the pivot is updated, and compared again with the object to be tagged until the boundaries are incorrects. This will give an estimation of the nearest tagged object position, the nearest object will be between the tagged objects before and after the pivot. To get the nearest tagged object, no more than three tagged objects are to be compared with the untagged object. 
+
+% 
+
+
+
+
+
 
 % comparer chaque champs un par un 
 % donner l'ordre des champs 
@@ -357,7 +381,7 @@ The \vref{fig:diagram:class:kmeans} shows the class diagram used to implement th
 	\label{fig:diagram:class:kmeans}
 \end{figure}
 
-
+~~
 
 The K-means \gls{algorithm} has some defaults : 
 \begin{itemize}
