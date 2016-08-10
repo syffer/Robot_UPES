@@ -295,24 +295,44 @@ The \gls{DAO} pattern is used in order to facilitate the access to the database.
 The \vref{fig:diagram:class:database} displays the class diagram of the database package. An abstract Session class provides a general way of connecting to a database, regarding of the user's id, the database's url, and the \gls{DBMS} used (e.g. Oracle, MySQL). A general abstract DAO class also provide basis requests to be implemented. When a new table is added into the database, it is necessary to create a new bean class, a new dao class by extending the abstract class "DAO", and add a method in the factory in order to be able to access the new dao class.
 
 
-
-
-
-
 \begin{figure}[h]
 	\centering 
 	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_database}
-	\caption{Database package}
+	\caption{Database package class diagram}
 	\label{fig:diagram:class:database}
 \end{figure}
 
 
 \subsection{The selected dataset}
 
+Multiple dataset can be found on the Internet, for example the \href{http://groups.csail.mit.edu/vision/SUN/}{SUN database}, the \href{http://cbcl.mit.edu/software-datasets/streetscenes/}{StreetScenes framework}, the \href{http://host.robots.ox.ac.uk/pascal/VOC/voc2007/index.html}{PASCAL Visual Object Classes} and the \href{http://labelme2.csail.mit.edu/Release3.0/browserTools/php/dataset.php}{LabelMe dataset}. For this project, it has been chosen to use the last one, the LabelMe dataset, has it seems to be the most suited to the project needs. LabelMe was created by the MIT Computer Science and Artificial Intelligence Laboratory, it's goal is to provide an online annotation tool in order to build image databases for computer vision research. An application was released on the 10$^{th}$ of December 2012 for iPhone and iPad \cite{bib:labelme}.
+
+~~
+
+LabelMe represents the extracted objects in the form of polygons, stored in a xml file. Each annotated images in associated to one xml file, which contains every annotated objects present in that image. For retrieving the dataset (i.e. the images and their annotations), LabelMe provide a Matlab toolbox, which allow to customize to portion of the database the user want to access (i.e. by giving the folders, tags, etc.). As describes in the LabelMe documentation, it is possible to access the dataset either by downloading all the interested images locally and then explore the dataset, or access the dataset online and exlore it before downloading what is necessary. The first method is advised by LabelMe authors, but seems to bug during the downloading of the dataset. The second method was used, Matlab scrips were written in order to specify the folders to explore, which tagged object to recover (by giving the tag), and the local folder were the annotations should be saved.
+
+~~
+
+In order to save the annotated objects from the xml files to the database, a xml parser is used to travel the xml files and get each annotated object through his tag and the polygon. Then the features of the polygon are extracted with the same methods as the chain code, and are stored into the database by using the dao. As for parsing the xml files, the \acrshort{SAX} is used. 
+
+% création d'un parseur xml pour extraire les données
 
 
 \subsection{Tagging}
 
+% comparer chaque champs un par un 
+% donner l'ordre des champs 
+
+% ordre de préférence (d'abord lui, puis lui, puis lui...)
+% utilisation de comparator pour pouvoir comparer les obj via leurs features
+% - un comparator par featur 
+% - un comparator global utilisant les autres comparator dans un ordre spécific
+
+% récupération des obj annoté de la db via dao
+% trouver l'obj annoté le plus proche de l'objet à annoter
+% - ordoner les obj annoté du plus petit au plus grand via l'instruction 'order by' de la requete sql
+% - utilisation du quicksort pour obtenir un interval dans lequel l'obj le plus proche se trouve
+% - comparer les trois derniers objets (les obj annoté de l'interval), lequel est vraiment le plus proche de l'obj à annoter
 
 
 
