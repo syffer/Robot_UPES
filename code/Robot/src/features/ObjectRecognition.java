@@ -54,6 +54,7 @@ public class ObjectRecognition {
 			else return other;
 		}
 		
+		difference = Math.abs(difference);
 		for(int i : Arrays.asList(middle-1, middle+1)) {
 			if(i < 0 || i >= others.size()) continue;
 			
