@@ -128,31 +128,32 @@ The Freeman Chain Code is a coding edge algorithm. It allows to represent a shap
 In order to extract the chain code of a shape in a binary image, it is necessary to start from on of the end edges. For this project, it has been decided to start from the most left upper edge point of the shape, i.e. there isn't any other edge point that is at the left of the starting point. In order to have this starting point, the image has been travelled from up to down, and then from left to right, as it is shown on the \vref{fig:chain code:course order}.
 
 
-%\begin{wrapfigure}{R}{0.5\textwidth}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{images/chain_code/course_order}
-	\caption{Course order of the binary image \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
-	\label{fig:chain code:course order}	
-\end{figure}
-%\end{wrapfigure}
-
 ~~
-
 
 
 Once the starting point is determined, it is then possible to follow the boundary in the anticlockwise direction. Then, depending on the direction, a code is generated according to the following direction scheme illustrated with the \vref{fig:chain code:direction scheme star}, where the central point of the star represent the current boundary pixel. For example, if the next boundary pixel is on the top of the current one, the code 2 will be generated. 
 
 
-
-%\begin{wrapfigure}{R}{0.2\textwidth}
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=0.2\textwidth]{images/chain_code/direction_scheme_star}
-	\caption{Direction scheme star \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
-	\label{fig:chain code:direction scheme star}	
+	
+  	\begin{subfigure}[b]{0.5\textwidth}
+    		\includegraphics[width=\textwidth]{images/chain_code/course_order}
+			\caption{Course order of the binary image \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
+			\label{fig:chain code:course order}	
+  	\end{subfigure}
+  	\begin{subfigure}[b]{0.4\textwidth}
+  			\centering
+    		\includegraphics[width=0.5\textwidth]{images/chain_code/direction_scheme_star}
+    		\caption{Direction scheme star \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
+	\label{fig:chain code:direction scheme star}
+  	\end{subfigure}
+	
+	\caption{Course order and direction scheme star}
 \end{figure}
-%\end{wrapfigure}
+
+
+
 
 Moreover, in order to support more complexe shapes, the pixel neibors of the current boundary pixel are travelled depending on the last generated code (i.e. on the last direction). In other words, the stating point of the star is changed depending on the last direction. The first pixel neibor that should be visited must be the previous pixel boundary (i.e. the origin of the direction used to get on the current pixel). For example, the chain code "6011445" can be produced with the shape given on the \vref{fig:chain code:course order}. The \vref{fig:chain code:example} explains the procedure. 
 
@@ -279,6 +280,12 @@ bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
 \subsubsection{Modelisation}
 
 
+\begin{figure}[h]
+	\centering 
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_objects}
+	\caption{..... class diagram}
+	\label{fig:diagram:class:objects}
+\end{figure}
 
 
 
