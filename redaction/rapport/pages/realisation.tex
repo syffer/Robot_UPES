@@ -85,9 +85,27 @@ The axis we used to represent an image are illustrated on the \vref{fig:axis rep
 
 \subsection{Filters}
 
+
+
+
 \subsection{Cellular Automata algorithm}
 
+The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduction algorithms based on cellular automata. For this project, it has been decided to implement the second version of the algorithm. A cellular automaton concists of a large number of simple individuals, called cells, which have a state (e.g. "on" and "off"). During one iteration, each cell updates its state depending on its own state and on the state of the neighbor cells. Two types od neighborhooh exists : the 4-connexity (Von Neumann) and the 8-connexity (Moore) neighborhood. For this algorithm, it is the Moor neighborhood that is used. In the case of the second algorithm, each pixel will be updated by taking the average value of his 8-connexity neighborhood (him included), except the minimum and the maximum values. The \vref{fig:diagram:flowchart:CAII} explains the procedure with a flowchart.
+
+
+%\begin{wrapfigure}{R}{0.4\textwidth}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.4\textwidth]{images/diagrams/flowchart_CAII}
+	\caption{CA II flowchart \cite{bib:filter:CA}}
+	\label{fig:diagram:flowchart:CAII}
+\end{figure}
+%\end{wrapfigure}
+
+
+
 \subsection{Morphology}
+
 
 
 
@@ -138,15 +156,15 @@ Once the starting point is determined, it is then possible to follow the boundar
 	\centering
 	
   	\begin{subfigure}[b]{0.5\textwidth}
-    		\includegraphics[width=\textwidth]{images/chain_code/course_order}
-			\caption{Course order of the binary image \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
-			\label{fig:chain code:course order}	
+    	\includegraphics[width=\textwidth]{images/chain_code/course_order}
+		\caption{Course order of the binary image \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
+		\label{fig:chain code:course order}	
   	\end{subfigure}
   	\begin{subfigure}[b]{0.4\textwidth}
-  			\centering
-    		\includegraphics[width=0.5\textwidth]{images/chain_code/direction_scheme_star}
-    		\caption{Direction scheme star \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
-	\label{fig:chain code:direction scheme star}
+  		\centering
+    	\includegraphics[width=0.5\textwidth]{images/chain_code/direction_scheme_star}
+    	\caption{Direction scheme star \cite{bib:chain:ParametreGeometriqueChaineFreeman}}
+		\label{fig:chain code:direction scheme star}
   	\end{subfigure}
 	
 	\caption{Course order and direction scheme star}
@@ -280,10 +298,13 @@ bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
 \subsubsection{Modelisation}
 
 
+The \vref{fig:diagram:class:objects} illustrates the class dagram of the object package. This packages gathers every classes related to the object recognition, that is the chain code, the features, and the objects (tagged or not). A chain code is represented by the ChainCode class, and stores the codes in a list. The SomeObject abstract class represents an object that can be tagged, and posessing some features. The PositionnedObject corresponds to an object extracted from the image, it has a certain position along with a chain code. The Feature class regroups every features an object can have (e.g. width, compactness, etc.). The AnnotatedObjectBean class and the use of the Comparator's interfaces are explained in the following sections. 
+
+
 \begin{figure}[h]
 	\centering 
 	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_objects}
-	\caption{..... class diagram}
+	\caption{Object package class diagram}
 	\label{fig:diagram:class:objects}
 \end{figure}
 
@@ -362,7 +383,7 @@ public AnnotatedObjectBean getNearestAnnotated(SomeObject object, List<Annotated
 	
 	difference @$\leftarrow |$@difference@$|$@  // absolute value to get the nearest
 	for (i in [pivot-1, pivot+1]) {
-		if(i < 0 || i >= others.size()) continue
+		if (i < 0 || i >= others.size()) continue
 		
 		AnnotatedObjectBean other @$\leftarrow$@ others.get(i)
 		diff = @$|$@object.compareTo(other)@$|$@
