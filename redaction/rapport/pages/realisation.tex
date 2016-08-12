@@ -94,6 +94,28 @@ The transform package regroups every operations that create a new image from ano
 A \gls{GUI} has been developped during the project in order to see the results of each transformations. The \gls{MVC} pattern is used to create the \gls{GUI}, it is an architectural pattern that separates an application into three parts : the model that contains the data and the logistics of the application, the view that gives a presentation of the model, and the controller who accepts user inputs and links the two previous parts. An example of the \gls{GUI} is shown with the \vref{fig:gui:application}.
 
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/application/application}
+	\caption{Application GUI example}
+	\label{fig:gui:application}
+\end{figure}
+
+
+The simplified class diagram of the gui package is shown on the \vref{fig:diagram:class:gui}, some methods aren't displayed and other classes that doesn't belong to the gui package are in order to make the diagram clearer. Each part of the \gls{MVC} pattern is grouped in its own subpackage (the view package regroups the classes belonging to the view part, etc.). 
+
+~~
+
+The View class represents the interface visible by users, and has multiple attributes, like buttons, allowing users to interract with the application. The InternalView represents an internal window in the \gls{GUI}, that can be moved by users. Each InternalView is associated with one InternalModel, and one InternalController. The ImageView represents an image, loaded or transformed, that is displayed in an internal window in the \gls{GUI}. Users are able to transform an image by selecting the appropriate internal window (ImageView), and clicking on the button associated to the desired transformation. 
+
+
+The GeneralController creates and links the view and the model parts. His other job is to get back the user interractions with the application. To do that, classes extending the AbstractAction are created, and affected on the view buttons. The ActionTransformation class represents an action that will apply a transformation on the selected image, using a Transformation subclass given during the initialization. Others actions exists, like ActionSave, and ActionClose. When the user clic on a button, the associated action is applyied (e.g. a transformation, a loading, etc.), and a subclass of the InternalController is created, which will create the appropriate InternalModel and InternalView subclasses.
+
+~~
+
+Images are stored in the ImageModel classes. The GeneralModel keeps in memory which of the opened image model is selected by the user. Moreover, the GeneralModel is made Observable in order to notify others classes when the user changes his selection. The actions classes implement the Observer interface, and listen to the GeneralModel. When the GeneralModel notifies its observers, the actions classes update themselves, and activate depending on the new selection of the user. 
+
+
 
 \begin{figure}[ht]
 	\centering
@@ -102,12 +124,7 @@ A \gls{GUI} has been developped during the project in order to see the results o
 	\label{fig:diagram:class:gui}
 \end{figure}
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.75\textwidth]{images/application/application}
-	\caption{Application GUI example}
-	\label{fig:gui:application}
-\end{figure}
+
 
 
 
