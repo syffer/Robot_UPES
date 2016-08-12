@@ -51,12 +51,10 @@ mono_{threshold}(greyValue) =
 
 ~~
 
-The \vref{fig:diagram:class:image} shows the class diagram that was used. The visitor pattern was also used in order to facilitate the implementation of new processes (or algorithms) on a data structure without changing it. It does so by separating the algorithm and the data structure from each other. A new process (or algorithm) could be added by extending the VisitorImage class and implementing the apply method for each image subclasses \cite{bib:pattern:Visitor}. 
+The \vref{fig:diagram:class:image} shows the class diagram that was used. The visitor pattern was also used in order to facilitate the implementation of new processes (or algorithms) on a data structure without changing it. It does so by separating the algorithm and the data structure from each other  \cite{bib:pattern:Visitor}. A new process (or algorithm) could be added by extending the VisitorImage class.
+% and implementing the apply method for each image subclasses 
 
-% + cours 
-% + book
-
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering 
 	\includegraphics[width=0.75\textwidth]{images/diagrams/class_diagram_image}
 	\caption{Image package class diagram}
@@ -68,7 +66,17 @@ The \vref{fig:diagram:class:image} shows the class diagram that was used. The vi
 \subsection{Modelisation of the transformations}
 
 
-The \vref{fig:diagram:class:transform} shows the class diagram of the transform package. In order to make the reading easier, this diagram has been simplified (e.g. "visit()" methods of concrete classes have been removed), and the Image and VisitorImage classes hab been added (which do not belong to the transform package). The transform package regroups every operations that create a new image from another. As a transformation can be different depending on the type of the image (e.g. RGB, grey, etc.), the visitor pattern is used. The abstract class Transformation represents a transformation applyied on an image, and returning a new image. It extends from the VisitorImage and provide a way to get back the new image from the visitor pattern. All of the transformations must heritate from the Transformation class. Moreover, differents subpackages are used in order to seperate transformations by type : 
+The \vref{fig:diagram:class:transform} shows the class diagram of the transform package. In order to make the reading easier, this diagram has been simplified (e.g. "visit()" methods of concrete classes have been removed), and the Image and VisitorImage classes hab been added (which do not belong to the transform package). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_transform}
+	\caption{Transform package class diagram}
+	\label{fig:diagram:class:transform}
+\end{figure}
+
+
+The transform package regroups every operations that create a new image from another. As a transformation can be different depending on the type of the image (e.g. RGB, grey, etc.), the visitor pattern is used. The abstract class Transformation represents a transformation applyied on an image, and returning a new image. It extends from the VisitorImage and provide a way to get back the new image from the visitor pattern. All of the transformations must heritate from the Transformation class. Moreover, differents subpackages are used in order to seperate transformations by type : 
 \begin{description}
 	\item[morphology] contains the operations that changes the shape of the images (e.g. grey scale, erosion)
 	\item[filter] groups the transformations that uses filters, whether it is an edge detection filter or a noise removal filter (e.g. the median filter, the canny filter)
@@ -78,23 +86,23 @@ The \vref{fig:diagram:class:transform} shows the class diagram of the transform 
 
 
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_transform}
-	\caption{Transform package class diagram}
-	\label{fig:diagram:class:transform}
-\end{figure}
+
 
 
 \subsection{GUI}
 
-A \gls{GUI} has been developped during the project in order to see the results of each transformations. The \gls{MVC} is used to create the \gls{GUI}, it is an architectural pattern that separates an application into three parts : the model that contains the data and the logistics of the application, the view that gives a presentation of the model, and the controller who accepts user inputs and links the two previous parts. 
+A \gls{GUI} has been developped during the project in order to see the results of each transformations. The \gls{MVC} pattern is used to create the \gls{GUI}, it is an architectural pattern that separates an application into three parts : the model that contains the data and the logistics of the application, the view that gives a presentation of the model, and the controller who accepts user inputs and links the two previous parts. An example of the \gls{GUI} is shown with the \vref{fig:gui:application}.
 
 
 
-An example of the \gls{GUI} is shown with the \vref{fig:gui:application}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_gui}
+	\caption{GUI package class diagram}
+	\label{fig:diagram:class:gui}
+\end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.75\textwidth]{images/application/application}
 	\caption{Application GUI example}
@@ -137,7 +145,7 @@ In order to extract the chain code of a shape in a binary image, it is necessary
 Once the starting point is determined, it is then possible to follow the boundary in the anticlockwise direction. Then, depending on the direction, a code is generated according to the following direction scheme illustrated with the \vref{fig:chain code:direction scheme star}, where the central point of the star represent the current boundary pixel. For example, if the next boundary pixel is on the top of the current one, the code 2 will be generated. 
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	
   	\begin{subfigure}[b]{0.5\textwidth}
@@ -184,7 +192,7 @@ d_i = code_i - code_{(i-1) \bmod N} \bmod 8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\caption{Example of a differential chain code}
 	\label{tab:chain code:differential chain code}
@@ -220,10 +228,17 @@ After extracting the chain code from a shape, it is then possible to extracts fe
 ~~ 
 
 The perimeter can be calculated using the following \vref{eq:feature extraction:perimeter}. $n_e$ represents the number of even chain elements (i.e. code), and $n_o$ the number of odd chain elements \cite{bib:chain:EstimateAreasAndPerimetersChainCode}. Others equations improve the perimeter length estimation, like the \vref{eq:feature extraction:kulpa} given by Kulpa which is used in this project \cite{bib:chain:ObjectDescription}.
-\begin{align} 
-P &= n_e + \sqrt{2}*n_o \label{eq:feature extraction:perimeter} \\
-P_K &= \frac{\pi}{8} * (1 + \sqrt{2}) * P \label{eq:feature extraction:kulpa}
-\end{align}
+
+\noindent\begin{tabularx}{\textwidth}{@{}XX@{}}
+	\begin{equation} \label{eq:feature extraction:perimeter}
+		P = n_e + \sqrt{2}*n_o 
+	\end{equation} & 
+	\begin{equation} \label{eq:feature extraction:kulpa}
+		P_K = \frac{\pi}{8} * (1 + \sqrt{2}) * P 
+	\end{equation}
+\end{tabularx}
+
+
 % http://www.mva-org.jp/Proceedings/CommemorativeDVD/1994/papers/1994272.pdf 
 % https://www.uio.no/studier/emner/matnat/ifi/INF4300/h15/undervisningsmateriale/inf4300-2015-f06-description.pdf 
 
@@ -250,34 +265,38 @@ height &= \sum_{i = 1}^{N} h_i
 
 ~~
 
-The compactness is calculated with the following \vref{eq:feature extraction:compactness}. It is invariant to translation, rotation and scale  \cite{bib:chain:RepresentationAndDescription}.
-\begin{equation} \label{eq:feature extraction:compactness}
-compactness = \frac{perimeter^2}{area}
-\end{equation}
+The compactness is calculated with the following \vref{eq:feature extraction:compactness}. It is invariant to translation, rotation and scale  \cite{bib:chain:RepresentationAndDescription}. The circularity ratio is given by the \vref{eq:feature extraction:circularity}. It is equal to 1 when the shape is a perfect continuous circle and between 0 and 1 for other shapes \cite{bib:chain:ObjectDescription}.
 
-~~
 
-The circularity ratio is given by the \vref{eq:feature extraction:circularity}. It is equal to 1 when the shape is a perfect continuous circle and between 0 and 1 for other shapes \cite{bib:chain:ObjectDescription}.
-\begin{equation} \label{eq:feature extraction:circularity}
-circularity = \frac{4 * \pi * area}{perimeter^2}
-\end{equation}
+\noindent\begin{tabularx}{\textwidth}{@{}XX@{}}
+	\begin{equation} \label{eq:feature extraction:compactness}
+		compactness = \frac{perimeter^2}{area}
+	\end{equation} & 
+	\begin{equation} \label{eq:feature extraction:circularity}
+		circularity = \frac{4 * \pi * area}{perimeter^2}
+	\end{equation}
+\end{tabularx}
 
 ~~ 
 
-The curvature is the change of rate of slope \cite{bib:chain:ObjectDescription}, in other words it is the ratio between the number of direction changes and the total number of boundary pixels. It can be obtained by summing the elements of the shape differencial chain code  \cite{bib:chain:ShapeRepresentationDescription}. In the following equation, $N$ represents the number of the chain code elements, and $diffCode_i$ represents the i$^{th}$ element of the differential chain code. 
-\begin{equation}
-curvature = \sum_{i = 0}^{N} \text{diffCode}_i
-\end{equation}
+The curvature is the change of rate of slope \cite{bib:chain:ObjectDescription}, in other words it is the ratio between the number of direction changes and the total number of boundary pixels. It can be obtained by summing the elements of the shape differencial chain code  \cite{bib:chain:ShapeRepresentationDescription}. In the following equation, $N$ represents the number of the chain code elements, and $diffCode_i$ represents the i$^{th}$ element of the differential chain code. The bending energy is calculated by integrating the squared curvature along the entire contour of the shape \cite{bib:chain:ShapeRepresentationDescription}, as shown on the \vref{eq:feature extraction:bending energy}. According to \cite{bib:chain:ShapeDescriptionLesson}, it is a good feature for shape matching. 
 
-% http://www.cb.uu.se/~ingela/Teaching/ImageAnalysis/Shape2002.pdf 
-% bib:chain:ShapeRepresentationDescription 
+\noindent\begin{tabularx}{\textwidth}{@{}XX@{}}
+	\begin{equation}
+		curvature = \sum_{i = 0}^{N} \text{diffCode}_i
+	\end{equation} & 
+	\begin{equation} \label{eq:feature extraction:bending energy}
+		bendingEn = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
+	\end{equation}
+\end{tabularx}
 
-~~
+% pour curvature : 
+% - http://www.cb.uu.se/~ingela/Teaching/ImageAnalysis/Shape2002.pdf 
+% - bib:chain:ShapeRepresentationDescription 
 
-The bending energy is calculated by integrating the squared curvature along the entire contour of the shape \cite{bib:chain:ShapeRepresentationDescription}. According to \cite{bib:chain:ShapeDescriptionLesson}, it is a good feature for shape matching. 
-\begin{equation}
-bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
-\end{equation}
+
+
+
 
 
 \subsubsection{Modelisation}
@@ -286,7 +305,7 @@ bendingEnergy = \frac{1}{N} \sum_{i = 0}^{N} (\text{diffCode}_i)^{2}
 The \vref{fig:diagram:class:objects} illustrates the class dagram of the object package. This packages gathers every classes related to the object recognition, that is the chain code, the features, and the objects (tagged or not). A chain code is represented by the ChainCode class, and stores the codes in a list. The SomeObject abstract class represents an object that can be tagged, and posessing some features. The PositionnedObject corresponds to an object extracted from the image, it has a certain position along with a chain code. The Feature class regroups every features an object can have (e.g. width, compactness, etc.). The AnnotatedObjectBean class and the use of the Comparator's interfaces are explained in the following sections. 
 
 
-\begin{figure}[h]
+\begin{figure}[hb]
 	\centering 
 	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_objects}
 	\caption{Object package class diagram}
@@ -315,7 +334,7 @@ The \gls{DAO} pattern is used in order to facilitate the access to the database.
 The \vref{fig:diagram:class:database} displays the class diagram of the database package. An abstract Session class provides a general way of connecting to a database, regarding of the user's id, the database's url, and the \gls{DBMS} used (e.g. Oracle, MySQL). A general abstract DAO class also provide basis requests to be implemented. When a new table is added into the database, it is necessary to create a new bean class, a new dao class by extending the abstract class "DAO", and add a method in the factory in order to be able to access the new dao class.
 
 
-\begin{figure}[h]
+\begin{figure}[hb]
 	\centering 
 	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_database}
 	\caption{Database package class diagram}
