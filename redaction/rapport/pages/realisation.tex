@@ -1,21 +1,10 @@
 \chapter{Realised work}
 
 
-This chapter describes ...
-
-general procedure 
-
-<diagram flowchart>
+This chapter describes how each part of the project hab been realised. It will present the first module with the image modelisation, the transformations implementation, and the \gls{GUI} realisation. Then the second module will be explained with the chain code, the database creation, and the tagging algorithm.
 
 
 \section{First module : image processing operations}
-
-
-\subsection{Procedure}
-
-=> est une introduction 
-
-<diagram flowchart>
 
 
 \subsection{Images}
@@ -30,7 +19,17 @@ An image is represented by a width, an heigth, colors (stocked in pixel values, 
 
 ~~
 
-This project is dealing with three types of images : RGB, Grey and Monochromatic images. A grey image is an image where the pixels are represented in a grey scale by only one value, the grey value (which can have any integer values between 0 and 255 included). In other words, there is 256 possible colors in a grey images, which are all shade of grey. In a monochromatic image, only two colors are represented, black (with the value 0) and white (with the value 255).
+%\begin{figure}[h]
+\begin{wrapfigure}{R}{0.3\textwidth}
+	\centering
+	\includegraphics[width=0.3\textwidth]{images/axis/axis_representation}
+	\caption{Axis representation}
+	\label{fig:axis representation}
+%\end{figure}
+\end{wrapfigure}
+
+
+This project is dealing with three types of images : RGB, Grey and Monochromatic images. A grey image is an image where the pixels are represented in a grey scale by only one value, the grey value (which can have any integer values between 0 and 255 included). In other words, there is 256 possible colors in a grey images, which are all shade of grey. In a monochromatic image, only two colors are represented, black (with the value 0) and white (with the value 255). The axis we used to represent an image are illustrated on the \vref{fig:axis representation}. 
 
 ~~
 
@@ -50,71 +49,57 @@ mono_{threshold}(greyValue) =
 \end{equation}
 
 
-%We choosed to represent the grey and monochromatic image by a one matrix. 
-%.... 
-%<changer RGB image> 
-%~~
-
-\begin{figure}
-	\centering 
-	\includegraphics[width=0.75\textwidth]{images/diagrams/class_diagram_image}
-	\caption{Image package class diagram}
-	\label{fig:diagram:class:image}
-\end{figure}
+~~
 
 The \vref{fig:diagram:class:image} shows the class diagram that was used. The visitor pattern was also used in order to facilitate the implementation of new processes (or algorithms) on a data structure without changing it. It does so by separating the algorithm and the data structure from each other. A new process (or algorithm) could be added by extending the VisitorImage class and implementing the apply method for each image subclasses \cite{bib:pattern:Visitor}. 
 
 % + cours 
 % + book
 
-~~
+\begin{figure}[h]
+	\centering 
+	\includegraphics[width=0.75\textwidth]{images/diagrams/class_diagram_image}
+	\caption{Image package class diagram}
+	\label{fig:diagram:class:image}
+\end{figure}
 
-The axis we used to represent an image are illustrated on the \vref{fig:axis representation}. 
+
+
+\subsection{Modelisation of the transformations}
+
+
+The \vref{fig:diagram:class:transform} shows the class diagram of the transform package. In order to make the reading easier, this diagram has been simplified (e.g. "visit()" methods of concrete classes have been removed), and the Image and VisitorImage classes hab been added (which do not belong to the transform package). The transform package regroups every operations that create a new image from another. As a transformation can be different depending on the type of the image (e.g. RGB, grey, etc.), the visitor pattern is used. The abstract class Transformation represents a transformation applyied on an image, and returning a new image. It extends from the VisitorImage and provide a way to get back the new image from the visitor pattern. All of the transformations must heritate from the Transformation class. Moreover, differents subpackages are used in order to seperate transformations by type : 
+\begin{description}
+	\item[morphology] contains the operations that changes the shape of the images (e.g. grey scale, erosion)
+	\item[filter] groups the transformations that uses filters, whether it is an edge detection filter or a noise removal filter (e.g. the median filter, the canny filter)
+	\item[cellularAutomata] huddles the operations using cellular automata shown in the paper \cite{bib:filter:CA}. For the moment, only the second version of the presented algorithms is implemented
+	\item[symbolic] gathers the algorithms invloving symbolic computing
+\end{description}
+
+
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/axis/axis_representation}
-	\caption{Axis representation}
-	\label{fig:axis representation}
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_transform}
+	\caption{Transform package class diagram}
+	\label{fig:diagram:class:transform}
 \end{figure}
-
-
-
-
-
-
-\subsection{Filters}
-
-
-
-
-\subsection{Cellular Automata algorithm}
-
-The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduction algorithms based on cellular automata. For this project, it has been decided to implement the second version of the algorithm. A cellular automaton concists of a large number of simple individuals, called cells, which have a state (e.g. "on" and "off"). During one iteration, each cell updates its state depending on its own state and on the state of the neighbor cells. Two types od neighborhooh exists : the 4-connexity (Von Neumann) and the 8-connexity (Moore) neighborhood. For this algorithm, it is the Moor neighborhood that is used. In the case of the second algorithm, each pixel will be updated by taking the average value of his 8-connexity neighborhood (him included), except the minimum and the maximum values. The \vref{fig:diagram:flowchart:CAII} explains the procedure with a flowchart.
-
-
-%\begin{wrapfigure}{R}{0.4\textwidth}
-\begin{figure}
-	\centering
-	\includegraphics[width=0.4\textwidth]{images/diagrams/flowchart_CAII}
-	\caption{CA II flowchart \cite{bib:filter:CA}}
-	\label{fig:diagram:flowchart:CAII}
-\end{figure}
-%\end{wrapfigure}
-
-
-
-\subsection{Morphology}
-
-
 
 
 \subsection{GUI}
 
-A Graphic User Interface has been developped during the project in order to see the results.... 
+A \gls{GUI} has been developped during the project in order to see the results of each transformations. The \gls{MVC} is used to create the \gls{GUI}, it is an architectural pattern that separates an application into three parts : the model that contains the data and the logistics of the application, the view that gives a presentation of the model, and the controller who accepts user inputs and links the two previous parts. 
 
 
 
+An example of the \gls{GUI} is shown with the \vref{fig:gui:application}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\textwidth]{images/application/application}
+	\caption{Application GUI example}
+	\label{fig:gui:application}
+\end{figure}
 
 
 
