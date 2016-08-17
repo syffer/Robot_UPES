@@ -31,8 +31,11 @@
 
 
 \printbibliography 
-\listoffigures 
-\listoftables 
+\listoffigures
+\begingroup		% lof lot on same page 
+\let\clearpage\relax
+\listoftables
+\endgroup
 %\listoflistings
 \printglossary 
 
