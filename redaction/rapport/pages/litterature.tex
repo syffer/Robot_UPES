@@ -1,5 +1,6 @@
 \chapter{Litterature}
 
+This chapter presents different concepts used in this project. Images are introduced, then concepts of edge detection and noise removal are explained. Finally the Freeman chain codes are described. 
 
 \section{Images}
 
@@ -113,6 +114,7 @@ Edge detection regroups differents mathematical methods, where the goal is to id
 
 %The Sobel operator can be obtain by using a convolution between each pixel of the images and the 
 
+~~ 
 
 The Sobel operator calculates the gradiant of each pixel on the image. It is done by applying a convolution on the image with the two masks given on \vref{tab:edge detection:sobel:x,tab:edge detection:sobel:y}, which are filters that estimates the gradiant in the horizontal and vertical direction  \cite{bib:filter:sobelRuby}. $G_x$ will be the result of the convolution between the image and the $x$ axis filter (same for $G_y$ but with the $y$ axis filter). The gradiant of the resulting image can then be obtain by applying the \vref{eq:edge detection:gradiant}. The Canny operator works in the same way as the Sobel operator. Moreover, the \vref{eq:edge detection:gradiant} can be simplified as the \vref{eq:edge detection:gradiant:simplified} using the manhattan distance \cite{bib:filter:canny}. The first equation will be used for sobel, and the second for canny. 
 
@@ -129,13 +131,22 @@ The Sobel operator calculates the gradiant of each pixel on the image. It is don
 
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{wrapfigure}{R}{0.35\textwidth}
+%\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.35\textwidth]{images/diagrams/flowchart_CAII}
+	\caption{CA II flowchart \cite{bib:filter:CA}}
+	\label{fig:diagram:flowchart:CAII}
+%\end{figure}
+\end{wrapfigure}
+
+
 \section{Noise removal}
 
 
-% \cite{bib:noise:wikipedia} 
-
-% median filter 
-% weighted average filter 
+Noise removal, or noise reduction, is the process of removing noise from a signal, like an image. Noise can be introduced in an image during the capture of that image, which mean that some pixels don't have the right values \cite{bib:noise:wikipedia}. Multiple techniques exist in order to remove this noise, like the gaussian blur or the weighted average filter. For example, the median filter is one of them, where the new value of each pixel will be the median value of the pixel neighborhood (in 8-connexity) \cite{bib:noise:ImageFiltering}.
 
 
 \section{Cellular Automata algorithm}
@@ -143,14 +154,7 @@ The Sobel operator calculates the gradiant of each pixel on the image. It is don
 The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduction algorithms based on cellular automata. For this project, it has been decided to implement the second version of the algorithm. A cellular automaton concists of a large number of simple individuals, called cells, which have a state (e.g. "on" and "off"). During one iteration, each cell updates its state depending on its own state and on the state of the neighbor cells. Two types od neighborhooh exists : the 4-connexity (Von Neumann) and the 8-connexity (Moore) neighborhood. For this algorithm, it is the Moor neighborhood that is used. In the case of the second algorithm, each pixel will be updated by taking the average value of his 8-connexity neighborhood (him included), except the minimum and the maximum values. The \vref{fig:diagram:flowchart:CAII} explains the procedure with a flowchart.
 
 
-%\begin{wrapfigure}{R}{0.4\textwidth}
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.4\textwidth]{images/diagrams/flowchart_CAII}
-	\caption{CA II flowchart \cite{bib:filter:CA}}
-	\label{fig:diagram:flowchart:CAII}
-\end{figure}
-%\end{wrapfigure}
+
 
 
 
@@ -161,7 +165,7 @@ The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduc
 \section{CLAP}
 
 
-\cite{bib:filter:EdgeWithCLAP}
+\gls{CLAP} \cite{bib:filter:EdgeWithCLAP}
 
 
 

@@ -24,14 +24,14 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 		for(int i = 1; i < newImage.getWidth() - 1; i++) {
 			for(int j = 1; j < newImage.getHeight() - 1; j++) {
 				
-				Set<Position> neighbors = newImage.getMooreNeighborhoods(1, i, j);
+				Set<Position> neighbors = image.getMooreNeighborhoods(1, i, j);
 				
 				List<Integer> reds = new ArrayList<Integer>();
 				List<Integer> greens = new ArrayList<Integer>();
 				List<Integer> blues = new ArrayList<Integer>();
 				
 				for(Position pair : neighbors) {
-					Pixel pixel = newImage.getPixel(pair.i, pair.j);
+					Pixel pixel = image.getPixel(pair.i, pair.j);
 					reds.add(pixel.getRed());
 					greens.add(pixel.getGreen());
 					blues.add(pixel.getBlue());
@@ -86,11 +86,11 @@ public class CellularAutomataAlgoII extends AbstractCellularAutomata {
 		for(int i = 1; i < greyImage.getWidth() - 1; i++) {
 			for(int j = 1; j < greyImage.getHeight() - 1; j++) {
 				
-				Set<Position> neighbors = greyImage.getMooreNeighborhoods(1, i, j);
+				Set<Position> neighbors = image.getMooreNeighborhoods(1, i, j);
 				List<Integer> values = new ArrayList<Integer>();
 				
 				for(Position pair : neighbors) {
-					values.add(greyImage.get(pair.i, pair.j));
+					values.add(image.get(pair.i, pair.j));
 				}
 				
 				Collections.sort(values);
