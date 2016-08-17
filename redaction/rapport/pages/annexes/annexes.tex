@@ -43,4 +43,43 @@ The \gls{STRT} is the application of the Rajan Transform in the sets domain, and
 
 
 
+\section{Tagging algorithm pseudocode}
+
+
+\begin{listing}[H]
+	\begin{minted}[mathescape=true]{java}
+public AnnotatedObjectBean getNearestAnnotated(SomeObject object, List<AnnotatedObjectBean> others) {
+	pivot, lower @$\leftarrow$@ 0, difference @$\leftarrow$@ 0
+	higher @$\leftarrow$@ others.size()
+	
+	while (lower < higher) { // get an estimation of the nearest object position 
+		pivot @$\leftarrow$@ (lower + higher) / 2
+		AnnotatedObjectBean other @$\leftarrow$@ others.get(pivot)
+		difference @$\leftarrow$@ object.compareTo(other)
+		
+		if (difference > 0) lower @$\leftarrow$@ pivot + 1  // change the boundaries accordingly 
+		else if (difference < 0) higher @$\leftarrow$@ pivot;
+		else return other;
+	}
+	
+	difference @$\leftarrow |$@difference@$|$@  // absolute value to get the nearest
+	for (i in [pivot-1, pivot+1]) {
+		if (i < 0 || i >= others.size()) continue
+		
+		AnnotatedObjectBean other @$\leftarrow$@ others.get(i)
+		diff = @$|$@object.compareTo(other)@$|$@
+		
+		if (diff < difference) { // a nearest object has been found
+			difference @$\leftarrow$@ diff
+			pivot @$\leftarrow$@ i
+		}
+	}
+	
+	return others.get(pivot)	
+}
+	\end{minted}
+	\caption{Simplified tagging algorithm pseudocode}
+	\label{lst:simplified tagging algorithm}
+\end{listing}
+
 

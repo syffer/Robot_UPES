@@ -15,7 +15,7 @@ The \vref{fig:diagram:class:image} shows the class diagram that was used. The vi
 
 \begin{figure}[H]
 	\centering 
-	\includegraphics[width=0.75\textwidth]{images/diagrams/class_diagram_image}
+	\includegraphics[width=0.8\textwidth]{images/diagrams/class_diagram_image}
 	\caption{Image package class diagram}
 	\label{fig:diagram:class:image}
 \end{figure}
@@ -55,9 +55,9 @@ A \gls{GUI} has been developped during the project in order to see the results o
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.75\textwidth]{images/application/application}
-	\caption{Application GUI example}
-	\label{fig:gui:application}
+	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_gui}
+	\caption{GUI package class diagram}
+	\label{fig:diagram:class:gui}
 \end{figure}
 
 
@@ -67,6 +67,7 @@ The simplified class diagram of the gui package is shown on the \vref{fig:diagra
 
 The View class represents the interface visible by users, and has multiple attributes, like buttons, allowing users to interract with the application. The InternalView represents an internal window in the \gls{GUI}, that can be moved by users. Each InternalView is associated with one InternalModel, and one InternalController. The ImageView represents an image, loaded or transformed, that is displayed in an internal window in the \gls{GUI}. Users are able to transform an image by selecting the appropriate internal window (ImageView), and clicking on the button associated to the desired transformation. 
 
+~~
 
 The GeneralController creates and links the view and the model parts. His other job is to get back the user interractions with the application. To do that, classes extending the AbstractAction are created, and affected on the view buttons. The ActionTransformation class represents an action that will apply a transformation on the selected image, using a Transformation subclass given during the initialization. Others actions exists, like ActionSave, and ActionClose. When the user clic on a button, the associated action is applyied (e.g. a transformation, a loading, etc.), and a subclass of the InternalController is created, which will create the appropriate InternalModel and InternalView subclasses.
 
@@ -75,16 +76,12 @@ The GeneralController creates and links the view and the model parts. His other 
 Images are stored in the ImageModel classes. The GeneralModel keeps in memory which of the opened image model is selected by the user. Moreover, the GeneralModel is made Observable in order to notify others classes when the user changes his selection. The actions classes implement the Observer interface, and listen to the GeneralModel. When the GeneralModel notifies its observers, the actions classes update themselves, and activate depending on the new selection of the user. 
 
 
-
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth]{images/diagrams/class_diagram_gui}
-	\caption{GUI package class diagram}
-	\label{fig:diagram:class:gui}
+	\includegraphics[width=0.65\textwidth]{images/application/application}
+	\caption{Application GUI example}
+	\label{fig:gui:application}
 \end{figure}
-
-
-
 
 
 
@@ -161,43 +158,6 @@ In order to implement this algorithm, the Feature class has been made comparable
 ~~
 
 As the tagged objects list could be large, instead of crossing the list completely, a "quick sort like" research algorithm is used. For this algorithm to work, it is necessary to sort the list of the tagged objects, which is done with the sql request by ordering every fields (i.e. columns of the table) in ascending order. The algorithm define a pivot (i.e. the middle of the list boundaries), and compare the pivot with the object to be tagged. Depending on the result of the comparison, the nearest tagged object is either before the pivot, or after. The list boundaries are then changed, the pivot is updated, and compared again with the object to be tagged until the boundaries are incorrects. This will give an estimation of the nearest tagged object position, the nearest object will be between the tagged objects before and after the pivot. To get the nearest tagged object, no more than three tagged objects are to be compared with the untagged object. The \vref{lst:simplified tagging algorithm} shows the pseudocode of the algorithm.
-
-\begin{listing}
-	\begin{minted}[mathescape=true]{java}
-public AnnotatedObjectBean getNearestAnnotated(SomeObject object, List<AnnotatedObjectBean> others) {
-	pivot, lower @$\leftarrow$@ 0, difference @$\leftarrow$@ 0
-	higher @$\leftarrow$@ others.size()
-	
-	while (lower < higher) { // get an estimation of the nearest object position 
-		pivot @$\leftarrow$@ (lower + higher) / 2
-		AnnotatedObjectBean other @$\leftarrow$@ others.get(pivot)
-		difference @$\leftarrow$@ object.compareTo(other)
-		
-		if (difference > 0) lower @$\leftarrow$@ pivot + 1  // change the boundaries accordingly 
-		else if (difference < 0) higher @$\leftarrow$@ pivot;
-		else return other;
-	}
-	
-	difference @$\leftarrow |$@difference@$|$@  // absolute value to get the nearest
-	for (i in [pivot-1, pivot+1]) {
-		if (i < 0 || i >= others.size()) continue
-		
-		AnnotatedObjectBean other @$\leftarrow$@ others.get(i)
-		diff = @$|$@object.compareTo(other)@$|$@
-		
-		if (diff < difference) { // a nearest object has been found
-			difference @$\leftarrow$@ diff
-			pivot @$\leftarrow$@ i
-		}
-	}
-	
-	return others.get(pivot)	
-}
-	\end{minted}
-	\caption{Simplified tagging algorithm pseudocode}
-	\label{lst:simplified tagging algorithm}
-\end{listing}
-
 
 
 % comparer chaque champs un par un 

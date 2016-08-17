@@ -1,6 +1,6 @@
 \chapter{Litterature}
 
-This chapter presents different concepts used in this project. Images are introduced, then concepts of edge detection and noise removal are explained. Finally the Freeman chain codes are described. 
+This chapter presents different concepts used in this project. Images are introduced, then concepts of edge detection and noise removal are explained, allonw with a cellular automata algorithm and the \gls{CLAP} algorithm. Finally the Freeman chain codes are described, as well as some features that can be extracted from it. 
 
 \section{Images}
 
@@ -132,16 +132,8 @@ The Sobel operator calculates the gradiant of each pixel on the image. It is don
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{wrapfigure}{R}{0.35\textwidth}
-%\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.35\textwidth]{images/diagrams/flowchart_CAII}
-	\caption{CA II flowchart \cite{bib:filter:CA}}
-	\label{fig:diagram:flowchart:CAII}
-%\end{figure}
-\end{wrapfigure}
 
+\begin{minipage}{0.5\textwidth}
 
 \section{Noise removal}
 
@@ -154,18 +146,27 @@ Noise removal, or noise reduction, is the process of removing noise from a signa
 The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduction algorithms based on cellular automata. For this project, it has been decided to implement the second version of the algorithm. A cellular automaton concists of a large number of simple individuals, called cells, which have a state (e.g. "on" and "off"). During one iteration, each cell updates its state depending on its own state and on the state of the neighbor cells. Two types od neighborhooh exists : the 4-connexity (Von Neumann) and the 8-connexity (Moore) neighborhood. For this algorithm, it is the Moor neighborhood that is used. In the case of the second algorithm, each pixel will be updated by taking the average value of his 8-connexity neighborhood (him included), except the minimum and the maximum values. The \vref{fig:diagram:flowchart:CAII} explains the procedure with a flowchart.
 
 
+\end{minipage} \hfill 
+\begin{minipage}{0.4\textwidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{wrapfigure}{R}{0.4\textwidth}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/diagrams/flowchart_CAII}
+	\caption{CA II flowchart \cite{bib:filter:CA}}
+	\label{fig:diagram:flowchart:CAII}
+\end{figure}
+%\end{wrapfigure}
+
+\end{minipage}
+
+\newpage 
 
 
+\section[CLAP]{Cellular Logic Array Processing algorithm}
 
-
-
-
-
-
-\section{CLAP}
-
-
-\gls{CLAP} \cite{bib:filter:EdgeWithCLAP}
+The \acrfull{CLAP} algorithm is a new algorithm for extracting volumetric edges from 3D images. Volumetric edges refers to lines, curves and points represented in a 3D digital space. \gls{CLAP} combines notions of Markov's normal algorithms and Von Neuman's cellular automata. A threshold value is required. The principe is the following : for each pixel, the minimal and the maximal pixel values are determinated from the 4-connexity pixel neighborhood (including the actual pixel). Then, the difference between the maximum and the minimum is calculated. If that difference is inferior or equal to the given  threshold value, all the 4-connexity pixel neighbors are set to 0. Pixel values are not changes if it's not the case \cite{bib:filter:EdgeWithCLAP}.
 
 
 
@@ -179,6 +180,8 @@ The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduc
 
 
 The Freeman Chain Code is a coding edge algorithm. It allows to represent a shape given in a bimary image (monochromatic) by it's edge. It's first purpose is to compress the data, as we pass from a binary image to a chain (or list) of code representing the shape of the edge \cite{bib:chain:ParametreGeometriqueChaineFreeman}. In other words, it's a data structure for representing the boundary of a feature \cite{bib:chain:DigitalImageProcessing}.
+
+~~ 
 
 In order to extract the chain code of a shape in a binary image, it is necessary to start from on of the end edges. For this project, it has been decided to start from the most left upper edge point of the shape, i.e. there isn't any other edge point that is at the left of the starting point. In order to have this starting point, the image has been travelled from up to down, and then from left to right, as it is shown on the \vref{fig:chain code:course order}.
 
