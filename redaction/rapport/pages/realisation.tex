@@ -1,7 +1,7 @@
 \chapter{Realised work}
 
 
-This chapter describes how each part of the project hab been realised. It will present the first module with the image modelisation, the transformations implementation, and the \gls{GUI} realisation. Then the second module will be explained with the chain code, the database creation, and the tagging algorithm.
+This chapter describes how each part of the project hab been realised. It will present the first module with the image modelisation, the transformations implementation, and the \gls{GUI} realisation. Then the second module will be explained with the chain code, the database creation, and the tagging algorithm. This project has been implemented in java.
 
 
 \section{First module : image processing operations}
@@ -150,8 +150,6 @@ A feature is defined as something in the image that have a certain shape and edg
 
 
 The Freeman Chain Code is a coding edge algorithm. It allows to represent a shape given in a bimary image (monochromatic) by it's edge. It's first purpose is to compress the data, as we pass from a binary image to a chain (or list) of code representing the shape of the edge \cite{bib:chain:ParametreGeometriqueChaineFreeman}. In other words, it's a data structure for representing the boundary of a feature \cite{bib:chain:DigitalImageProcessing}.
-
-~~
 
 In order to extract the chain code of a shape in a binary image, it is necessary to start from on of the end edges. For this project, it has been decided to start from the most left upper edge point of the shape, i.e. there isn't any other edge point that is at the left of the starting point. In order to have this starting point, the image has been travelled from up to down, and then from left to right, as it is shown on the \vref{fig:chain code:course order}.
 
