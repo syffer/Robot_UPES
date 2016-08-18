@@ -83,3 +83,25 @@ public AnnotatedObjectBean getNearestAnnotated(SomeObject object, List<Annotated
 \end{listing}
 
 
+
+
+\section{The CLAP algorithm}
+\label{sec:annexe:clap}
+
+The \gls{CLAP} algorithm as given in the paper \cite{bib:filter:EdgeWithCLAP}, for finding edges in a 3D images : 
+\begin{enumerate}
+	\item read the 3-D data and place voxel values in a 1-D array called "input\_array"
+	\item copy "input\_array" to "output\_array"
+	\item repeat sliding the 7-neighborhood window over the image(input\_array) until the structuring element spans whole of image 
+	\begin{enumerate}
+		\item find the maximum gray value $G_{max}$
+		\item find the minimal gray value $G_{min}$
+		\item find the differende $D = G_{max} - G_{min}$
+		\item if($D \leq $ threshold) then assign zero value to all seven cells in "output\_array" 
+		\item slide the 7-neighborhood
+	\end{enumerate}
+	\item pass the "output\_array" to VolumeRendered() method 
+\end{enumerate}
+
+The adapted version for 2D images involves only a 5-neighborhood instead of a 7. 
+

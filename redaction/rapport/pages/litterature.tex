@@ -167,7 +167,7 @@ The algorithms presented in the paper \cite{bib:filter:CA} are image noise reduc
 
 \section[CLAP]{Cellular Logic Array Processing algorithm}
 
-The \acrfull{CLAP} algorithm is a new algorithm for extracting volumetric edges from 3D images. Volumetric edges refers to lines, curves and points represented in a 3D digital space. \gls{CLAP} combines notions of Markov's normal algorithms and Von Neuman's cellular automata. A threshold value is required. The principe is the following : for each pixel, the minimal and the maximal pixel values are determinated from the 4-connexity pixel neighborhood (including the actual pixel). Then, the difference between the maximum and the minimum is calculated. If that difference is inferior or equal to the given  threshold value, all the 4-connexity pixel neighbors are set to 0. Pixel values are not changes if it's not the case \cite{bib:filter:EdgeWithCLAP}.
+The \acrfull{CLAP} algorithm is a new algorithm for extracting volumetric edges from 3D images. Volumetric edges refers to lines, curves and points represented in a 3D digital space. \gls{CLAP} combines notions of Markov's normal algorithms and Von Neuman's cellular automata. A threshold value is required. The principe is the following : for each pixel, the minimal and the maximal pixel values are determinated from the 4-connexity pixel neighborhood (including the actual pixel). Then, the difference between the maximum and the minimum is calculated. If that difference is inferior or equal to the given  threshold value, all the 4-connexity pixel neighbors are set to 0. Pixel values are not changes if it's not the case \cite{bib:filter:EdgeWithCLAP}. The algorithm as given in the paper is shown at the \vref{sec:annexe:clap}. 
 
 
 
