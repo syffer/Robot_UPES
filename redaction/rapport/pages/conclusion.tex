@@ -1,3 +1,19 @@
 \chapter{Conclusion}
 
+At the end of the project, most of the requested functionnalities were implemented. Multiple transformations are available, which involve : 
+\begin{itemize}
+	\item edge detection, with Sobel, Canny, Laplacian or the \gls{CLAP} \gls{algorithm}
+	\item noise removal, using a median filter, a weighted average filter, or a cellular automaton \gls{algorithm}
+	\item morphological operators, that includes passing an image into a grey scale, get its negative, erode or dilate it 
+\end{itemize}
 
+
+A \acrlong{GUI} was provided allowing the user to load images and test each provided transformation, and see the time it's take to process the images. An attempt of implementing an object recognition system was realised, using the Freeman chain code features, a database, and some pictures given by the LabelMe dataset. Other functionnalities were planned, but weren't implemented by lack of time, for example the fourier transform and the wiener filter. 
+
+~~
+
+Two issues remain in this project. The first one involves the time complexity of the algorithms. Transformations are taking too much time compared to similar nowadays technologies. The second is regarding the object recognition, which might be very sensitive and work only if every steps work correctly. For example, if the edges of an object are not identified correctly during the use of an edge detection operator (e.g. there is a hole in the edge after the process, hence the shape of the image is not continuous), no chain code will be extracted, and no object will be created.
+
+~~
+
+This internship was a rewarding experience, professionally and personnally speaking. It gave me the opportunity to work in a computer science laboratory for a short period of time. I had the chance to apply some technics I have learned during my computer science classes, especially in the image processing area, the application of UML, diagram patterns, and the use of the java language. 
