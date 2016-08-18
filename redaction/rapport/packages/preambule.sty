@@ -865,6 +865,14 @@
 % new glossary style 
 % - ordonner alphabétiquement, en les séparant (A, B, C, ...) 
 % - navigation list at the right 
+% - ajout de "page"/"pages" dans la number list (location list)
+\newcommand{\formattingnumberlist}[1]{% \glsXpageXglsnumberformat
+	\StrCount{\detokenize{#1}}{\detokenize{glsnumberformat}}[\appearances]%
+	\ifnum\appearances=1 \emph{page} \fi%
+	\ifnum\appearances>1 \emph{pages} \fi%
+	#1%
+}
+
 \newglossarystyle{rightlisthypergroup}{ 
 	\setglossarystyle{listhypergroup} 
 
@@ -874,9 +882,16 @@
 		\item \parbox{0.9\textwidth}{\begin{flushright} \glsnavigation \end{flushright}}
 	}
 
+	% ajout de "page"/"pages"
+	% - http://tex.stackexchange.com/questions/256152/glossaries-modified-page-list-back-references 
+	\renewcommand*{\glossentry}[2]{%
+        \item[\glsentryitem{##1}%
+        \glstarget{##1}{\glossentryname{##1}}]
+        \glossentrydesc{##1}\glspostdescription\space \formattingnumberlist{##2}%
+    }%
 }
 
-\setglossarystyle{rightlisthypergroup} 	
+\setglossarystyle{rightlisthypergroup} 
 
 % new entry style, display entries description in footnote at the first time (except accronym)
 % - /!\ do not remove the '%'
