@@ -386,9 +386,21 @@
 	hyperref = true,
 	backref = true, 	% back reference to the citation (index like)
 	backend = biber,
-	sorting = none, 	% "none" pour ranger par ordre d'apparition
+	sorting = tny, 	% "none" pour ranger par ordre d'apparition
 	style = \package@bibstyle, 
 ]{biblatex}
+
+% sorting tnyv
+% - title, name, year, version 
+% - http://tex.stackexchange.com/questions/46868/biblatex-sorting-by-date 
+% - http://ctan.imsc.res.in/macros/latex/contrib/biblatex/doc/biblatex.pdf#subsubsection.4.5.6 
+\DeclareSortingScheme{tny}{
+	\sort{
+		\field{title} 
+		\field{author} 
+		\field{year} 
+	}
+}
 
 % for APA-style, maps a babel/polyglossia language identifier to an lbx file (doc p.223)
 % - http://tex.stackexchange.com/questions/312091/citations-in-small-caps-using-biblatex-in-french-apa-style 
